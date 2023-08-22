@@ -7,83 +7,6 @@
     "text": "To start this lab, you’ll need:\n\n\n\n\n\n\nImportant\n\n\n\nVisit the “Programming Toolkit-webpage” to learn how to meet all requirements.\n\n\n\nPython: Anaconda, Anaconda Environment prompt and Visual Studio Code\nEnvironment: A folder on your machine called prompt, an OpenAI-API key and an environment file with your OpenAI-API keyqu"
   },
   {
-    "objectID": "slides/slides.html#text",
-    "href": "slides/slides.html#text",
-    "title": "Title",
-    "section": "Text",
-    "text": "Text\n\na 🤖\n\nabc\n\n\n\n\nb\nc1\n\n📚 Required reading: A & B (2023)\nhttps://arxiv.org/pdf/2303.12712.pdf\n\nRussell & Norvig, 2009"
-  },
-  {
-    "objectID": "slides/slides.html#image",
-    "href": "slides/slides.html#image",
-    "title": "Title",
-    "section": "Image",
-    "text": "Image"
-  },
-  {
-    "objectID": "slides/slides.html#video",
-    "href": "slides/slides.html#video",
-    "title": "Title",
-    "section": "Video",
-    "text": "Video"
-  },
-  {
-    "objectID": "slides/slides.html#a-lot-of-text",
-    "href": "slides/slides.html#a-lot-of-text",
-    "title": "Title",
-    "section": "A lot of text",
-    "text": "A lot of text\nSmaller heading"
-  },
-  {
-    "objectID": "slides/slides.html#background-image",
-    "href": "slides/slides.html#background-image",
-    "title": "Title",
-    "section": "Background image",
-    "text": "Background image\nabc"
-  },
-  {
-    "objectID": "slides/slides.html#code",
-    "href": "slides/slides.html#code",
-    "title": "Title",
-    "section": "Code",
-    "text": "Code\n1print('Hello World')\n2for i in LIST:\n  df[i] = df[i].astype('cat')\n\n1\n\nPrint Hello World, and then,\n\n2\n\ntransform all columns in the LIST element to categorical variables"
-  },
-  {
-    "objectID": "slides/slides.html#end",
-    "href": "slides/slides.html#end",
-    "title": "Title",
-    "section": "End",
-    "text": "End\n\n\nJan Kirenz"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Welcome 👋",
-    "section": "",
-    "text": "Welcome to the lab “chat system”\n\nIn this lab, we will use OpenAI’s API to leverage Large Language Models (LLMs) like GPT-3.5 Turbo and GPT-4 into Python based chat applications.\n\n\n\n\n\n\nImportant\n\n\n\nMake sure you meet all the requirements and have read the lecture slides before you start with the assignments\n\n\nWhat you will learn in this lab:\n\nThis lab is mainly based on an excellent course provided by Isa Fulford from OpenAI and Andrew Ng from DeepLearning.AI."
-  },
-  {
-    "objectID": "slide.html",
-    "href": "slide.html",
-    "title": "Slides",
-    "section": "",
-    "text": "Take a look at the slides tutorial to learn how to use all slide options"
-  },
-  {
-    "objectID": "slide.html#basics",
-    "href": "slide.html#basics",
-    "title": "Slides",
-    "section": "1 Basics",
-    "text": "1 Basics\nIn this tutorial, you’ll learn some basic properties of Large Language Models: The Chat Format and Tokens:\n\n🖥️ Basics"
-  },
-  {
-    "objectID": "assignments.html",
-    "href": "assignments.html",
-    "title": "Assignments",
-    "section": "",
-    "text": "This is a Quarto slidedeck."
-  },
-  {
     "objectID": "code/notebook.html",
     "href": "code/notebook.html",
     "title": "Notebook",
@@ -105,6 +28,34 @@
     "text": "Data"
   },
   {
+    "objectID": "assignments.html",
+    "href": "assignments.html",
+    "title": "Assignments",
+    "section": "",
+    "text": "This is a Quarto slidedeck."
+  },
+  {
+    "objectID": "slide.html",
+    "href": "slide.html",
+    "title": "Slides",
+    "section": "",
+    "text": "Take a look at the slides tutorial to learn how to use all slide options"
+  },
+  {
+    "objectID": "slide.html#basics",
+    "href": "slide.html#basics",
+    "title": "Slides",
+    "section": "1 Basics",
+    "text": "1 Basics\nIn this tutorial, you’ll learn some basic properties of Large Language Models: The Chat Format and Tokens:\n\n🖥️ Basics"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome 👋",
+    "section": "",
+    "text": "Welcome to the lab “chat system”\n\nIn this lab, we will use OpenAI’s API to leverage Large Language Models (LLMs) like GPT-3.5 Turbo and GPT-4 into Python based chat applications.\n\n\n\n\n\n\nImportant\n\n\n\nMake sure you meet all the requirements and have read the lecture slides before you start with the assignments\n\n\nWhat you will learn in this lab:\n\nThis lab is mainly based on an excellent course provided by Isa Fulford from OpenAI and Andrew Ng from DeepLearning.AI."
+  },
+  {
     "objectID": "slides/basics.html#python",
     "href": "slides/basics.html#python",
     "title": "Chat Format and Tokens",
@@ -123,21 +74,21 @@
     "href": "slides/basics.html#example-prompt",
     "title": "Chat Format and Tokens",
     "section": "Example prompt",
-    "text": "Example prompt\n\nPrompt the model and get a completion\n\n\nresponse = get_completion(\"What is the capital of Germany?\")\n\n\n\nprint(response)"
+    "text": "Example prompt\n\nPrompt the model and get a completion\n\n\nresponse = get_completion(\"What is the capital of Germany?\")\n\n\n\nprint(response)\n\n\n\nThe capital of Germany is Berlin."
   },
   {
     "objectID": "slides/basics.html#tokens",
     "href": "slides/basics.html#tokens",
     "title": "Chat Format and Tokens",
     "section": "Tokens",
-    "text": "Tokens\n\nresponse = get_completion(\"Take the letters in lollipop \\\nand reverse them\")\nprint(response)\n\n\n\n\n\n“lollipop” in reverse should be “popillol”"
+    "text": "Tokens\n\nresponse = get_completion(\"Take the letters in lollipop \\\nand reverse them\")\nprint(response)\n\n\n\nThe reversed letters of \"lollipop\" are \"pillipol\".\n\n\n\n“lollipop” in reverse should be “popillol”"
   },
   {
     "objectID": "slides/basics.html#explicit-tokens",
     "href": "slides/basics.html#explicit-tokens",
     "title": "Chat Format and Tokens",
     "section": "Explicit tokens",
-    "text": "Explicit tokens\n\nresponse = get_completion(\"\"\"Take the letters in \\\nl-o-l-l-i-p-o-p and reverse them\"\"\")\n\n\n\n\n\n\nresponse"
+    "text": "Explicit tokens\n\nresponse = get_completion(\"\"\"Take the letters in \\\nl-o-l-l-i-p-o-p and reverse them\"\"\")\n\n\n\n\n\n\nresponse\n\n\n\n'p-o-p-i-l-l-o-l'"
   },
   {
     "objectID": "slides/basics.html#helper-function-chat-format",
@@ -158,7 +109,7 @@
     "href": "slides/basics.html#response",
     "title": "Chat Format and Tokens",
     "section": "Response",
-    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)"
+    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)\n\n\n\nOh, a student at Hochschule der Medien bright,\nWith joy in their heart and a radiant light,\nIn the halls of wisdom, they dance and rejoice,\nSoaring through knowledge with an enthusiastic voice.\n\nTheir mind a sponge, thirsty for learning's embrace,\nEach lecture a moment to grow and to chase,\nBoundless curiosity, forever on their quest,\nIn this haven of knowledge, they truly feel blessed.\n\nWith professors guiding, nurturing their souls,\nThey thrive, expanding their intellectual goals,\nOh, happy student of Hochschule der Medien,\nYour joy in learning, a beacon to be seen."
   },
   {
     "objectID": "slides/basics.html#message-example-one-sentence",
@@ -172,7 +123,7 @@
     "href": "slides/basics.html#response-1",
     "title": "Chat Format and Tokens",
     "section": "Response",
-    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)"
+    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)\n\n\n\nIn Stuttgart's media school, a happy student finds their soul, creative dreams unfold."
   },
   {
     "objectID": "slides/basics.html#message-example-sokrates-one-sentence",
@@ -186,7 +137,7 @@
     "href": "slides/basics.html#response-2",
     "title": "Chat Format and Tokens",
     "section": "Response",
-    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)"
+    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)\n\n\n\nIn halls of wisdom, joy unfolds,\nHochschule der Medien, where bliss beholds."
   },
   {
     "objectID": "slides/basics.html#helper-function-1",
@@ -207,13 +158,13 @@
     "href": "slides/basics.html#response-3",
     "title": "Chat Format and Tokens",
     "section": "Response",
-    "text": "Response\n\nprint(response)"
+    "text": "Response\n\nprint(response)\n\n\n\nOh, the joy of a student's heart,\nAt Hochschule der Medien, a work of art.\nWith knowledge and passion, they do strive,\nIn pursuit of wisdom, they come alive.\n\nIn lecture halls, their minds ignite,\nExploring ideas, day and night.\nWith books and screens, they delve so deep,\nIn this vibrant place, their dreams they keep.\n\nFrom design to media, they learn and grow,\nCreating stories, with every show.\nTheir spirits soar, their talents bloom,\nIn this haven of learning, they find their room.\n\nOh, happy student, at Hochschule der Medien,\nMay your journey be filled with joy and inspiration.\nEmbrace the knowledge, let your dreams take flight,\nFor in this place, your future shines bright."
   },
   {
     "objectID": "slides/basics.html#token-count-1",
     "href": "slides/basics.html#token-count-1",
     "title": "Chat Format and Tokens",
     "section": "Token count",
-    "text": "Token count\n\nprint(token_dict)"
+    "text": "Token count\n\nprint(token_dict)\n\n\n\n{'prompt_tokens': 43, 'completion_tokens': 157, 'total_tokens': 200}"
   }
 ]
