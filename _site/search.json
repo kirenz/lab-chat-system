@@ -1,0 +1,107 @@
+[
+  {
+    "objectID": "slide.html",
+    "href": "slide.html",
+    "title": "Slides",
+    "section": "",
+    "text": "This is a Quarto slidedeck."
+  },
+  {
+    "objectID": "slides/slides.html#text",
+    "href": "slides/slides.html#text",
+    "title": "Title",
+    "section": "Text",
+    "text": "Text\n\na 🤖\n\nabc\n\n\n\n\nb\nc1\n\n📚 Required reading: A & B (2023)\nhttps://arxiv.org/pdf/2303.12712.pdf\n\nRussell & Norvig, 2009"
+  },
+  {
+    "objectID": "slides/slides.html#image",
+    "href": "slides/slides.html#image",
+    "title": "Title",
+    "section": "Image",
+    "text": "Image"
+  },
+  {
+    "objectID": "slides/slides.html#video",
+    "href": "slides/slides.html#video",
+    "title": "Title",
+    "section": "Video",
+    "text": "Video"
+  },
+  {
+    "objectID": "slides/slides.html#a-lot-of-text",
+    "href": "slides/slides.html#a-lot-of-text",
+    "title": "Title",
+    "section": "A lot of text",
+    "text": "A lot of text\nSmaller heading"
+  },
+  {
+    "objectID": "slides/slides.html#background-image",
+    "href": "slides/slides.html#background-image",
+    "title": "Title",
+    "section": "Background image",
+    "text": "Background image\nabc"
+  },
+  {
+    "objectID": "slides/slides.html#code",
+    "href": "slides/slides.html#code",
+    "title": "Title",
+    "section": "Code",
+    "text": "Code\n1print('Hello World')\n2for i in LIST:\n  df[i] = df[i].astype('cat')\n\n1\n\nPrint Hello World, and then,\n\n2\n\ntransform all columns in the LIST element to categorical variables"
+  },
+  {
+    "objectID": "slides/slides.html#end",
+    "href": "slides/slides.html#end",
+    "title": "Title",
+    "section": "End",
+    "text": "End\n\n\nJan Kirenz"
+  },
+  {
+    "objectID": "code/notebook.html",
+    "href": "code/notebook.html",
+    "title": "Notebook",
+    "section": "",
+    "text": "Load Python libaries and API keys.\n\nimport os\nimport openai\nimport pandas as pd\nimport altair as alt\nfrom dotenv import load_dotenv, find_dotenv\n\n\n_ = load_dotenv(find_dotenv()) # read local .env file\nopenai.api_key  = os.environ['OPENAI_API_KEY']"
+  },
+  {
+    "objectID": "code/notebook.html#setup",
+    "href": "code/notebook.html#setup",
+    "title": "Notebook",
+    "section": "",
+    "text": "Load Python libaries and API keys.\n\nimport os\nimport openai\nimport pandas as pd\nimport altair as alt\nfrom dotenv import load_dotenv, find_dotenv\n\n\n_ = load_dotenv(find_dotenv()) # read local .env file\nopenai.api_key  = os.environ['OPENAI_API_KEY']"
+  },
+  {
+    "objectID": "code/notebook.html#data",
+    "href": "code/notebook.html#data",
+    "title": "Notebook",
+    "section": "Data",
+    "text": "Data"
+  },
+  {
+    "objectID": "assignments.html",
+    "href": "assignments.html",
+    "title": "Assignments",
+    "section": "",
+    "text": "This is a Quarto slidedeck."
+  },
+  {
+    "objectID": "requirements.html",
+    "href": "requirements.html",
+    "title": "Requirements",
+    "section": "",
+    "text": "To start this lab, you’ll need the following environments:\n\nSQL: MySQL, MySQL Workbench and a database called db_data\nPython: Anaconda, Anaconda Environment lab and Visual Studio Code\nWorking environment: A folder on your machine called competitive and an environment file with your MySQL password\n\n\n\n\n\n\n\nImportant\n\n\n\nVisit the “Programming Toolkit-webpage” to learn how to set up the environments."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome 👋",
+    "section": "",
+    "text": "Lab “Name”\nIn this lab you will …\n\n\n\n\n\n\nImportant\n\n\n\nMake sure you meet all the requirements and have read the lecture slides before you start with the assignments\n\n\nWhat you will learn in this lab:\n\nHow to set up a MySQL database\nUse SQL for data analysis\nMake use of Pandas for data analysis in Python\nUse Altair for data visualization in Python"
+  },
+  {
+    "objectID": "howto.html",
+    "href": "howto.html",
+    "title": "Workflow",
+    "section": "",
+    "text": "This is a Quarto slidedeck.\n\nCreate new labs GitHub-Repo\nCreate new branch gh-pages\nChange settings in page: gh-pages and root\nOpen VS Code\nChange Quarto seetings in files\nRender all in terminal: quarto render\nPush to GitHub"
+  }
+]
