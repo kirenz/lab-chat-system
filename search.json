@@ -32,7 +32,7 @@
     "href": "assignments.html",
     "title": "Assignments",
     "section": "",
-    "text": "This is a Quarto slidedeck."
+    "text": "tbd."
   },
   {
     "objectID": "slide.html",
@@ -58,113 +58,141 @@
   {
     "objectID": "slides/basics.html#python",
     "href": "slides/basics.html#python",
-    "title": "Chat Format and Tokens",
+    "title": "Tokens and Chat Format",
     "section": "Python",
-    "text": "Python\n\nimport os\nimport openai\nimport tiktoken\nfrom dotenv import load_dotenv, find_dotenv\n_ = load_dotenv(find_dotenv())  # read local .env file\n\nopenai.api_key = os.environ['OPENAI_API_KEY']"
+    "text": "Python\n\nimport os\nimport openai\nimport tiktoken  # tokenizer\nfrom dotenv import load_dotenv, find_dotenv\n_ = load_dotenv(find_dotenv())  # read local .env file\n\nopenai.api_key = os.environ['OPENAI_API_KEY']"
   },
   {
     "objectID": "slides/basics.html#helper-function",
     "href": "slides/basics.html#helper-function",
-    "title": "Chat Format and Tokens",
+    "title": "Tokens and Chat Format",
     "section": "Helper function",
     "text": "Helper function\n\ndef get_completion(prompt, model=\"gpt-3.5-turbo\"):\n    messages = [{\"role\": \"user\", \"content\": prompt}]\n    response = openai.ChatCompletion.create(\n        model=model,\n        messages=messages,\n        temperature=0,\n    )\n    return response.choices[0].message[\"content\"]"
   },
   {
     "objectID": "slides/basics.html#example-prompt",
     "href": "slides/basics.html#example-prompt",
-    "title": "Chat Format and Tokens",
+    "title": "Tokens and Chat Format",
     "section": "Example prompt",
-    "text": "Example prompt\n\nPrompt the model and get a completion\n\n\nresponse = get_completion(\"What is the capital of Germany?\")\n\n\n\nprint(response)\n\n\n\nThe capital of Germany is Berlin."
+    "text": "Example prompt\n\nPrompt the model and get a completion\n\n\n\nresponse = get_completion(\"What is the capital of Germany?\")\n\n\n\n\nprint(response)\n\n\n\nThe capital of Germany is Berlin."
   },
   {
-    "objectID": "slides/basics.html#tokens",
-    "href": "slides/basics.html#tokens",
-    "title": "Chat Format and Tokens",
-    "section": "Tokens",
-    "text": "Tokens\n\nresponse = get_completion(\"Take the letters in lollipop \\\nand reverse them\")\nprint(response)\n\n\n\nThe reversed letters of \"lollipop\" are \"pillipol\".\n\n\n\n“lollipop” in reverse should be “popillol”"
+    "objectID": "slides/basics.html#intuition",
+    "href": "slides/basics.html#intuition",
+    "title": "Tokens and Chat Format",
+    "section": "Intuition",
+    "text": "Intuition"
   },
   {
-    "objectID": "slides/basics.html#explicit-tokens",
-    "href": "slides/basics.html#explicit-tokens",
-    "title": "Chat Format and Tokens",
-    "section": "Explicit tokens",
-    "text": "Explicit tokens\n\nresponse = get_completion(\"\"\"Take the letters in \\\nl-o-l-l-i-p-o-p and reverse them\"\"\")\n\n\n\n\n\n\nresponse\n\n\n\n'p-o-p-i-l-l-o-l'"
+    "objectID": "slides/basics.html#what-is-a-token",
+    "href": "slides/basics.html#what-is-a-token",
+    "title": "Tokens and Chat Format",
+    "section": "What is a token?",
+    "text": "What is a token?\n\nThe GPT family of models process text using tokens\nTokens are common sequences of characters found in text\nThe models understand the statistical relationships between these tokens, and excel at producing the next token in a sequence of tokens."
+  },
+  {
+    "objectID": "slides/basics.html#how-long-is-a-token",
+    "href": "slides/basics.html#how-long-is-a-token",
+    "title": "Tokens and Chat Format",
+    "section": "How long is a token?",
+    "text": "How long is a token?\n\nOne token generally corresponds to ~4 characters of text\nThis translates to roughly ¾ of a word (so 100 tokens ~= 75 words)."
+  },
+  {
+    "objectID": "slides/basics.html#tokens-vs-words",
+    "href": "slides/basics.html#tokens-vs-words",
+    "title": "Tokens and Chat Format",
+    "section": "Tokens vs words",
+    "text": "Tokens vs words\n\n“lollipop” in reverse should be “popillol”\n\n\n\nresponse = get_completion(\"Take the letters in lollipop \\\nand reverse them\")\nprint(response)\n\n\n\nThe reversed letters of \"lollipop\" are \"pillipol\"."
+  },
+  {
+    "objectID": "slides/basics.html#create-single-tokens",
+    "href": "slides/basics.html#create-single-tokens",
+    "title": "Tokens and Chat Format",
+    "section": "Create single tokens",
+    "text": "Create single tokens\n\nresponse = get_completion(\"\"\"Take the letters in \\\nl-o-l-l-i-p-o-p and reverse them\"\"\")\n\n\n\n\n\n\nresponse\n\n\n\n'p-o-p-i-l-l-o-l'"
   },
   {
     "objectID": "slides/basics.html#helper-function-chat-format",
     "href": "slides/basics.html#helper-function-chat-format",
-    "title": "Chat Format and Tokens",
+    "title": "Tokens and Chat Format",
     "section": "Helper function (chat format)",
-    "text": "Helper function (chat format)\n\nHelper function for chat format\n\n\ndef get_completion_from_messages(messages,\n                                 model=\"gpt-3.5-turbo\",\n                                 temperature=0,\n                                 max_tokens=500):\n    response = openai.ChatCompletion.create(\n        model=model,\n        messages=messages,\n        temperature=temperature,  # this is the degree of randomness of the model's output\n        max_tokens=max_tokens,  # the maximum number of tokens the model can ouptut\n    )\n    return response.choices[0].message[\"content\"]"
+    "text": "Helper function (chat format)\n\nHelper function for chat format\n\n\n\ndef get_completion_from_messages(messages,\n                                 model=\"gpt-3.5-turbo\",\n                                 temperature=0,\n                                 max_tokens=500):\n    response = openai.ChatCompletion.create(\n        model=model,\n        messages=messages,\n        temperature=temperature,  # this is the degree of randomness of the model's output\n        max_tokens=max_tokens,  # the maximum number of tokens the model can ouptut\n    )\n    return response.choices[0].message[\"content\"]"
   },
   {
-    "objectID": "slides/basics.html#message-example-sokrates",
-    "href": "slides/basics.html#message-example-sokrates",
-    "title": "Chat Format and Tokens",
-    "section": "Message example Sokrates",
-    "text": "Message example Sokrates\n\nmessages = [\n    {'role': 'system',  # overall tone/behavior of assistant\n     'content': \"\"\"You are an assistant who\\\n responds in the style of Sokrates.\"\"\"},\n    {'role': 'user',\n        'content': \"\"\"write me a very short poem\\\n about a happy student at Hochschule der Medien Stuttgart \"\"\"},\n]"
+    "objectID": "slides/basics.html#sokrates-happy-hdm-students",
+    "href": "slides/basics.html#sokrates-happy-hdm-students",
+    "title": "Tokens and Chat Format",
+    "section": "Sokrates & happy HdM students 😊",
+    "text": "Sokrates & happy HdM students 😊\n\nmessages = [\n    {'role': 'system',  # overall tone/behavior of assistant\n     'content': \"\"\"You are an assistant who\\\n responds in the style of Sokrates.\"\"\"},\n    {'role': 'user',\n        'content': \"\"\"write me a very short poem\\\n about a happy student at Hochschule der Medien Stuttgart \"\"\"},\n]"
   },
   {
     "objectID": "slides/basics.html#response",
     "href": "slides/basics.html#response",
-    "title": "Chat Format and Tokens",
+    "title": "Tokens and Chat Format",
     "section": "Response",
-    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)\n\n\n\nOh, a student at Hochschule der Medien bright,\nWith joy in their heart and a radiant light,\nIn the halls of wisdom, they dance and rejoice,\nSoaring through knowledge with an enthusiastic voice.\n\nTheir mind a sponge, thirsty for learning's embrace,\nEach lecture a moment to grow and to chase,\nBoundless curiosity, forever on their quest,\nIn this haven of knowledge, they truly feel blessed.\n\nWith professors guiding, nurturing their souls,\nThey thrive, expanding their intellectual goals,\nOh, happy student of Hochschule der Medien,\nYour joy in learning, a beacon to be seen."
+    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)\n\n\n\nOh, happy student amidst the halls,\nIn Hochschule der Medien's academic thralls,\nWith spirits high and mind engaged,\nIn pursuit of knowledge, never disengaged.\n\nThe books, the lectures, the friends so bright,\nIlluminate the path, brought into sight,\nIn Stuttgart's embrace, where dreams take flight,\nA student's joy, forever igniting the light.\n\nThe journey unfolds, challenges faced,\nBut with passion and fervor, they are embraced,\nFor in each class and project profound,\nWisdom and joy intertwine, astound.\n\nOh, happy student, strong and wise,\nIn Hochschule der Medien, aspirations rise,\nMay your days be filled with learning's delight,\nIn Stuttgart's embrace, forever ignite."
   },
   {
-    "objectID": "slides/basics.html#message-example-one-sentence",
-    "href": "slides/basics.html#message-example-one-sentence",
-    "title": "Chat Format and Tokens",
-    "section": "Message example one sentence",
-    "text": "Message example one sentence\n\nmessages = [\n    {'role': 'system',\n     'content': 'All your responses must be \\\none sentence long.'},\n    {'role': 'user',\n     'content': 'write me a very short poem\\\n about a happy student at Hochschule der Medien Stuttgart'},\n]"
+    "objectID": "slides/basics.html#one-sentence-output",
+    "href": "slides/basics.html#one-sentence-output",
+    "title": "Tokens and Chat Format",
+    "section": "One sentence output",
+    "text": "One sentence output\n\nmessages = [\n    {'role': 'system',\n     'content': 'All your responses must be \\\none sentence long.'},\n    {'role': 'user',\n     'content': 'write me a very short poem\\\n about a happy student at Hochschule der Medien Stuttgart'},\n]"
   },
   {
     "objectID": "slides/basics.html#response-1",
     "href": "slides/basics.html#response-1",
-    "title": "Chat Format and Tokens",
+    "title": "Tokens and Chat Format",
     "section": "Response",
-    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)\n\n\n\nIn Stuttgart's media school, a happy student finds their soul, creative dreams unfold."
+    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)\n\n\n\nIn Stuttgart's halls,\nJoyous student whispers,\nLearning bliss embraces."
   },
   {
-    "objectID": "slides/basics.html#message-example-sokrates-one-sentence",
-    "href": "slides/basics.html#message-example-sokrates-one-sentence",
-    "title": "Chat Format and Tokens",
-    "section": "Message example Sokrates, one sentence",
-    "text": "Message example Sokrates, one sentence\n\n# combined\nmessages = [\n    {'role': 'system',\n     'content': \"\"\"You are an assistant who \\\nresponds in the style of Sokrates. \\\nAll your responses must be one sentence long.\"\"\"},\n    {'role': 'user',\n     'content': \"\"\"write me a very short poem\\\n about a happy student at Hochschule der Medien Stuttgart\"\"\"},\n]"
+    "objectID": "slides/basics.html#sokrates-in-one-sentence",
+    "href": "slides/basics.html#sokrates-in-one-sentence",
+    "title": "Tokens and Chat Format",
+    "section": "Sokrates in one sentence",
+    "text": "Sokrates in one sentence\n\n# combined\nmessages = [\n    {'role': 'system',\n     'content': \"\"\"You are an assistant who \\\nresponds in the style of Sokrates. \\\nAll your responses must be one sentence long.\"\"\"},\n    {'role': 'user',\n     'content': \"\"\"write me a very short poem\\\n about a happy student at Hochschule der Medien Stuttgart\"\"\"},\n]"
   },
   {
     "objectID": "slides/basics.html#response-2",
     "href": "slides/basics.html#response-2",
-    "title": "Chat Format and Tokens",
+    "title": "Tokens and Chat Format",
     "section": "Response",
-    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)\n\n\n\nIn halls of wisdom, joy unfolds,\nHochschule der Medien, where bliss beholds."
+    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)\n\n\n\nIn studious bliss, Hochschule's embrace,\nA student's heart, alight with knowledge's grace."
+  },
+  {
+    "objectID": "slides/basics.html#tiktoken",
+    "href": "slides/basics.html#tiktoken",
+    "title": "Tokens and Chat Format",
+    "section": "tiktoken",
+    "text": "tiktoken\n\ntiktoken is a fast open-source tokenizer by OpenAI.\nGiven a text string (e.g., “tiktoken is great!”) and an encoding (e.g., “cl100k_base”), a tokenizer can split the text string into a list of tokens (e.g., [“t”, “ik”, “token”, ” is”, ” great”, “!”]).\nEncodings specify how text is converted into tokens.\nDifferent models use different encodings."
   },
   {
     "objectID": "slides/basics.html#helper-function-1",
     "href": "slides/basics.html#helper-function-1",
-    "title": "Chat Format and Tokens",
+    "title": "Tokens and Chat Format",
     "section": "Helper function",
     "text": "Helper function\n\nShow how many tokens you are using\n\n\ndef get_completion_and_token_count(messages,\n                                   model=\"gpt-3.5-turbo\",\n                                   temperature=0,\n                                   max_tokens=500):\n\n    response = openai.ChatCompletion.create(\n        model=model,\n        messages=messages,\n        temperature=temperature,\n        max_tokens=max_tokens,\n    )\n\n    content = response.choices[0].message[\"content\"]\n\n    token_dict = {\n        'prompt_tokens': response['usage']['prompt_tokens'],\n        'completion_tokens': response['usage']['completion_tokens'],\n        'total_tokens': response['usage']['total_tokens'],\n    }\n\n    return content, token_dict"
   },
   {
     "objectID": "slides/basics.html#example-prompt-1",
     "href": "slides/basics.html#example-prompt-1",
-    "title": "Chat Format and Tokens",
+    "title": "Tokens and Chat Format",
     "section": "Example prompt",
     "text": "Example prompt\n\nmessages = [\n    {'role': 'system',  # overall tone/behavior of assistant\n     'content': \"\"\"You are an assistant who\\\n responds in the style of Sokrates.\"\"\"},\n    {'role': 'user',\n        'content': \"\"\"write me a very short poem\\\n about a happy student at Hochschule der Medien Stuttgart \"\"\"},\n]\n\nresponse, token_dict = get_completion_and_token_count(messages)"
   },
   {
     "objectID": "slides/basics.html#response-3",
     "href": "slides/basics.html#response-3",
-    "title": "Chat Format and Tokens",
+    "title": "Tokens and Chat Format",
     "section": "Response",
-    "text": "Response\n\nprint(response)\n\n\n\nOh, the joy of a student's heart,\nAt Hochschule der Medien, a work of art.\nWith knowledge and passion, they do strive,\nIn pursuit of wisdom, they come alive.\n\nIn lecture halls, their minds ignite,\nExploring ideas, day and night.\nWith books and screens, they delve so deep,\nIn this vibrant place, their dreams they keep.\n\nFrom design to media, they learn and grow,\nCreating stories, with every show.\nTheir spirits soar, their talents bloom,\nIn this haven of learning, they find their room.\n\nOh, happy student, at Hochschule der Medien,\nMay your journey be filled with joy and inspiration.\nEmbrace the knowledge, let your dreams take flight,\nFor in this place, your future shines bright."
+    "text": "Response\n\nprint(response)\n\n\n\nOh, a student at Hochschule der Medien Stuttgart,\nWith joy in their heart, their passion unfurled.\nIn lectures they learn, their minds ever bright,\nSeeking knowledge, embracing the light.\n\nAmongst fellow scholars, they find their place,\nSharing ideas, with smiles on their face.\nIn libraries they delve, books as their guide,\nExpanding horizons, with each page they stride.\n\nWith professors as mentors, guiding their way,\nThey grow and they flourish, day after day.\nIn projects they thrive, creativity soars,\nA happy student, forever exploring new shores.\n\nOh, Hochschule der Medien Stuttgart, a place so grand,\nWhere dreams are nurtured, where futures expand.\nA happy student, forever grateful, they'll be,\nFor the knowledge gained, and the memories set free."
   },
   {
     "objectID": "slides/basics.html#token-count-1",
     "href": "slides/basics.html#token-count-1",
-    "title": "Chat Format and Tokens",
+    "title": "Tokens and Chat Format",
     "section": "Token count",
-    "text": "Token count\n\nprint(token_dict)\n\n\n\n{'prompt_tokens': 43, 'completion_tokens': 157, 'total_tokens': 200}"
+    "text": "Token count\n\nprint(token_dict)\n\n\n\n{'prompt_tokens': 43, 'completion_tokens': 167, 'total_tokens': 210}"
   }
 ]
