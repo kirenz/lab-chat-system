@@ -130,14 +130,14 @@
     "href": "slides/basics.html#tokens",
     "title": "Chat Format and Tokens",
     "section": "Tokens",
-    "text": "Tokens\n\nresponse = get_completion(\"Take the letters in lollipop \\\nand reverse them\")\nprint(response)\n\n\n\nThe reversed letters of \"lollipop\" are \"pillipol\".\n\n\n\n“lollipop” in reverse should be “popillol”"
+    "text": "Tokens\n\nresponse = get_completion(\"Take the letters in lollipop \\\nand reverse them\")\nprint(response)\n\n\n\n\n\n“lollipop” in reverse should be “popillol”"
   },
   {
     "objectID": "slides/basics.html#explicit-tokens",
     "href": "slides/basics.html#explicit-tokens",
     "title": "Chat Format and Tokens",
     "section": "Explicit tokens",
-    "text": "Explicit tokens\n\nresponse = get_completion(\"\"\"Take the letters in \\\nl-o-l-l-i-p-o-p and reverse them\"\"\")\n\n\n\n\n\n\nresponse\n\n\n\n'p-o-p-i-l-l-o-l'"
+    "text": "Explicit tokens\n\nresponse = get_completion(\"\"\"Take the letters in \\\nl-o-l-l-i-p-o-p and reverse them\"\"\")\n\n\n\n\n\n\nresponse"
   },
   {
     "objectID": "slides/basics.html#helper-function-chat-format",
@@ -158,7 +158,7 @@
     "href": "slides/basics.html#response",
     "title": "Chat Format and Tokens",
     "section": "Response",
-    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)\n\n\n\nAh, dear inquirer, permit me to oblige,\nWith words that may embrace a happy student's stride.\nIn Hochschule der Medien Stuttgart, a student thrives,\nWith joyous heart and knowledge that soars in skies.\n\nAmidst the halls, where books and stories reside,\nA seeker of wisdom, with grateful eyes wide,\nBends to learn, with fervor and delight,\nThe student's soul dances, set aglow in the night.\n\nWith words of professors, a guiding light,\nIntellect's waters quench a thirst, burning bright.\nThe hum of discussions, debates that arise,\nExpands the mind, amidst the student's ties.\n\nA canvas of dreams, where creativity weaves,\nEach stroke, each line, a passion he believes.\nDesign, artistry, innovation takes flight,\nAnd in the student's heart, joy reaches its height.\n\nOh, the friendships formed within these walls,\nKindred spirits, together, answer the calls,\nThrough laughter and support, shoulders entwined,\nA network of care, a love that's aligned.\n\nDear student at Hochschule der Medien Stuttgart,\nIn your happiness, let knowledge take root,\nMay learning and joy forever unite,\nFor you are blessed, under education's light."
+    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)"
   },
   {
     "objectID": "slides/basics.html#message-example-one-sentence",
@@ -172,21 +172,21 @@
     "href": "slides/basics.html#response-1",
     "title": "Chat Format and Tokens",
     "section": "Response",
-    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)\n\n\n\nA student's joy, learning and growing at HdM Stuttgart."
+    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)"
   },
   {
     "objectID": "slides/basics.html#message-example-sokrates-one-sentence",
     "href": "slides/basics.html#message-example-sokrates-one-sentence",
     "title": "Chat Format and Tokens",
     "section": "Message example Sokrates, one sentence",
-    "text": "Message example Sokrates, one sentence\n\n# combined\nmessages = [\n    {'role': 'system',\n     'content': \"\"\"You are an assistant who \\\nresponds in the style of Sokrates. \\\nAll your responses must be one sentence long.\"\"\"},\n    {'role': 'user',\n     'content': \"\"\"write me a story about a happy carrot\"\"\"},\n]"
+    "text": "Message example Sokrates, one sentence\n\n# combined\nmessages = [\n    {'role': 'system',\n     'content': \"\"\"You are an assistant who \\\nresponds in the style of Sokrates. \\\nAll your responses must be one sentence long.\"\"\"},\n    {'role': 'user',\n     'content': \"\"\"write me a very short poem\\\n about a happy student at Hochschule der Medien Stuttgart\"\"\"},\n]"
   },
   {
     "objectID": "slides/basics.html#response-2",
     "href": "slides/basics.html#response-2",
     "title": "Chat Format and Tokens",
     "section": "Response",
-    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)\n\n\n\nAh, the happy carrot, a symbol of contentment and nourishment."
+    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)"
   },
   {
     "objectID": "slides/basics.html#helper-function-1",
@@ -207,6 +207,34 @@
     "href": "slides/basics.html#response-3",
     "title": "Chat Format and Tokens",
     "section": "Response",
-    "text": "Response\n\nprint(response)\n\n\n\nOh, a student at Hochschule der Medien Stuttgart,\nWith joy in their heart, their passion unfurled.\nIn lectures they learn, their minds ever bright,\nSeeking knowledge, embracing the light.\n\nAmongst fellow scholars, they find their place,\nSharing ideas, with smiles on their face.\nIn libraries they delve, books as their guide,\nExpanding horizons, with each page they stride.\n\nWith professors as mentors, wise and kind,\nThey nurture their dreams, their ambitions aligned.\nIn labs and studios, they create and explore,\nUnleashing their talents, forever wanting more.\n\nOh, a happy student, their spirit so high,\nAt Hochschule der Medien, they reach for the sky.\nWith every challenge, they grow and they thrive,\nIn this vibrant community, they truly come alive.\n\n\n\n\nprint(token_dict)\n\n\n\n{'prompt_tokens': 43, 'completion_tokens': 166, 'total_tokens': 209}\n\n\n\n\nJan Kirenz"
+    "text": "Response\n\nprint(response)"
+  },
+  {
+    "objectID": "slides/basics.html#example-prompt",
+    "href": "slides/basics.html#example-prompt",
+    "title": "Chat Format and Tokens",
+    "section": "Example prompt",
+    "text": "Example prompt\n\nPrompt the model and get a completion\n\n\nresponse = get_completion(\"What is the capital of Germany?\")\n\n\n\nprint(response)"
+  },
+  {
+    "objectID": "slides/basics.html#example-prompt-1",
+    "href": "slides/basics.html#example-prompt-1",
+    "title": "Chat Format and Tokens",
+    "section": "Example prompt",
+    "text": "Example prompt\n\nmessages = [\n    {'role': 'system',  # overall tone/behavior of assistant\n     'content': \"\"\"You are an assistant who\\\n responds in the style of Sokrates.\"\"\"},\n    {'role': 'user',\n        'content': \"\"\"write me a very short poem\\\n about a happy student at Hochschule der Medien Stuttgart \"\"\"},\n]\n\nresponse, token_dict = get_completion_and_token_count(messages)"
+  },
+  {
+    "objectID": "slides/basics.html#token-count-1",
+    "href": "slides/basics.html#token-count-1",
+    "title": "Chat Format and Tokens",
+    "section": "Token count",
+    "text": "Token count\n\nprint(token_dict)"
+  },
+  {
+    "objectID": "slides/basics.html#whats-next",
+    "href": "slides/basics.html#whats-next",
+    "title": "Chat Format and Tokens",
+    "section": "What’s next?",
+    "text": "What’s next?\n\nCongratulations! You have completed this tutorial 👍\nNext, you may want to go back to the lab’s website\n\n\n\n\nJan Kirenz"
   }
 ]
