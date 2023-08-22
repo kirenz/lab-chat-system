@@ -1,10 +1,14 @@
 ---
 title: Chat Format and Tokens
+title-slide-attributes:
+  data-background-image: ../images/logo.png
+  data-background-size: contain
+  data-background-opacity: "0.5"
 lang: en
 subtitle: Tutorial 1
 author: Jan Kirenz
 execute:
-  eval: true
+  eval: false
   echo: true
 highlight-style: github
 format:
@@ -13,7 +17,7 @@ format:
     toc-depth: 1
     embed-resources: false
     theme: [dark, ../custom.scss]  
-    incremental: true
+    incremental: false
     transition: slide
     background-transition: fade
     transition-speed: slow
@@ -25,7 +29,7 @@ format:
     preview-links: auto
     chalkboard: 
       buttons: false
-   #logo: images/logo.png
+   # logo: ../images/logo.png
     footer: Jan Kirenz
 ---
 
@@ -62,14 +66,14 @@ def get_completion(prompt, model="gpt-3.5-turbo"):
 
 ```
 
-# Basic Language Model
+# Basic Completion
 
-## Standard completion
+## Example prompt
 
 - Prompt the model and get a completion
 
 ```{python}
-response = get_completion("What is the capital of France?")
+response = get_completion("What is the capital of Germany?")
 ```
 
 . . .
@@ -186,7 +190,8 @@ messages = [
 responds in the style of Sokrates. \
 All your responses must be one sentence long."""},
     {'role': 'user',
-     'content': """write me a story about a happy carrot"""},
+     'content': """write me a very short poem\
+ about a happy student at Hochschule der Medien Stuttgart"""},
 ]
 ```
 
@@ -235,7 +240,7 @@ def get_completion_and_token_count(messages,
 ```
 
 
-## Example message
+## Example prompt
 
 ```{python}
 messages = [
@@ -258,9 +263,17 @@ response, token_dict = get_completion_and_token_count(messages)
 print(response)
 ```
 
-. . .
+## Token count
 
 ```{python}
 # | output-location: fragment
 print(token_dict)
 ```
+
+
+# What's next? {background-image="../images/logo.png" background-opacity="0.5"}
+
+- **Congratulations! You have completed this tutorial** 👍
+
+- **Next, you may want to go back to the [lab's website](/index.qmd)**
+
