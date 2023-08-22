@@ -1,5 +1,5 @@
 ---
-title: Chat Format and Tokens
+title: Tokens and Chat Format
 title-slide-attributes:
   data-background-image: ../images/logo.png
   data-background-size: contain
@@ -17,7 +17,7 @@ format:
     toc-depth: 1
     embed-resources: false
     theme: [dark, ../custom.scss]  
-    incremental: false
+    incremental: true
     transition: slide
     background-transition: fade
     transition-speed: slow
@@ -41,7 +41,7 @@ format:
 ```{python}
 import os
 import openai
-import tiktoken
+import tiktoken  # tokenizer
 from dotenv import load_dotenv, find_dotenv
 _ = load_dotenv(find_dotenv())  # read local .env file
 
@@ -72,6 +72,8 @@ def get_completion(prompt, model="gpt-3.5-turbo"):
 
 - Prompt the model and get a completion
 
+. . . 
+
 ```{python}
 response = get_completion("What is the capital of Germany?")
 ```
@@ -83,7 +85,28 @@ response = get_completion("What is the capital of Germany?")
 print(response)
 ```
 
-## Tokens
+# Tokens
+
+## Intuition
+
+![](../images/tokens.png)
+
+## What is a token?
+
+- The GPT family of models process text using *tokens*
+- Tokens are common sequences of characters found in text
+- The models understand the statistical relationships between these tokens, and excel at producing the next token in a sequence of tokens.
+
+## How long is a token?
+
+- One token generally corresponds to ~4 characters of text 
+- This translates to roughly ¾ of a word (so 100 tokens ~= 75 words).
+
+## Tokens vs words
+
+- "lollipop" in reverse should be "popillol"
+
+. . .
 
 ```{python}
 # | output-location: fragment
@@ -92,9 +115,8 @@ and reverse them")
 print(response)
 ```
 
-- "lollipop" in reverse should be "popillol"
 
-## Explicit tokens
+## Create single tokens
 
 ```{python}
 # | output-location: fragment
@@ -116,6 +138,8 @@ response
 
 - Helper function for chat format
 
+. . .
+
 ```{python}
 
 
@@ -134,7 +158,7 @@ def get_completion_from_messages(messages,
 
 ```
 
-## Message example Sokrates
+## Sokrates & happy HdM students 😊
 
 ```{python}
 messages = [
@@ -156,7 +180,7 @@ response = get_completion_from_messages(messages, temperature=1)
 print(response)
 ```
 
-## Message example one sentence
+## One sentence output
 
 ```{python}
 messages = [
@@ -179,7 +203,7 @@ response = get_completion_from_messages(messages, temperature=1)
 print(response)
 ```
 
-## Message example Sokrates, one sentence
+## Sokrates in one sentence
 
 ```{python}
 # | output-location: fragment
@@ -206,6 +230,15 @@ print(response)
 
 
 # Token Count
+
+## tiktoken
+
+- [tiktoken](https://github.com/openai/tiktoken) is a fast open-source tokenizer by OpenAI.
+- Given a text string (e.g., "tiktoken is great!") and an *encoding* (e.g., "cl100k_base"), a tokenizer can split the text string into a list of tokens (e.g., ["t", "ik", "token", " is", " great", "!"]).
+- Encodings specify how text is converted into tokens. 
+- Different models use different encodings.
+
+
 
 ## Helper function {.smaller}
 
@@ -275,5 +308,5 @@ print(token_dict)
 
 - **Congratulations! You have completed this tutorial** 👍
 
-- **Next, you may want to go back to the [lab's website](/index.qmd)**
+- **Next, you may want to go back to the [lab's website](https://kirenz.github.io/lab-chat-system/)**
 
