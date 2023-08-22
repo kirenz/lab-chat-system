@@ -1,5 +1,5 @@
 ---
-title: Language Models, the Chat Format and Tokens
+title: Chat Format and Tokens
 lang: en
 subtitle: Tutorial 1
 author: Jan Kirenz
