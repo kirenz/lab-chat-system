@@ -130,14 +130,14 @@
     "href": "slides/basics.html#tokens",
     "title": "Chat Format and Tokens",
     "section": "Tokens",
-    "text": "Tokens\n\nresponse = get_completion(\"Take the letters in lollipop \\\nand reverse them\")\nprint(response)\n\n\n\n\n\n“lollipop” in reverse should be “popillol”"
+    "text": "Tokens\n\nresponse = get_completion(\"Take the letters in lollipop \\\nand reverse them\")\nprint(response)\n\n\n\nThe reversed letters of \"lollipop\" are \"pillipol\".\n\n\n\n“lollipop” in reverse should be “popillol”"
   },
   {
     "objectID": "slides/basics.html#explicit-tokens",
     "href": "slides/basics.html#explicit-tokens",
     "title": "Chat Format and Tokens",
     "section": "Explicit tokens",
-    "text": "Explicit tokens\n\nresponse = get_completion(\"\"\"Take the letters in \\\nl-o-l-l-i-p-o-p and reverse them\"\"\")\n\n\n\n\n\n\nresponse"
+    "text": "Explicit tokens\n\nresponse = get_completion(\"\"\"Take the letters in \\\nl-o-l-l-i-p-o-p and reverse them\"\"\")\n\n\n\n\n\n\nresponse\n\n\n\n'p-o-p-i-l-l-o-l'"
   },
   {
     "objectID": "slides/basics.html#helper-function-chat-format",
@@ -158,7 +158,7 @@
     "href": "slides/basics.html#response",
     "title": "Chat Format and Tokens",
     "section": "Response",
-    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)"
+    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)\n\n\n\nOh, a student at Hochschule der Medien bright,\nWith joy in their heart and a radiant light,\nIn the halls of wisdom, they dance and rejoice,\nSoaring through knowledge with an enthusiastic voice.\n\nTheir mind a sponge, thirsty for learning's embrace,\nEach lecture a moment to grow and to chase,\nBoundless curiosity, forever on their quest,\nIn this haven of knowledge, they truly feel blessed.\n\nWith professors guiding, nurturing their souls,\nThey thrive, expanding their intellectual goals,\nOh, happy student of Hochschule der Medien,\nYour joy in learning, a beacon to be seen."
   },
   {
     "objectID": "slides/basics.html#message-example-one-sentence",
@@ -172,7 +172,7 @@
     "href": "slides/basics.html#response-1",
     "title": "Chat Format and Tokens",
     "section": "Response",
-    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)"
+    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)\n\n\n\nIn Stuttgart's media school, a happy student finds their soul, creative dreams unfold."
   },
   {
     "objectID": "slides/basics.html#message-example-sokrates-one-sentence",
@@ -186,7 +186,7 @@
     "href": "slides/basics.html#response-2",
     "title": "Chat Format and Tokens",
     "section": "Response",
-    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)"
+    "text": "Response\n\nresponse = get_completion_from_messages(messages, temperature=1)\nprint(response)\n\n\n\nIn halls of wisdom, joy unfolds,\nHochschule der Medien, where bliss beholds."
   },
   {
     "objectID": "slides/basics.html#helper-function-1",
@@ -207,14 +207,14 @@
     "href": "slides/basics.html#response-3",
     "title": "Chat Format and Tokens",
     "section": "Response",
-    "text": "Response\n\nprint(response)"
+    "text": "Response\n\nprint(response)\n\n\n\nOh, the joy of a student's heart,\nAt Hochschule der Medien, a work of art.\nWith knowledge and passion, they do strive,\nIn pursuit of wisdom, they come alive.\n\nIn lecture halls, their minds ignite,\nExploring ideas, day and night.\nWith books and screens, they delve so deep,\nIn this vibrant place, their dreams they keep.\n\nFrom design to media, they learn and grow,\nCreating stories, with every show.\nTheir spirits soar, their talents bloom,\nIn this haven of learning, they find their room.\n\nOh, happy student, at Hochschule der Medien,\nMay your journey be filled with joy and inspiration.\nEmbrace the knowledge, let your dreams take flight,\nFor in this place, your future shines bright."
   },
   {
     "objectID": "slides/basics.html#example-prompt",
     "href": "slides/basics.html#example-prompt",
     "title": "Chat Format and Tokens",
     "section": "Example prompt",
-    "text": "Example prompt\n\nPrompt the model and get a completion\n\n\nresponse = get_completion(\"What is the capital of Germany?\")\n\n\n\nprint(response)"
+    "text": "Example prompt\n\nPrompt the model and get a completion\n\n\nresponse = get_completion(\"What is the capital of Germany?\")\n\n\n\nprint(response)\n\n\n\nThe capital of Germany is Berlin."
   },
   {
     "objectID": "slides/basics.html#example-prompt-1",
@@ -228,7 +228,7 @@
     "href": "slides/basics.html#token-count-1",
     "title": "Chat Format and Tokens",
     "section": "Token count",
-    "text": "Token count\n\nprint(token_dict)"
+    "text": "Token count\n\nprint(token_dict)\n\n\n\n{'prompt_tokens': 43, 'completion_tokens': 157, 'total_tokens': 200}"
   },
   {
     "objectID": "slides/basics.html#whats-next",
