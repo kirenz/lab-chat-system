@@ -5,7 +5,7 @@ execute:
   freeze: auto
 
 website:
-  title: "Lab"
+  title: "Chat System"
   image: "/images/logo.png"
   favicon: "/images/logo.png"
   search:
