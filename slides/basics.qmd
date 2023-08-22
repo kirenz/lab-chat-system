@@ -1,0 +1,266 @@
+---
+title: Language Models, the Chat Format and Tokens
+lang: en
+subtitle: Tutorial 1
+author: Jan Kirenz
+execute:
+  eval: true
+  echo: true
+highlight-style: github
+format:
+  revealjs: 
+    toc: true
+    toc-depth: 1
+    embed-resources: false
+    theme: [dark, ../custom.scss]  
+    incremental: true
+    transition: slide
+    background-transition: fade
+    transition-speed: slow
+    code-copy: true
+    code-line-numbers: true
+    smaller: false
+    scrollable: true
+    slide-number: c
+    preview-links: auto
+    chalkboard: 
+      buttons: false
+   #logo: images/logo.png
+    footer: Jan Kirenz
+---
+
+# Setup
+
+## Python
+
+
+```{python}
+import os
+import openai
+import tiktoken
+from dotenv import load_dotenv, find_dotenv
+_ = load_dotenv(find_dotenv())  # read local .env file
+
+openai.api_key = os.environ['OPENAI_API_KEY']
+```
+
+## Helper function
+
+
+```{python}
+
+
+def get_completion(prompt, model="gpt-3.5-turbo"):
+    messages = [{"role": "user", "content": prompt}]
+    response = openai.ChatCompletion.create(
+        model=model,
+        messages=messages,
+        temperature=0,
+    )
+    return response.choices[0].message["content"]
+
+
+```
+
+# Basic Language Model
+
+## Standard completion
+
+- Prompt the model and get a completion
+
+```{python}
+response = get_completion("What is the capital of France?")
+```
+
+. . .
+
+```{python}
+# | output-location: fragment
+print(response)
+```
+
+## Tokens
+
+```{python}
+# | output-location: fragment
+response = get_completion("Take the letters in lollipop \
+and reverse them")
+print(response)
+```
+
+- "lollipop" in reverse should be "popillol"
+
+## Explicit tokens
+
+```{python}
+# | output-location: fragment
+response = get_completion("""Take the letters in \
+l-o-l-l-i-p-o-p and reverse them""")
+```
+
+. . .
+
+```{python}
+# | output-location: fragment
+response
+```
+
+
+# Chat Format
+
+## Helper function (chat format)
+
+- Helper function for chat format
+
+```{python}
+
+
+def get_completion_from_messages(messages,
+                                 model="gpt-3.5-turbo",
+                                 temperature=0,
+                                 max_tokens=500):
+    response = openai.ChatCompletion.create(
+        model=model,
+        messages=messages,
+        temperature=temperature,  # this is the degree of randomness of the model's output
+        max_tokens=max_tokens,  # the maximum number of tokens the model can ouptut
+    )
+    return response.choices[0].message["content"]
+
+
+```
+
+## Message example Sokrates
+
+```{python}
+messages = [
+    {'role': 'system',  # overall tone/behavior of assistant
+     'content': """You are an assistant who\
+ responds in the style of Sokrates."""},
+    {'role': 'user',
+        'content': """write me a very short poem\
+ about a happy student at Hochschule der Medien Stuttgart """},
+]
+```
+
+
+## Response
+
+```{python}
+# | output-location: fragment
+response = get_completion_from_messages(messages, temperature=1)
+print(response)
+```
+
+## Message example one sentence
+
+```{python}
+messages = [
+    {'role': 'system',
+     'content': 'All your responses must be \
+one sentence long.'},
+    {'role': 'user',
+     'content': 'write me a very short poem\
+ about a happy student at Hochschule der Medien Stuttgart'},
+]
+
+```
+
+
+## Response
+
+```{python}
+# | output-location: fragment
+response = get_completion_from_messages(messages, temperature=1)
+print(response)
+```
+
+## Message example Sokrates, one sentence
+
+```{python}
+# | output-location: fragment
+# combined
+messages = [
+    {'role': 'system',
+     'content': """You are an assistant who \
+responds in the style of Sokrates. \
+All your responses must be one sentence long."""},
+    {'role': 'user',
+     'content': """write me a story about a happy carrot"""},
+]
+```
+
+
+## Response
+
+```{python}
+# | output-location: fragment
+response = get_completion_from_messages(messages, temperature=1)
+print(response)
+```
+
+
+# Token Count
+
+## Helper function {.smaller}
+
+- Show how many tokens you are using
+
+```{python}
+
+
+def get_completion_and_token_count(messages,
+                                   model="gpt-3.5-turbo",
+                                   temperature=0,
+                                   max_tokens=500):
+
+    response = openai.ChatCompletion.create(
+        model=model,
+        messages=messages,
+        temperature=temperature,
+        max_tokens=max_tokens,
+    )
+
+    content = response.choices[0].message["content"]
+
+    token_dict = {
+        'prompt_tokens': response['usage']['prompt_tokens'],
+        'completion_tokens': response['usage']['completion_tokens'],
+        'total_tokens': response['usage']['total_tokens'],
+    }
+
+    return content, token_dict
+
+
+```
+
+
+## Example message
+
+```{python}
+messages = [
+    {'role': 'system',  # overall tone/behavior of assistant
+     'content': """You are an assistant who\
+ responds in the style of Sokrates."""},
+    {'role': 'user',
+        'content': """write me a very short poem\
+ about a happy student at Hochschule der Medien Stuttgart """},
+]
+
+response, token_dict = get_completion_and_token_count(messages)
+```
+
+
+## Response 
+
+```{python}
+# | output-location: fragment
+print(response)
+```
+
+. . .
+
+```{python}
+# | output-location: fragment
+print(token_dict)
+```
