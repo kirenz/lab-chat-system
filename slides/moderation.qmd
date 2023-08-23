@@ -67,7 +67,7 @@ def get_completion_from_messages(messages,
 
 ```
 
-# Moderation API
+# Moderation API Basics
 
 - The [OpenAI Moderation API](https://platform.openai.com/docs/guides/moderation) is a tool you can use to check whether content complies with OpenAI's usage policies. 
 
@@ -149,7 +149,7 @@ print(response)
 
 ```
 
-# Prevent Prompt Injection
+# Determine Prompt Injection
 
 ## System message {.smaller}
 
@@ -214,3 +214,10 @@ messages = [
 response = get_completion_from_messages(messages, max_tokens=1)
 print(response)
 ```
+
+# What's next? {background-image="../images/logo.png" background-opacity="0.5"}
+
+- **Congratulations! You have completed this tutorial** 👍
+
+- **Next, you may want to go back to the [lab's website](https://kirenz.github.io/lab-chat-system/)**
+
