@@ -9,8 +9,20 @@ Take a look at the [slides tutorial](https://kirenz.github.io/lab-toolkit/slides
 
 :::
 
-## Basics
+## Tokens and chat format
 
-In this tutorial, you'll learn some basic properties of Large Language Models: The Chat Format and Tokens:
+In this tutorial, you'll learn some basic properties of Large Language Models: Tokens and the chat format:
 
 - [🖥️ Basics](/slides/basics.qmd)
+
+## Classification 
+
+Learn how to classify different customer queries:
+
+- [🖥️ Classification](/slides/classification.qmd)
+
+## Moderation
+
+The moderations endpoint is a tool you can use to check whether content complies with our usage policies:
+
+- [🖥️ Moderation](/slides/moderation.qmd)
