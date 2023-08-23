@@ -3,13 +3,16 @@ title: "Slides"
 number-sections: true
 ---
 
+For cost reasons we mainly use OpenAI's `gpt-3.5-turbo` model in our tutorials. However, you can simply replace `model="gpt-3.5-turbo"` with `model="gpt-4"` in the helper function. Note the [price difference](https://openai.com/pricing) between the two models.
 
 ::: {.callout-note appearance="simple"}
 Take a look at the [slides tutorial](https://kirenz.github.io/lab-toolkit/slides/slides.html#/title-slide) to learn how to use all slide options 
 
 :::
 
-## Tokens and chat format
+
+
+## Basics: Tokens and chat format
 
 In this tutorial, you'll learn some basic properties of Large Language Models: Tokens and the chat format:
 
@@ -26,3 +29,16 @@ Learn how to classify different customer queries:
 The moderations endpoint is a tool you can use to check whether content complies with our usage policies:
 
 - [🖥️ Moderation](/slides/moderation.qmd)
+
+## Chain of Thought Reasoning
+
+Chain-of-thought (CoT) prompting enables complex reasoning capabilities through intermediate reasoning steps. You can combine it with few-shot prompting to get better results on more complex tasks that require reasoning before responding:
+
+- [🖥️ Chain of Thought Reasoning](/slides/reasoning.qmd)
+
+## Chaining Prompts
+
+Prompt Chaining is a technique of connecting multiple tasks to generate complex content by breaking down a large generative task into smaller, more manageable pieces. Examples of prompt chaining are generating product descriptions, creating personalized email campaigns, and generating complex chatbot responses.
+
+- [🖥️ Chaining prompts](/slides/chaining.qmd)
+
