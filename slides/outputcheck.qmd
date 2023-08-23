@@ -148,7 +148,7 @@ Also tell me about your tvs"""
 
 
 
-## Product information  {.smaller}
+## Product information 
 
 ```{python}
 
@@ -191,12 +191,10 @@ messages = [
 ## Response
 
 ```{python}
-# | output-location: slide
+# | output-location: fragment
 response = get_completion_from_messages(messages, max_tokens=1)
 print(response)
 ```
-
-
 
 
 # Output Check 2
