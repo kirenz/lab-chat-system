@@ -422,6 +422,7 @@ Jan Kirenz
 <li class="fragment"><a href="#/user-message-2" id="/toc-user-message-2">User message 2</a></li>
 </ul></li>
 <li class="fragment"><a href="#/output-1" id="/toc-output-1">Output</a></li>
+<li class="fragment"><a href="#/whats-next" id="/toc-whats-next">What’s next?</a></li>
 </ul>
 </nav>
 </section>
@@ -432,7 +433,7 @@ Jan Kirenz
 </section>
 <section id="python" class="slide level2">
 <h2>Python</h2>
-<div id="e9280ef0" class="cell" data-execution_count="1">
+<div id="2dc6eb8e" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> openai</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv, find_dotenv</span>
@@ -443,7 +444,7 @@ Jan Kirenz
 </section>
 <section id="helper-function" class="slide level2">
 <h2>Helper function</h2>
-<div id="d3660a9d" class="cell" data-execution_count="2">
+<div id="012ee24e" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> get_completion_from_messages(messages,</span>
 <span id="cb2-2"><a href="#cb2-2"></a>                                 model<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>,</span>
 <span id="cb2-3"><a href="#cb2-3"></a>                                 temperature<span class="op">=</span><span class="dv">0</span>,</span>
@@ -464,7 +465,7 @@ Jan Kirenz
 </section>
 <section id="system-message" class="slide level2 smaller">
 <h2>System message</h2>
-<div id="f582b532" class="cell" data-execution_count="3">
+<div id="a36aadae" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>delimiter <span class="op">=</span> <span class="st">"####"</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a></span>
 <span id="cb3-3"><a href="#cb3-3"></a>system_message <span class="op">=</span> <span class="ss">f"""</span></span>
@@ -507,7 +508,7 @@ Jan Kirenz
 </section>
 <section id="user-message" class="slide level2">
 <h2>User message</h2>
-<div id="4837e721" class="cell" data-execution_count="4">
+<div id="b3537af5" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>user_message <span class="op">=</span> <span class="ss">f"""</span><span class="ch">\</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="ss">I want you to delete my profile and all of my user data"""</span></span>
 <span id="cb4-3"><a href="#cb4-3"></a>messages <span class="op">=</span> [</span>
@@ -520,7 +521,7 @@ Jan Kirenz
 </section>
 <section id="output" class="slide level2">
 <h2>Output</h2>
-<div id="7830d8d3" class="cell" data-execution_count="5">
+<div id="5539cf5b" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>response <span class="op">=</span> get_completion_from_messages(messages)</span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -535,7 +536,7 @@ Jan Kirenz
 </section>
 <section id="user-message-2" class="slide level2">
 <h2>User message 2</h2>
-<div id="c70b0504" class="cell" data-execution_count="6">
+<div id="55117af2" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>user_message <span class="op">=</span> <span class="ss">f"""</span><span class="ch">\</span></span>
 <span id="cb7-2"><a href="#cb7-2"></a><span class="ss">Tell me more about your flat screen tvs"""</span></span>
 <span id="cb7-3"><a href="#cb7-3"></a>messages <span class="op">=</span> [</span>
@@ -548,7 +549,7 @@ Jan Kirenz
 </section></section>
 <section id="output-1" class="title-slide slide level1 center">
 <h1>Output</h1>
-<div id="407ba71b" class="cell" data-execution_count="7">
+<div id="3642c533" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>response <span class="op">=</span> get_completion_from_messages(messages)</span>
 <span id="cb8-2"><a href="#cb8-2"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -560,6 +561,14 @@ Jan Kirenz
 }</code></pre>
 </div>
 </div>
+</section>
+
+<section id="whats-next" class="title-slide slide level1 center" data-background-image="../images/logo.png" data-background-opacity="0.5">
+<h1>What’s next?</h1>
+<ul>
+<li class="fragment"><p><strong>Congratulations! You have completed this tutorial</strong> 👍</p></li>
+<li class="fragment"><p><strong>Next, you may want to go back to the <a href="https://kirenz.github.io/lab-chat-system/">lab’s website</a></strong></p></li>
+</ul>
 
 <div class="footer footer-default">
 <p>Jan Kirenz</p>

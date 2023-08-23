@@ -25,7 +25,7 @@
     "href": "slides/moderation.html#moderation-example",
     "title": "Moderation",
     "section": "Moderation example",
-    "text": "Moderation example\n\nresponse = openai.Moderation.create(\n    input=\"\"\"\nHere's the plan.  We get the warhead, \nand we hold the world ransom...\n...FOR ONE MILLION DOLLARS!\n\"\"\"\n)\n\n\n\nmoderation_output = response[\"results\"][0]\nprint(moderation_output)\n\n\n\n{\n  \"categories\": {\n    \"harassment\": false,\n    \"harassment/threatening\": false,\n    \"hate\": false,\n    \"hate/threatening\": false,\n    \"self-harm\": false,\n    \"self-harm/instructions\": false,\n    \"self-harm/intent\": false,\n    \"sexual\": false,\n    \"sexual/minors\": false,\n    \"violence\": false,\n    \"violence/graphic\": false\n  },\n  \"category_scores\": {\n    \"harassment\": 0.0023543125,\n    \"harassment/threatening\": 0.0014792397,\n    \"hate\": 0.00013087358,\n    \"hate/threatening\": 7.701352e-06,\n    \"self-harm\": 7.058675e-06,\n    \"self-harm/instructions\": 3.4455798e-09,\n    \"self-harm/intent\": 5.67357e-07,\n    \"sexual\": 8.540684e-06,\n    \"sexual/minors\": 2.0925359e-07,\n    \"violence\": 0.34197497,\n    \"violence/graphic\": 0.00011635302\n  },\n  \"flagged\": false\n}"
+    "text": "Moderation example\n\nresponse = openai.Moderation.create(\n    input=\"\"\"\nHere's the plan.  We get the warhead, \nand we hold the world ransom...\n...FOR ONE MILLION DOLLARS!\n\"\"\"\n)\n\n\n\nmoderation_output = response[\"results\"][0]\nprint(moderation_output)\n\n\n\n{\n  \"categories\": {\n    \"harassment\": false,\n    \"harassment/threatening\": false,\n    \"hate\": false,\n    \"hate/threatening\": false,\n    \"self-harm\": false,\n    \"self-harm/instructions\": false,\n    \"self-harm/intent\": false,\n    \"sexual\": false,\n    \"sexual/minors\": false,\n    \"violence\": false,\n    \"violence/graphic\": false\n  },\n  \"category_scores\": {\n    \"harassment\": 0.0023528947,\n    \"harassment/threatening\": 0.0014970574,\n    \"hate\": 0.00013292857,\n    \"hate/threatening\": 7.733471e-06,\n    \"self-harm\": 7.094429e-06,\n    \"self-harm/instructions\": 3.436883e-09,\n    \"self-harm/intent\": 5.657275e-07,\n    \"sexual\": 8.6908285e-06,\n    \"sexual/minors\": 2.1739038e-07,\n    \"violence\": 0.33872977,\n    \"violence/graphic\": 0.000115384704\n  },\n  \"flagged\": false\n}"
   },
   {
     "objectID": "slides/moderation.html#system-message",
@@ -81,7 +81,7 @@
     "href": "slides/moderation.html#response-1",
     "title": "Moderation",
     "section": "Response",
-    "text": "Response\n\nresponse = get_completion_from_messages(messages, max_tokens=1)\nprint(response)\n\n\n\nY\n\n\n\n\nJan Kirenz"
+    "text": "Response\n\nresponse = get_completion_from_messages(messages, max_tokens=1)\nprint(response)\n\n\n\nY"
   },
   {
     "objectID": "code/notebook.html",
