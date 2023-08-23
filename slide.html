@@ -114,9 +114,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#tokens-and-chat-format" id="toc-tokens-and-chat-format" class="nav-link active" data-scroll-target="#tokens-and-chat-format"><span class="header-section-number">1</span> Tokens and chat format</a></li>
+  <li><a href="#basics-tokens-and-chat-format" id="toc-basics-tokens-and-chat-format" class="nav-link active" data-scroll-target="#basics-tokens-and-chat-format"><span class="header-section-number">1</span> Basics: Tokens and chat format</a></li>
   <li><a href="#classification" id="toc-classification" class="nav-link" data-scroll-target="#classification"><span class="header-section-number">2</span> Classification</a></li>
   <li><a href="#moderation" id="toc-moderation" class="nav-link" data-scroll-target="#moderation"><span class="header-section-number">3</span> Moderation</a></li>
+  <li><a href="#chain-of-thought-reasoning" id="toc-chain-of-thought-reasoning" class="nav-link" data-scroll-target="#chain-of-thought-reasoning"><span class="header-section-number">4</span> Chain of Thought Reasoning</a></li>
+  <li><a href="#chaining-prompts" id="toc-chaining-prompts" class="nav-link" data-scroll-target="#chaining-prompts"><span class="header-section-number">5</span> Chaining Prompts</a></li>
+  <li><a href="#check-model-output" id="toc-check-model-output" class="nav-link" data-scroll-target="#check-model-output"><span class="header-section-number">6</span> Check Model Output</a></li>
   </ul>
 </nav>
     </div>
@@ -140,6 +143,7 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p>For cost reasons we mainly use OpenAI’s <code>gpt-3.5-turbo</code> model in our tutorials. However, you can simply replace <code>model="gpt-3.5-turbo"</code> with <code>model="gpt-4"</code> in the helper function. Note the <a href="https://openai.com/pricing">price difference</a> between the two models.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -150,8 +154,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<section id="tokens-and-chat-format" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="tokens-and-chat-format"><span class="header-section-number">1</span> Tokens and chat format</h2>
+<section id="basics-tokens-and-chat-format" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="basics-tokens-and-chat-format"><span class="header-section-number">1</span> Basics: Tokens and chat format</h2>
 <p>In this tutorial, you’ll learn some basic properties of Large Language Models: Tokens and the chat format:</p>
 <ul>
 <li><a href="./slides/basics.html">🖥️ Basics</a></li>
@@ -169,6 +173,27 @@ ul.task-list li input[type="checkbox"] {
 <p>The moderations endpoint is a tool you can use to check whether content complies with our usage policies:</p>
 <ul>
 <li><a href="./slides/moderation.html">🖥️ Moderation</a></li>
+</ul>
+</section>
+<section id="chain-of-thought-reasoning" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="chain-of-thought-reasoning"><span class="header-section-number">4</span> Chain of Thought Reasoning</h2>
+<p>Chain-of-thought (CoT) prompting enables complex reasoning capabilities through intermediate reasoning steps. You can combine it with few-shot prompting to get better results on more complex tasks that require reasoning before responding:</p>
+<ul>
+<li><a href="./slides/reasoning.html">🖥️ Chain of Thought Reasoning</a></li>
+</ul>
+</section>
+<section id="chaining-prompts" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="chaining-prompts"><span class="header-section-number">5</span> Chaining Prompts</h2>
+<p>Prompt Chaining is a technique of connecting multiple tasks to generate complex content by breaking down a large generative task into smaller, more manageable pieces. Examples of prompt chaining are generating product descriptions, creating personalized email campaigns, and generating complex chatbot responses.</p>
+<ul>
+<li><a href="./slides/chaining.html">🖥️ Chaining prompts</a></li>
+</ul>
+</section>
+<section id="check-model-output" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="check-model-output"><span class="header-section-number">6</span> Check Model Output</h2>
+<p>Ask the model to verify its own outputs:</p>
+<ul>
+<li><a href="./slides/outputcheck.html">🖥️ Output check</a></li>
 </ul>
 
 
