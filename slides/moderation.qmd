@@ -14,7 +14,7 @@ highlight-style: github
 format:
   revealjs: 
     toc: true
-    toc-depth: 2
+    toc-depth: 1
     embed-resources: false
     theme: [dark, ../custom.scss]  
     incremental: true
