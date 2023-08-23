@@ -217,7 +217,8 @@ print(response)
 
 # What's next? {background-image="../images/logo.png" background-opacity="0.5"}
 
-- **Congratulations! You have completed this tutorial** 👍
+**Congratulations! You have completed this tutorial** 👍
 
-- **Next, you may want to go back to the [lab's website](https://kirenz.github.io/lab-chat-system/)**
+
+**Next, you may want to go back to the [lab's website](https://kirenz.github.io/lab-chat-system/)**
 
