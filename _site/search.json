@@ -642,5 +642,103 @@
     "title": "Chain of Thought Reasoning",
     "section": "Inner Monologue",
     "text": "Inner Monologue\n\nSince we asked the LLM to separate its reasoning steps by a delimiter, we can hide the chain-of-thought reasoning from the final output that the user sees.\n\n\ntry:\n    final_response = response.split(delimiter)[-1].strip()\nexcept Exception as e:\n    final_response = \"Sorry, I'm having trouble right now, please try asking another question.\"\n\nprint(final_response)\n\n\n\nI'm sorry, but we currently do not sell TVs. Our store specializes in computers and laptops. If you have any questions or need assistance with our available products, feel free to ask."
+  },
+  {
+    "objectID": "slides/outputcheck.html#python",
+    "href": "slides/outputcheck.html#python",
+    "title": "Check Outputs Prompts",
+    "section": "Python",
+    "text": "Python\n\nimport os\nimport openai\nfrom dotenv import load_dotenv, find_dotenv\n_ = load_dotenv(find_dotenv())  # read local .env file\n\nopenai.api_key = os.environ['OPENAI_API_KEY']"
+  },
+  {
+    "objectID": "slides/outputcheck.html#final-response",
+    "href": "slides/outputcheck.html#final-response",
+    "title": "Check Outputs Prompts",
+    "section": "Final response",
+    "text": "Final response\n\nfinal_response_to_customer = f\"\"\"\nThe SmartX ProPhone has a 6.1-inch display, 128GB storage, \\\n12MP dual camera, and 5G. The FotoSnap DSLR Camera \\\nhas a 24.2MP sensor, 1080p video, 3-inch LCD, and \\\ninterchangeable lenses. We have a variety of TVs, including \\\nthe CineView 4K TV with a 55-inch display, 4K resolution, \\\nHDR, and smart TV features. We also have the SoundMax \\\nHome Theater system with 5.1 channel, 1000W output, wireless \\\nsubwoofer, and Bluetooth. Do you have any specific questions \\\nabout these products or any other products we offer?\n\"\"\""
+  },
+  {
+    "objectID": "slides/outputcheck.html#moderation-api",
+    "href": "slides/outputcheck.html#moderation-api",
+    "title": "Check Outputs Prompts",
+    "section": "Moderation API",
+    "text": "Moderation API\n\nCheck output for potentially harmful content\n\n\nresponse = openai.Moderation.create(\n    input=final_response_to_customer\n)\n\n\n\nmoderation_output = response[\"results\"][0]\nprint(moderation_output)\n\n\n\n{\n  \"categories\": {\n    \"harassment\": false,\n    \"harassment/threatening\": false,\n    \"hate\": false,\n    \"hate/threatening\": false,\n    \"self-harm\": false,\n    \"self-harm/instructions\": false,\n    \"self-harm/intent\": false,\n    \"sexual\": false,\n    \"sexual/minors\": false,\n    \"violence\": false,\n    \"violence/graphic\": false\n  },\n  \"category_scores\": {\n    \"harassment\": 3.4541336e-09,\n    \"harassment/threatening\": 9.436073e-10,\n    \"hate\": 6.0525585e-09,\n    \"hate/threatening\": 3.6487915e-10,\n    \"self-harm\": 5.5932053e-10,\n    \"self-harm/instructions\": 3.7074006e-08,\n    \"self-harm/intent\": 9.529e-10,\n    \"sexual\": 2.2053725e-07,\n    \"sexual/minors\": 2.627828e-08,\n    \"violence\": 3.560504e-07,\n    \"violence/graphic\": 7.441945e-10\n  },\n  \"flagged\": false\n}"
+  },
+  {
+    "objectID": "slides/outputcheck.html#system-message",
+    "href": "slides/outputcheck.html#system-message",
+    "title": "Check Outputs Prompts",
+    "section": "System message",
+    "text": "System message\n\nsystem_message = f\"\"\"\nYou are an assistant that evaluates whether \\\ncustomer service agent responses sufficiently \\\nanswer customer questions, and also validates that \\\nall the facts the assistant cites from the product \\\ninformation are correct.\nThe product information and user and customer \\\nservice agent messages will be delimited by \\\n3 backticks, i.e. ```.\nRespond with a Y or N character, with no punctuation:\nY - if the output sufficiently answers the question \\\nAND the response correctly uses product information\nN - otherwise\n\nOutput a single letter only.\n\"\"\""
+  },
+  {
+    "objectID": "slides/outputcheck.html#customer-message",
+    "href": "slides/outputcheck.html#customer-message",
+    "title": "Check Outputs Prompts",
+    "section": "Customer message",
+    "text": "Customer message\n\ncustomer_message = f\"\"\"\ntell me about the smartx pro phone and \\\nthe fotosnap camera, the dslr one. \\\nAlso tell me about your tvs\"\"\""
+  },
+  {
+    "objectID": "slides/outputcheck.html#product-information",
+    "href": "slides/outputcheck.html#product-information",
+    "title": "Check Outputs Prompts",
+    "section": "Product information",
+    "text": "Product information\n\nproduct_information = \"\"\"{ \"name\": \"SmartX ProPhone\", \"category\": \"Smartphones and Accessories\", \"brand\": \"SmartX\", \"model_number\": \"SX-PP10\", \"warranty\": \"1 year\", \"rating\": 4.6, \"features\": [ \"6.1-inch display\", \"128GB storage\", \"12MP dual camera\", \"5G\" ], \"description\": \"A powerful smartphone with advanced camera features.\", \"price\": 899.99 } { \"name\": \"FotoSnap DSLR Camera\", \"category\": \"Cameras and Camcorders\", \"brand\": \"FotoSnap\", \"model_number\": \"FS-DSLR200\", \"warranty\": \"1 year\", \"rating\": 4.7, \"features\": [ \"24.2MP sensor\", \"1080p video\", \"3-inch LCD\", \"Interchangeable lenses\" ], \"description\": \"Capture stunning photos and videos with this versatile DSLR camera.\", \"price\": 599.99 } { \"name\": \"CineView 4K TV\", \"category\": \"Televisions and Home Theater Systems\", \"brand\": \"CineView\", \"model_number\": \"CV-4K55\", \"warranty\": \"2 years\", \"rating\": 4.8, \"features\": [ \"55-inch display\", \"4K resolution\", \"HDR\", \"Smart TV\" ], \"description\": \"A stunning 4K TV with vibrant colors and smart features.\", \"price\": 599.99 } { \"name\": \"SoundMax Home Theater\", \"category\": \"Televisions and Home Theater Systems\", \"brand\": \"SoundMax\", \"model_number\": \"SM-HT100\", \"warranty\": \"1 year\", \"rating\": 4.4, \"features\": [ \"5.1 channel\", \"1000W output\", \"Wireless subwoofer\", \"Bluetooth\" ], \"description\": \"A powerful home theater system for an immersive audio experience.\", \"price\": 399.99 } { \"name\": \"CineView 8K TV\", \"category\": \"Televisions and Home Theater Systems\", \"brand\": \"CineView\", \"model_number\": \"CV-8K65\", \"warranty\": \"2 years\", \"rating\": 4.9, \"features\": [ \"65-inch display\", \"8K resolution\", \"HDR\", \"Smart TV\" ], \"description\": \"Experience the future of television with this stunning 8K TV.\", \"price\": 2999.99 } { \"name\": \"SoundMax Soundbar\", \"category\": \"Televisions and Home Theater Systems\", \"brand\": \"SoundMax\", \"model_number\": \"SM-SB50\", \"warranty\": \"1 year\", \"rating\": 4.3, \"features\": [ \"2.1 channel\", \"300W output\", \"Wireless subwoofer\", \"Bluetooth\" ], \"description\": \"Upgrade your TV's audio with this sleek and powerful soundbar.\", \"price\": 199.99 } { \"name\": \"CineView OLED TV\", \"category\": \"Televisions and Home Theater Systems\", \"brand\": \"CineView\", \"model_number\": \"CV-OLED55\", \"warranty\": \"2 years\", \"rating\": 4.7, \"features\": [ \"55-inch display\", \"4K resolution\", \"HDR\", \"Smart TV\" ], \"description\": \"Experience true blacks and vibrant colors with this OLED TV.\", \"price\": 1499.99 }\"\"\""
+  },
+  {
+    "objectID": "slides/outputcheck.html#question-and-answer-pair",
+    "href": "slides/outputcheck.html#question-and-answer-pair",
+    "title": "Check Outputs Prompts",
+    "section": "Question and answer pair",
+    "text": "Question and answer pair\n\nq_a_pair = f\"\"\"\n\nProduct information: ```{product_information}```\nAgent response: ```{final_response_to_customer}```\n\nDoes the response use the retrieved information correctly?\nDoes the response sufficiently answer the question\n\nOutput Y or N\n\"\"\""
+  },
+  {
+    "objectID": "slides/outputcheck.html#messages",
+    "href": "slides/outputcheck.html#messages",
+    "title": "Check Outputs Prompts",
+    "section": "Messages",
+    "text": "Messages\n\nmessages = [\n    {'role': 'system', 'content': system_message},\n    {'role': 'user', 'content': q_a_pair}\n]"
+  },
+  {
+    "objectID": "slides/outputcheck.html#response",
+    "href": "slides/outputcheck.html#response",
+    "title": "Check Outputs Prompts",
+    "section": "Response",
+    "text": "Response\n\nresponse = get_completion_from_messages(messages, max_tokens=1)\nprint(response)"
+  },
+  {
+    "objectID": "slides/outputcheck.html#response-output",
+    "href": "slides/outputcheck.html#response-output",
+    "title": "Check Outputs Prompts",
+    "section": "Response",
+    "text": "Response\n\nN"
+  },
+  {
+    "objectID": "slides/outputcheck.html#another-response",
+    "href": "slides/outputcheck.html#another-response",
+    "title": "Check Outputs Prompts",
+    "section": "Another response",
+    "text": "Another response\n\nanother_response = \"Learning to program ChatGPT in Python: where you ask a machine how to teach it to talk, and hope it does not get smarter than you! 💬🐍\""
+  },
+  {
+    "objectID": "slides/outputcheck.html#question-answer-pair",
+    "href": "slides/outputcheck.html#question-answer-pair",
+    "title": "Check Outputs Prompts",
+    "section": "Question answer pair",
+    "text": "Question answer pair\n\nq_a_pair = f\"\"\"\nCustomer message: ```{customer_message}```\nProduct information: ```{product_information}```\nAgent response: ```{another_response}```\n\nDoes the response use the retrieved information correctly?\nDoes the response sufficiently answer the question?\n\nOutput Y or N\n\"\"\""
+  },
+  {
+    "objectID": "slides/outputcheck.html#messages-1",
+    "href": "slides/outputcheck.html#messages-1",
+    "title": "Check Outputs Prompts",
+    "section": "Messages",
+    "text": "Messages\n\nmessages = [\n    {'role': 'system', 'content': system_message},\n    {'role': 'user', 'content': q_a_pair}\n]"
+  },
+  {
+    "objectID": "slides/outputcheck.html#response-1",
+    "href": "slides/outputcheck.html#response-1",
+    "title": "Check Outputs Prompts",
+    "section": "Response",
+    "text": "Response\n\nresponse = get_completion_from_messages(messages)\nprint(response)\n\n\n\nN"
   }
 ]
