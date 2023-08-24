@@ -58,7 +58,7 @@ _ = load_dotenv(find_dotenv())
 openai.api_key = os.environ['OPENAI_API_KEY']
 ```
 
-# Helper function
+## Helper function
 
 ```{python}
 
@@ -225,7 +225,7 @@ def collect_messages(debug=False):
 
 ## Panel Dashboard
 
-**The dashboard only works in yor local file**
+**The dashboard only works in yor local file (the presentation crashes if you enter text ⚡️)**
 
 Note that the system message includes detailed instructions about what the OrderBot should do.
 
