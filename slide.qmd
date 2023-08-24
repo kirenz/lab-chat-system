@@ -48,3 +48,11 @@ Ask the model to verify its own outputs:
 
 - [🖥️ Output check](/slides/outputcheck.qmd)
 
+
+## Build an End-to-End System
+
+This puts together the chain of prompts that you saw throughout the tutorials:
+
+- [🖥️ End-to-end system](/slides/system.qmd)
+
+
