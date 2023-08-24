@@ -780,8 +780,8 @@
     "objectID": "slides/system.html#panel-dashboard",
     "href": "slides/system.html#panel-dashboard",
     "title": "End-to-End System",
-    "section": "Panel Dashboard",
-    "text": "Panel Dashboard\nThe dashboard only works in yor local file (the presentation crashes if you enter text ⚡️)\nNote that the system message includes detailed instructions about what the OrderBot should do.\n\npanels = []  # collect display\n\ncontext = [{'role': 'system', 'content': \"You are Service Assistant\"}]\n\ninp = pn.widgets.TextInput(placeholder='Enter text here…')\nbutton_conversation = pn.widgets.Button(name=\"Service Assistant\")\n\ninteractive_conversation = pn.bind(collect_messages, button_conversation)\n\ndashboard = pn.Column(\n    inp,\n    pn.Row(button_conversation),\n    pn.panel(interactive_conversation, loading_indicator=True, height=300),\n)\n\ndashboard"
+    "section": "Panel dashboard",
+    "text": "Panel dashboard\nThe dashboard only works in yor local file\nNote that the system message includes detailed instructions about what the OrderBot should do.\n\npanels = []  # collect display\n\ncontext = [{'role': 'system', 'content': \"You are Service Assistant\"}]\n\ninp = pn.widgets.TextInput(placeholder='Enter text here…')\nbutton_conversation = pn.widgets.Button(name=\"Service Assistant\")\n\ninteractive_conversation = pn.bind(collect_messages, button_conversation)\n\ndashboard = pn.Column(\n    inp,\n    pn.Row(button_conversation),\n    pn.panel(interactive_conversation, loading_indicator=True, height=300),\n)\n\ndashboard"
   },
   {
     "objectID": "slides/system.html#panel-dashboard-output",
@@ -796,5 +796,12 @@
     "title": "End-to-End System",
     "section": "Helper function",
     "text": "Helper function\n\ndef get_completion_from_messages(messages, model=\"gpt-3.5-turbo\", temperature=0, max_tokens=500):\n    response = openai.ChatCompletion.create(\n        model=model,\n        messages=messages,\n        temperature=temperature,\n        max_tokens=max_tokens,\n    )\n    return response.choices[0].message[\"content\"]"
+  },
+  {
+    "objectID": "slides/system.html#panel-output",
+    "href": "slides/system.html#panel-output",
+    "title": "End-to-End System",
+    "section": "Panel output",
+    "text": "Panel output\n\nImage of panel dashboard"
   }
 ]
