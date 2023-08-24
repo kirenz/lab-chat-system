@@ -223,14 +223,14 @@ def collect_messages(debug=False):
 
 # Chat with the chatbot
 
-## Panel Dashboard
+## Panel dashboard
 
-**The dashboard only works in yor local file (the presentation crashes if you enter text ⚡️)**
+**The dashboard only works in yor local file**
 
 Note that the system message includes detailed instructions about what the OrderBot should do.
 
 ```{python}
-# | output-location: slide
+# | eval: false
 
 panels = []  # collect display
 
@@ -250,6 +250,12 @@ dashboard = pn.Column(
 dashboard
 ```
 
+
+## Panel output
+
+- Image of panel dashboard
+
+![](/images/panel_dashboard.png)
 
 # What's next? {background-image="../images/logo.png" background-opacity="0.5"}
 
