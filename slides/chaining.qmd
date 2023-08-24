@@ -561,14 +561,13 @@ products = {
 def get_product_by_name(name):
     return products.get(name, None)
 
+
 ```
 
 . . .
 
 ```{python}
 # | output-location: fragment
-
-
 print(get_product_by_name("TechPro Ultrabook"))
 ```
 
