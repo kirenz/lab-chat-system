@@ -17,7 +17,7 @@ format:
     toc-depth: 1
     embed-resources: false
     theme: [dark, ../custom.scss]  
-    incremental: true
+    incremental: false
     transition: slide
     background-transition: fade
     transition-speed: slow
@@ -38,10 +38,10 @@ format:
 
 ## Python
 
-You need the following files:
+You need to download the following files:
 
 - [products.json](/slides/products.json)
-- [utils.py](/slides/utils)
+- [utils.py](/slides/utils.py)
 
 ```{python}
 
@@ -230,7 +230,8 @@ def collect_messages(debug=False):
 Note that the system message includes detailed instructions about what the OrderBot should do.
 
 ```{python}
-# | tags: []
+# | output-location: slide
+
 panels = []  # collect display
 
 context = [{'role': 'system', 'content': "You are Service Assistant"}]
