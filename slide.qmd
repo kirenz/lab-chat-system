@@ -60,3 +60,4 @@ This puts together the chain of prompts that you saw throughout the tutorials:
 
 Evaluate LLM responses when there is a single "right answer".
 
+- [🖥️ Evaluate your system](/slides/evaluation.qmd)
