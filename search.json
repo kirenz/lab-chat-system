@@ -724,14 +724,14 @@
     "objectID": "slides/system.html#panel-dashboard",
     "href": "slides/system.html#panel-dashboard",
     "title": "End-to-End System",
-    "section": "Panel Dashboard",
-    "text": "Panel Dashboard\nThe dashboard only works in yor local file (the presentation crashes if you enter text ⚡️)\nNote that the system message includes detailed instructions about what the OrderBot should do.\n\npanels = []  # collect display\n\ncontext = [{'role': 'system', 'content': \"You are Service Assistant\"}]\n\ninp = pn.widgets.TextInput(placeholder='Enter text here…')\nbutton_conversation = pn.widgets.Button(name=\"Service Assistant\")\n\ninteractive_conversation = pn.bind(collect_messages, button_conversation)\n\ndashboard = pn.Column(\n    inp,\n    pn.Row(button_conversation),\n    pn.panel(interactive_conversation, loading_indicator=True, height=300),\n)\n\ndashboard"
+    "section": "Panel dashboard",
+    "text": "Panel dashboard\nThe dashboard only works in yor local file\nNote that the system message includes detailed instructions about what the OrderBot should do.\n\npanels = []  # collect display\n\ncontext = [{'role': 'system', 'content': \"You are Service Assistant\"}]\n\ninp = pn.widgets.TextInput(placeholder='Enter text here…')\nbutton_conversation = pn.widgets.Button(name=\"Service Assistant\")\n\ninteractive_conversation = pn.bind(collect_messages, button_conversation)\n\ndashboard = pn.Column(\n    inp,\n    pn.Row(button_conversation),\n    pn.panel(interactive_conversation, loading_indicator=True, height=300),\n)\n\ndashboard"
   },
   {
-    "objectID": "slides/system.html#panel-dashboard-output",
-    "href": "slides/system.html#panel-dashboard-output",
+    "objectID": "slides/system.html#panel-output",
+    "href": "slides/system.html#panel-output",
     "title": "End-to-End System",
-    "section": "Panel Dashboard",
-    "text": "Panel Dashboard"
+    "section": "Panel output",
+    "text": "Panel output\n\nImage of panel dashboard"
   }
 ]
