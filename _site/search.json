@@ -740,5 +740,47 @@
     "title": "Check Outputs Prompts",
     "section": "Response",
     "text": "Response\n\nresponse = get_completion_from_messages(messages)\nprint(response)\n\n\n\nN"
+  },
+  {
+    "objectID": "slides/system.html#python",
+    "href": "slides/system.html#python",
+    "title": "End-to-End System",
+    "section": "Python",
+    "text": "Python\nYou need the following files:\n\nproducts.json\nutils.py\n\n\nfrom dotenv import load_dotenv, find_dotenv\nimport panel as pn  # GUI\nimport utils\nimport os\nimport openai\n\npn.extension()\n\n_ = load_dotenv(find_dotenv())\n\nopenai.api_key = os.environ['OPENAI_API_KEY']"
+  },
+  {
+    "objectID": "slides/system.html#helper-function-process-user-message",
+    "href": "slides/system.html#helper-function-process-user-message",
+    "title": "End-to-End System",
+    "section": "Helper function: process user message",
+    "text": "Helper function: process user message\n\ndef process_user_message(user_input, all_messages, debug=True):\n    delimiter = \"```\"\n\n    # Step 1: Check input to see if it flags the Moderation API or is a prompt injection\n    response = openai.Moderation.create(input=user_input)\n    moderation_output = response[\"results\"][0]\n\n    if moderation_output[\"flagged\"]:\n        print(\"Step 1: Input flagged by Moderation API.\")\n        return \"Sorry, we cannot process this request.\"\n\n    if debug:\n        print(\"Step 1: Input passed moderation check.\")\n\n    category_and_product_response = utils.find_category_and_product_only(\n        user_input, utils.get_products_and_category())\n    # print(print(category_and_product_response)\n    # Step 2: Extract the list of products\n    category_and_product_list = utils.read_string_to_list(\n        category_and_product_response)\n    # print(category_and_product_list)\n\n    if debug:\n        print(\"Step 2: Extracted list of products.\")\n\n    # Step 3: If products are found, look them up\n    product_information = utils.generate_output_string(\n        category_and_product_list)\n    if debug:\n        print(\"Step 3: Looked up product information.\")\n\n    # Step 4: Answer the user question\n    system_message = f\"\"\"\n    You are a customer service assistant for a large electronic store. \\\n    Respond in a friendly and helpful tone, with concise answers. \\\n    Make sure to ask the user relevant follow-up questions.\n    \"\"\"\n\n    messages = [\n        {'role': 'system', 'content': system_message},\n        {'role': 'user', 'content': f\"{delimiter}{user_input}{delimiter}\"},\n        {'role': 'assistant',\n            'content': f\"Relevant product information:\\n{product_information}\"}\n    ]\n\n    final_response = get_completion_from_messages(all_messages + messages)\n    if debug:\n        print(\"Step 4: Generated response to user question.\")\n    all_messages = all_messages + messages[1:]\n\n    # Step 5: Put the answer through the Moderation API\n    response = openai.Moderation.create(input=final_response)\n    moderation_output = response[\"results\"][0]\n\n    if moderation_output[\"flagged\"]:\n        if debug:\n            print(\"Step 5: Response flagged by Moderation API.\")\n        return \"Sorry, we cannot provide this information.\"\n\n    if debug:\n        print(\"Step 5: Response passed moderation check.\")\n\n    # Step 6: Ask the model if the response answers the initial user query well\n    user_message = f\"\"\"\n    Customer message: {delimiter}{user_input}{delimiter}\n    Agent response: {delimiter}{final_response}{delimiter}\n\n    Does the response sufficiently answer the question?\n    \"\"\"\n    messages = [\n        {'role': 'system', 'content': system_message},\n        {'role': 'user', 'content': user_message}\n    ]\n    evaluation_response = get_completion_from_messages(messages)\n    if debug:\n        print(\"Step 6: Model evaluated the response.\")\n\n    # Step 7: If yes, use this answer; if not, say that you will connect the user to a human\n    # Using \"in\" instead of \"==\" to be safer for model output variation (e.g., \"Y.\" or \"Yes\")\n    if \"Y\" in evaluation_response:\n        if debug:\n            print(\"Step 7: Model approved the response.\")\n        return final_response, all_messages\n    else:\n        if debug:\n            print(\"Step 7: Model disapproved the response.\")\n        neg_str = \"I'm unable to provide the information you're looking for. I'll connect you with a human representative for further assistance.\"\n        return neg_str, all_messages"
+  },
+  {
+    "objectID": "slides/system.html#user-input",
+    "href": "slides/system.html#user-input",
+    "title": "End-to-End System",
+    "section": "User input",
+    "text": "User input\n\nuser_input = \"tell me about the smartx pro phone and the fotosnap camera, the dslr one. Also what tell me about your tvs\""
+  },
+  {
+    "objectID": "slides/system.html#response",
+    "href": "slides/system.html#response",
+    "title": "End-to-End System",
+    "section": "Response",
+    "text": "Response\n\nresponse, _ = process_user_message(user_input, [])\nprint(response)\n\n\n\nStep 1: Input passed moderation check.\nStep 2: Extracted list of products.\nStep 3: Looked up product information.\nStep 4: Generated response to user question.\nStep 5: Response passed moderation check.\nStep 6: Model evaluated the response.\nStep 7: Model approved the response.\nSure! Here's some information about the SmartX ProPhone and the FotoSnap DSLR Camera:\n\n1. SmartX ProPhone:\n   - Brand: SmartX\n   - Model Number: SX-PP10\n   - Features: 6.1-inch display, 128GB storage, 12MP dual camera, 5G connectivity\n   - Description: A powerful smartphone with advanced camera features.\n   - Price: $899.99\n   - Warranty: 1 year\n\n2. FotoSnap DSLR Camera:\n   - Brand: FotoSnap\n   - Model Number: FS-DSLR200\n   - Features: 24.2MP sensor, 1080p video, 3-inch LCD, interchangeable lenses\n   - Description: Capture stunning photos and videos with this versatile DSLR camera.\n   - Price: $599.99\n   - Warranty: 1 year\n\nNow, could you please let me know which specific TV models you are interested in?"
+  },
+  {
+    "objectID": "slides/system.html#helper-function-collect-user-and-assistant-messages",
+    "href": "slides/system.html#helper-function-collect-user-and-assistant-messages",
+    "title": "End-to-End System",
+    "section": "Helper function: collect user and assistant messages",
+    "text": "Helper function: collect user and assistant messages\n\nCollect user and assistant messages over time\n\n\ndef collect_messages(debug=False):\n    user_input = inp.value_input\n    if debug:\n        print(f\"User Input = {user_input}\")\n    if user_input == \"\":\n        return\n    inp.value = ''\n    global context\n    # response, context = process_user_message(user_input, context, utils.get_products_and_category(),debug=True)\n    response, context = process_user_message(user_input, context, debug=False)\n    context.append({'role': 'assistant', 'content': f\"{response}\"})\n    panels.append(\n        pn.Row('User:', pn.pane.Markdown(user_input, width=600)))\n    panels.append(\n        pn.Row('Assistant:', pn.pane.Markdown(response, width=600, style={'background-color': '#F6F6F6'})))\n\n    return pn.Column(*panels)"
+  },
+  {
+    "objectID": "slides/system.html#panel-dashboard",
+    "href": "slides/system.html#panel-dashboard",
+    "title": "End-to-End System",
+    "section": "Panel Dashboard",
+    "text": "Panel Dashboard\nThe dashboard only works in yor local file\nNote that the system message includes detailed instructions about what the OrderBot should do.\n\npanels = []  # collect display\n\ncontext = [{'role': 'system', 'content': \"You are Service Assistant\"}]\n\ninp = pn.widgets.TextInput(placeholder='Enter text here…')\nbutton_conversation = pn.widgets.Button(name=\"Service Assistant\")\n\ninteractive_conversation = pn.bind(collect_messages, button_conversation)\n\ndashboard = pn.Column(\n    inp,\n    pn.Row(button_conversation),\n    pn.panel(interactive_conversation, loading_indicator=True, height=300),\n)\n\ndashboard"
   }
 ]
