@@ -56,3 +56,7 @@ This puts together the chain of prompts that you saw throughout the tutorials:
 - [🖥️ End-to-end system](/slides/system.qmd)
 
 
+## Evaluation
+
+Evaluate LLM responses when there is a single "right answer".
+
