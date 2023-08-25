@@ -428,13 +428,13 @@ Jan Kirenz
 </section>
 <section id="python" class="slide level2">
 <h2>Python</h2>
-<div id="927c1527" class="cell" data-execution_count="1">
+<div id="d57e6bf3" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> json</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> os</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> openai</span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="co"># import sys</span></span>
 <span id="cb1-5"><a href="#cb1-5"></a><span class="co"># sys.path.append('../..')</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="im">import</span> utils</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="im">import</span> utils_2</span>
 <span id="cb1-7"><a href="#cb1-7"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv, find_dotenv</span>
 <span id="cb1-8"><a href="#cb1-8"></a>_ <span class="op">=</span> load_dotenv(find_dotenv())  <span class="co"># read local .env file</span></span>
 <span id="cb1-9"><a href="#cb1-9"></a></span>
@@ -443,7 +443,7 @@ Jan Kirenz
 </section>
 <section id="helper-function" class="slide level2">
 <h2>Helper function</h2>
-<div id="7ca17d98" class="cell" data-execution_count="2">
+<div id="04829458" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> get_completion_from_messages(messages, model<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>, temperature<span class="op">=</span><span class="dv">0</span>, max_tokens<span class="op">=</span><span class="dv">500</span>):</span>
 <span id="cb2-2"><a href="#cb2-2"></a>    response <span class="op">=</span> openai.ChatCompletion.create(</span>
 <span id="cb2-3"><a href="#cb2-3"></a>        model<span class="op">=</span>model,</span>
@@ -462,7 +462,7 @@ Jan Kirenz
 <section id="products-and-categories" class="slide level2 smaller">
 <h2>Products and categories</h2>
 <p>List of products and categories that are in the product catalog.</p>
-<div id="50e91074" class="cell" data-execution_count="3">
+<div id="9b59461d" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>products_and_category <span class="op">=</span> {<span class="st">'Computers and Laptops'</span>: [<span class="st">'TechPro Ultrabook'</span>,</span>
 <span id="cb3-2"><a href="#cb3-2"></a>                                                   <span class="st">'BlueWave Gaming Laptop'</span>,</span>
 <span id="cb3-3"><a href="#cb3-3"></a>                                                   <span class="st">'PowerLite Convertible'</span>,</span>
@@ -498,7 +498,7 @@ Jan Kirenz
 <section id="find-product-and-category-names-v1" class="slide level2">
 <h2>Find product and category names (V1)</h2>
 <p>This could be the version that is running in production.</p>
-<div id="f5080ba6" class="cell" data-execution_count="4">
+<div id="e8204350" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">def</span> find_category_and_product_v1(user_input, products_and_category):</span>
 <span id="cb4-2"><a href="#cb4-2"></a></span>
 <span id="cb4-3"><a href="#cb4-3"></a>    delimiter <span class="op">=</span> <span class="st">"####"</span></span>
@@ -551,7 +551,7 @@ Jan Kirenz
 </section>
 <section id="evaluation-0" class="slide level2">
 <h2>Evaluation 0</h2>
-<div id="381386e4" class="cell" data-execution_count="5">
+<div id="ee719329" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>customer_msg_0 <span class="op">=</span> <span class="ss">f"""Which TV can I buy if I'm on a budget?"""</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a></span>
 <span id="cb5-3"><a href="#cb5-3"></a>products_by_category_0 <span class="op">=</span> find_category_and_product_v1(customer_msg_0,</span>
@@ -567,7 +567,7 @@ Jan Kirenz
 </section>
 <section id="evaluation-1" class="slide level2">
 <h2>Evaluation 1</h2>
-<div id="4deebd46" class="cell" data-execution_count="6">
+<div id="d7fdd275" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>customer_msg_1 <span class="op">=</span> <span class="ss">f"""I need a charger for my smartphone"""</span></span>
 <span id="cb7-2"><a href="#cb7-2"></a></span>
 <span id="cb7-3"><a href="#cb7-3"></a>products_by_category_1 <span class="op">=</span> find_category_and_product_v1(customer_msg_1,</span>
@@ -584,7 +584,7 @@ Jan Kirenz
 </section>
 <section id="evaluation-2" class="slide level2">
 <h2>Evaluation 2</h2>
-<div id="b7c0a84e" class="cell" data-execution_count="7">
+<div id="b20c0c95" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>customer_msg_2 <span class="op">=</span> <span class="ss">f"""</span></span>
 <span id="cb9-2"><a href="#cb9-2"></a><span class="ss">What computers do you have?"""</span></span>
 <span id="cb9-3"><a href="#cb9-3"></a></span>
@@ -593,14 +593,14 @@ Jan Kirenz
 <span id="cb9-6"><a href="#cb9-6"></a>products_by_category_2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-execution_count="7">
-<div class="cell-output cell-output-display" data-execution_count="23">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>" \n    [{'category': 'Computers and Laptops', 'products': ['TechPro Ultrabook', 'BlueWave Gaming Laptop', 'PowerLite Convertible', 'TechPro Desktop', 'BlueWave Chromebook']}]"</code></pre>
 </div>
 </div>
 </section>
 <section id="evaluation-3" class="slide level2">
 <h2>Evaluation 3</h2>
-<div id="2df19dfb" class="cell" data-execution_count="8">
+<div id="f6b0a5de" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>customer_msg_3 <span class="op">=</span> <span class="ss">f"""</span></span>
 <span id="cb11-2"><a href="#cb11-2"></a><span class="ss">tell me about the smartx pro phone and the fotosnap camera, the dslr one.</span></span>
 <span id="cb11-3"><a href="#cb11-3"></a><span class="ss">Also, what TVs do you have?"""</span></span>
@@ -623,7 +623,7 @@ Jan Kirenz
 </section>
 <section id="evaluation-4" class="slide level2">
 <h2>Evaluation 4</h2>
-<div id="375c8938" class="cell" data-execution_count="9">
+<div id="ac31e790" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>customer_msg_4 <span class="op">=</span> <span class="ss">f"""</span></span>
 <span id="cb13-2"><a href="#cb13-2"></a><span class="ss">tell me about the CineView TV, the 8K one, Gamesphere console, the X one.</span></span>
 <span id="cb13-3"><a href="#cb13-3"></a><span class="ss">I'm on a budget, what computers do you have?"""</span></span>
@@ -635,7 +635,9 @@ Jan Kirenz
 <div class="cell fragment" data-execution_count="9">
 <div class="cell-output cell-output-stdout">
 <pre><code> 
-    [{'category': 'Televisions and Home Theater Systems', 'products': ['CineView 8K TV']}, {'category': 'Gaming Consoles and Accessories', 'products': ['GameSphere X']}, {'category': 'Computers and Laptops', 'products': ['TechPro Ultrabook', 'BlueWave Gaming Laptop', 'PowerLite Convertible', 'TechPro Desktop', 'BlueWave Chromebook']}]</code></pre>
+    [{'category': 'Televisions and Home Theater Systems', 'products': ['CineView 4K TV', 'CineView 8K TV']}]
+    [{'category': 'Gaming Consoles and Accessories', 'products': ['GameSphere X']}]
+    [{'category': 'Computers and Laptops', 'products': ['TechPro Ultrabook', 'BlueWave Gaming Laptop', 'PowerLite Convertible', 'TechPro Desktop', 'BlueWave Chromebook']}]</code></pre>
 </div>
 </div>
 </section></section>
@@ -647,7 +649,7 @@ Jan Kirenz
 <section id="find-product-and-category-names-v2" class="slide level2 smaller">
 <h2>Find product and category names (V2)</h2>
 <p>Modify the prompt to work on the hard test cases</p>
-<div id="3bb6b76b" class="cell" data-execution_count="10">
+<div id="6bf09684" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">def</span> find_category_and_product_v2(user_input, products_and_category):</span>
 <span id="cb15-2"><a href="#cb15-2"></a>    <span class="co">"""</span></span>
 <span id="cb15-3"><a href="#cb15-3"></a><span class="co">    Added: Do not output any additional text that is not in JSON format.</span></span>
@@ -707,10 +709,7 @@ Jan Kirenz
 <span id="cb15-57"><a href="#cb15-57"></a>    ]</span>
 <span id="cb15-58"><a href="#cb15-58"></a>    <span class="cf">return</span> get_completion_from_messages(messages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-
-</section><section id="find-product-and-category-names-v2-output" class="slide level2 smaller output-location-slide"><h2>Find product and category names (V2)</h2><div class="cell output-location-slide" data-execution_count="10">
-
-</div></section></section>
+</section></section>
 <section>
 <section id="evaluate-modified-prompt" class="title-slide slide level1 center">
 <h1>Evaluate Modified Prompt</h1>
@@ -719,7 +718,7 @@ Jan Kirenz
 <section id="evaluation-3-v2" class="slide level2">
 <h2>Evaluation 3 (V2)</h2>
 <p>Evaluate the modified prompt on the hard tests cases</p>
-<div id="1cd99ef5" class="cell" data-execution_count="11">
+<div id="4a81d349" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>customer_msg_3 <span class="op">=</span> <span class="ss">f"""</span></span>
 <span id="cb16-2"><a href="#cb16-2"></a><span class="ss">tell me about the smartx pro phone and the fotosnap camera, the dslr one.</span></span>
 <span id="cb16-3"><a href="#cb16-3"></a><span class="ss">Also, what TVs do you have?"""</span></span>
@@ -728,13 +727,13 @@ Jan Kirenz
 <span id="cb16-6"><a href="#cb16-6"></a>                                                      products_and_category)</span>
 <span id="cb16-7"><a href="#cb16-7"></a><span class="bu">print</span>(products_by_category_3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-
-</section><section id="evaluation-3-v2-output" class="slide level2 output-location-slide"><h2>Evaluation 3 (V2)</h2><div class="cell output-location-slide" data-execution_count="11">
+<div class="cell fragment" data-execution_count="11">
 <div class="cell-output cell-output-stdout">
 <pre><code> 
     [{'category': 'Smartphones and Accessories', 'products': ['SmartX ProPhone']}, {'category': 'Cameras and Camcorders', 'products': ['FotoSnap DSLR Camera']}, {'category': 'Televisions and Home Theater Systems', 'products': ['CineView 4K TV', 'SoundMax Home Theater', 'CineView 8K TV', 'SoundMax Soundbar', 'CineView OLED TV']}]</code></pre>
 </div>
-</div></section></section>
+</div>
+</section></section>
 <section>
 <section id="regression-testing" class="title-slide slide level1 center">
 <h1>Regression Testing</h1>
@@ -743,7 +742,7 @@ Jan Kirenz
 <section id="test" class="slide level2">
 <h2>Test</h2>
 <p>Check that modifying the model to fix the hard test cases does not negatively affect its performance on previous test cases.</p>
-<div id="b9f5d0a6" class="cell" data-execution_count="12">
+<div id="a3f31ac6" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>customer_msg_0 <span class="op">=</span> <span class="ss">f"""Which TV can I buy if I'm on a budget?"""</span></span>
 <span id="cb18-2"><a href="#cb18-2"></a></span>
 <span id="cb18-3"><a href="#cb18-3"></a>products_by_category_0 <span class="op">=</span> find_category_and_product_v2(customer_msg_0,</span>
@@ -766,7 +765,7 @@ Jan Kirenz
 <section id="gather-development-set" class="slide level2 smaller">
 <h2>Gather development set</h2>
 <p>Gather development set for automated testin</p>
-<div id="41775b96" class="cell" data-execution_count="13">
+<div id="4a159702" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>msg_ideal_pairs_set <span class="op">=</span> [</span>
 <span id="cb20-2"><a href="#cb20-2"></a></span>
 <span id="cb20-3"><a href="#cb20-3"></a>    <span class="co"># eg 0</span></span>
@@ -868,7 +867,7 @@ Jan Kirenz
 <section id="evaluate-test-cases" class="slide level2 smaller">
 <h2>Evaluate test cases</h2>
 <p>Evaluate test cases by comparing to the ideal answers</p>
-<div id="d8c660db" class="cell" data-execution_count="14">
+<div id="46a27ece" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">def</span> eval_response_with_ideal(response,</span>
 <span id="cb21-2"><a href="#cb21-2"></a>                             ideal,</span>
 <span id="cb21-3"><a href="#cb21-3"></a>                             debug<span class="op">=</span><span class="va">False</span>):</span>
@@ -940,20 +939,20 @@ Jan Kirenz
 </section>
 <section id="message-and-ideal-answer" class="slide level2">
 <h2>Message and ideal answer</h2>
-<div id="77e5ec9c" class="cell" data-execution_count="15">
+<div id="faed95a4" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a><span class="bu">print</span>(<span class="ss">f'Customer message: </span><span class="sc">{</span>msg_ideal_pairs_set[<span class="dv">7</span>][<span class="st">"customer_msg"</span>]<span class="sc">}</span><span class="ss">'</span>)</span>
 <span id="cb22-2"><a href="#cb22-2"></a><span class="bu">print</span>(<span class="ss">f'Ideal answer: </span><span class="sc">{</span>msg_ideal_pairs_set[<span class="dv">7</span>][<span class="st">"ideal_answer"</span>]<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-execution_count="15">
 <div class="cell-output cell-output-stdout">
 <pre><code>Customer message: What Gaming consoles would be good for my friend who is into racing games?
-Ideal answer: {'Gaming Consoles and Accessories': {'ProGamer Controller', 'ProGamer Racing Wheel', 'GameSphere VR Headset', 'GameSphere Y', 'GameSphere X'}}</code></pre>
+Ideal answer: {'Gaming Consoles and Accessories': {'GameSphere X', 'ProGamer Racing Wheel', 'GameSphere VR Headset', 'GameSphere Y', 'ProGamer Controller'}}</code></pre>
 </div>
 </div>
 </section>
 <section id="output" class="slide level2">
 <h2>Output</h2>
-<div id="fce09da5" class="cell" data-execution_count="16">
+<div id="1f0791fb" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1"></a>response <span class="op">=</span> find_category_and_product_v2(msg_ideal_pairs_set[<span class="dv">7</span>][<span class="st">"customer_msg"</span>],</span>
 <span id="cb24-2"><a href="#cb24-2"></a>                                        products_and_category)</span>
 <span id="cb24-3"><a href="#cb24-3"></a><span class="bu">print</span>(<span class="ss">f'Resonse: </span><span class="sc">{</span>response<span class="sc">}</span><span class="ss">'</span>)</span>
@@ -961,22 +960,21 @@ Ideal answer: {'Gaming Consoles and Accessories': {'ProGamer Controller', 'ProGa
 <span id="cb24-5"><a href="#cb24-5"></a>eval_response_with_ideal(response,</span>
 <span id="cb24-6"><a href="#cb24-6"></a>                         msg_ideal_pairs_set[<span class="dv">7</span>][<span class="st">"ideal_answer"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-
-</section>
-<section id="output-output" class="slide level2 output-location-slide"><h2>Output</h2><div class="cell output-location-slide" data-execution_count="16">
+<div class="cell fragment" data-execution_count="16">
 <div class="cell-output cell-output-stdout">
 <pre><code>Resonse:  
     [{'category': 'Gaming Consoles and Accessories', 'products': ['GameSphere X', 'ProGamer Controller', 'GameSphere Y', 'ProGamer Racing Wheel', 'GameSphere VR Headset']}]
     </code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="32">
+<div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>1.0</code></pre>
 </div>
-</div></section><section id="evaluate-all-test-cases" class="slide level2 smaller">
+</div>
+</section>
+<section id="evaluate-all-test-cases" class="slide level2 smaller">
 <h2>Evaluate all test cases</h2>
 <p>Run evaluation on all test cases and calculate the fraction of cases that are correct</p>
-<p>We don’t run actualle this code in this presentation</p>
-<div id="2dd08f38" class="cell" data-execution_count="17">
+<div id="dab8b8c8" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># Note, this will not work if any of the api calls time out</span></span>
 <span id="cb27-2"><a href="#cb27-2"></a>score_accum <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb27-3"><a href="#cb27-3"></a><span class="cf">for</span> i, pair <span class="kw">in</span> <span class="bu">enumerate</span>(msg_ideal_pairs_set):</span>
@@ -999,12 +997,19 @@ Ideal answer: {'Gaming Consoles and Accessories': {'ProGamer Controller', 'ProGa
 <span id="cb27-20"><a href="#cb27-20"></a>n_examples <span class="op">=</span> <span class="bu">len</span>(msg_ideal_pairs_set)</span>
 <span id="cb27-21"><a href="#cb27-21"></a>fraction_correct <span class="op">=</span> score_accum <span class="op">/</span> n_examples</span>
 <span id="cb27-22"><a href="#cb27-22"></a><span class="bu">print</span>(<span class="ss">f"Fraction correct out of </span><span class="sc">{</span>n_examples<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>fraction_correct<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+<div class="footer footer-default">
+<p>Jan Kirenz</p>
+</div>
+</section><section id="evaluate-all-test-cases-output" class="slide level2 smaller output-location-slide"><h2>Evaluate all test cases</h2><div class="cell output-location-slide" data-execution_count="17">
 <div class="cell-output cell-output-stdout">
 <pre><code>example 0
 0: 1.0
 example 1
 incorrect
-prod_set: {'MobiTech Wireless Charger', 'SmartX ProPhone', 'SmartX MiniPhone', 'MobiTech PowerCase', 'SmartX EarBuds'}
+prod_set: {'SmartX ProPhone', 'SmartX MiniPhone', 'SmartX EarBuds', 'MobiTech PowerCase', 'MobiTech Wireless Charger'}
 prod_set_ideal: {'MobiTech Wireless Charger', 'SmartX EarBuds', 'MobiTech PowerCase'}
 response is a superset of the ideal answer
 1: 0.0
@@ -1014,11 +1019,11 @@ example 3
 3: 1.0
 example 4
 incorrect
-prod_set: {'SoundMax Home Theater', 'CineView 8K TV', 'CineView 4K TV', 'CineView OLED TV', 'SoundMax Soundbar'}
+prod_set: {'CineView 4K TV', 'SoundMax Home Theater', 'CineView OLED TV', 'SoundMax Soundbar', 'CineView 8K TV'}
 prod_set_ideal: {'CineView 8K TV'}
 response is a superset of the ideal answer
 incorrect
-prod_set: {'ProGamer Controller', 'ProGamer Racing Wheel', 'GameSphere VR Headset', 'GameSphere Y', 'GameSphere X'}
+prod_set: {'GameSphere X', 'ProGamer Racing Wheel', 'GameSphere VR Headset', 'GameSphere Y', 'ProGamer Controller'}
 prod_set_ideal: {'GameSphere X'}
 response is a superset of the ideal answer
 4: 0.3333333333333333
@@ -1034,12 +1039,7 @@ example 9
 9: 1
 Fraction correct out of 10: 0.8333333333333334</code></pre>
 </div>
-</div>
-
-<div class="footer footer-default">
-<p>Jan Kirenz</p>
-</div>
-</section></section>
+</div></section></section>
     </div>
   </div>
 
