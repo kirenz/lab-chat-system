@@ -582,3 +582,12 @@ fraction_correct = score_accum / n_examples
 print(f"Fraction correct out of {n_examples}: {fraction_correct}")
 ```
 
+
+
+# What's next? {background-image="../images/logo.png" background-opacity="0.5"}
+
+**Congratulations! You have completed this tutorial** 👍
+
+
+**Next, you may want to go back to the [lab's website](https://kirenz.github.io/lab-chat-system/)**
+
