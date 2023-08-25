@@ -78,7 +78,8 @@ FotoSnap Instant Camera
 Only output the list of objects, with nothing else.
 """
 
-step_2_system_message = {'role':'system', 'content': step_2_system_message_content}    
+step_2_system_message = {'role': 'system',
+                         'content': step_2_system_message_content}
 
 
 step_4_system_message_content = f"""
@@ -87,7 +88,8 @@ step_4_system_message_content = f"""
     Make sure to ask the user relevant follow-up questions.
 """
 
-step_4_system_message = {'role':'system', 'content': step_4_system_message_content}    
+step_4_system_message = {'role': 'system',
+                         'content': step_4_system_message_content}
 
 step_6_system_message_content = f"""
     You are an assistant that evaluates whether \
@@ -106,50 +108,52 @@ step_6_system_message_content = f"""
     Output a single letter only.
 """
 
-step_6_system_message = {'role':'system', 'content': step_6_system_message_content}    
+step_6_system_message = {'role': 'system',
+                         'content': step_6_system_message_content}
 
 
 def get_completion_from_messages(messages, model="gpt-3.5-turbo", temperature=0, max_tokens=500):
     response = openai.ChatCompletion.create(
         model=model,
         messages=messages,
-        temperature=temperature, 
-        max_tokens=max_tokens, 
+        temperature=temperature,
+        max_tokens=max_tokens,
     )
     return response.choices[0].message["content"]
 
+
 def create_categories():
     categories_dict = {
-      'Billing': [
-                'Unsubscribe or upgrade',
-                'Add a payment method',
-                'Explanation for charge',
-                'Dispute a charge'],
-      'Technical Support':[
-                'General troubleshooting'
-                'Device compatibility',
-                'Software updates'],
-      'Account Management':[
-                'Password reset'
-                'Update personal information',
-                'Close account',
-                'Account security'],
-      'General Inquiry':[
-                'Product information'
-                'Pricing',
-                'Feedback',
-                'Speak to a human']
+        'Billing': [
+            'Unsubscribe or upgrade',
+            'Add a payment method',
+            'Explanation for charge',
+            'Dispute a charge'],
+        'Technical Support': [
+            'General troubleshooting'
+            'Device compatibility',
+            'Software updates'],
+        'Account Management': [
+            'Password reset'
+            'Update personal information',
+            'Close account',
+            'Account security'],
+        'General Inquiry': [
+            'Product information'
+            'Pricing',
+            'Feedback',
+            'Speak to a human']
     }
-    
+
     with open(categories_file, 'w') as file:
         json.dump(categories_dict, file)
-        
+
     return categories_dict
 
 
 def get_categories():
     with open(categories_file, 'r') as file:
-            categories = json.load(file)
+        categories = json.load(file)
     return categories
 
 
@@ -161,8 +165,9 @@ def get_product_list():
     product_list = []
     for product in products.keys():
         product_list.append(product)
-    
+
     return product_list
+
 
 def get_products_and_category():
     """
@@ -174,15 +179,17 @@ def get_products_and_category():
         category = product_info.get('category')
         if category:
             products_by_category[category].append(product_info.get('name'))
-    
+
     return dict(products_by_category)
+
 
 def get_products():
     with open(products_file, 'r') as file:
         products = json.load(file)
     return products
 
-def find_category_and_product(user_input,products_and_category):
+
+def find_category_and_product(user_input, products_and_category):
     delimiter = "####"
     system_message = f"""
     You will be provided with customer service queries. \
@@ -203,13 +210,14 @@ def find_category_and_product(user_input,products_and_category):
     Allowed products: {products_and_category}
     
     """
-    messages =  [  
-    {'role':'system', 'content': system_message},    
-    {'role':'user', 'content': f"{delimiter}{user_input}{delimiter}"},  
-    ] 
+    messages = [
+        {'role': 'system', 'content': system_message},
+        {'role': 'user', 'content': f"{delimiter}{user_input}{delimiter}"},
+    ]
     return get_completion_from_messages(messages)
 
-def find_category_and_product_only(user_input,products_and_category):
+
+def find_category_and_product_only(user_input, products_and_category):
     delimiter = "####"
     system_message = f"""
     You will be provided with customer service queries. \
@@ -269,11 +277,12 @@ FotoSnap Instant Camera
     
     Only output the list of objects, nothing else.
     """
-    messages =  [  
-    {'role':'system', 'content': system_message},    
-    {'role':'user', 'content': f"{delimiter}{user_input}{delimiter}"},  
-    ] 
+    messages = [
+        {'role': 'system', 'content': system_message},
+        {'role': 'user', 'content': f"{delimiter}{user_input}{delimiter}"},
+    ]
     return get_completion_from_messages(messages)
+
 
 def get_products_from_query(user_msg):
     """
@@ -300,13 +309,13 @@ def get_products_from_query(user_msg):
     Allowed products: {products_and_category}
 
     """
-    
-    messages =  [  
-    {'role':'system', 'content': system_message},    
-    {'role':'user', 'content': f"{delimiter}{user_msg}{delimiter}"},  
-    ] 
+
+    messages = [
+        {'role': 'system', 'content': system_message},
+        {'role': 'user', 'content': f"{delimiter}{user_msg}{delimiter}"},
+    ]
     category_and_product_response = get_completion_from_messages(messages)
-    
+
     return category_and_product_response
 
 
@@ -315,9 +324,11 @@ def get_product_by_name(name):
     products = get_products()
     return products.get(name, None)
 
+
 def get_products_by_category(category):
     products = get_products()
     return [product for product in products.values() if product["category"] == category]
+
 
 def get_mentioned_product_info(data_list):
     """
@@ -351,18 +362,19 @@ def get_mentioned_product_info(data_list):
     return product_info_l
 
 
-
 def read_string_to_list(input_string):
     if input_string is None:
         return None
 
     try:
-        input_string = input_string.replace("'", "\"")  # Replace single quotes with double quotes for valid JSON
+        # Replace single quotes with double quotes for valid JSON
+        input_string = input_string.replace("'", "\"")
         data = json.loads(input_string)
         return data
     except json.JSONDecodeError:
         print("Error: Invalid JSON string")
         return None
+
 
 def generate_output_string(data_list):
     output_string = ""
@@ -393,10 +405,11 @@ def generate_output_string(data_list):
     return output_string
 
 # Example usage:
-#product_information_for_user_message_1 = generate_output_string(category_and_product_list)
-#print(product_information_for_user_message_1)
+# product_information_for_user_message_1 = generate_output_string(category_and_product_list)
+# print(product_information_for_user_message_1)
 
-def answer_user_msg(user_msg,product_info):
+
+def answer_user_msg(user_msg, product_info):
     """
     Code from L5, used in L6
     """
@@ -408,13 +421,14 @@ def answer_user_msg(user_msg,product_info):
     """
     # user_msg = f"""
     # tell me about the smartx pro phone and the fotosnap camera, the dslr one. Also what tell me about your tvs"""
-    messages =  [  
-    {'role':'system', 'content': system_message},   
-    {'role':'user', 'content': f"{delimiter}{user_msg}{delimiter}"},  
-    {'role':'assistant', 'content': f"Relevant product information:\n{product_info}"},   
-    ] 
+    messages = [
+        {'role': 'system', 'content': system_message},
+        {'role': 'user', 'content': f"{delimiter}{user_msg}{delimiter}"},
+        {'role': 'assistant', 'content': f"Relevant product information:\n{product_info}"},
+    ]
     response = get_completion_from_messages(messages)
     return response
+
 
 def create_products():
     """
@@ -762,5 +776,5 @@ def create_products():
     products_file = 'products.json'
     with open(products_file, 'w') as file:
         json.dump(products, file)
-        
+
     return products
