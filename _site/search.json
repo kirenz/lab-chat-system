@@ -809,7 +809,7 @@
     "href": "slides/evaluation.html#python",
     "title": "Evaluation for One Right Answer",
     "section": "Python",
-    "text": "Python\n\nimport json\nimport os\nimport openai\n# import sys\n# sys.path.append('../..')\nimport utils\nfrom dotenv import load_dotenv, find_dotenv\n_ = load_dotenv(find_dotenv())  # read local .env file\n\nopenai.api_key = os.environ['OPENAI_API_KEY']"
+    "text": "Python\n\nimport json\nimport os\nimport openai\n# import sys\n# sys.path.append('../..')\nimport utils_2\nfrom dotenv import load_dotenv, find_dotenv\n_ = load_dotenv(find_dotenv())  # read local .env file\n\nopenai.api_key = os.environ['OPENAI_API_KEY']"
   },
   {
     "objectID": "slides/evaluation.html#helper-function",
@@ -865,7 +865,7 @@
     "href": "slides/evaluation.html#evaluation-4",
     "title": "Evaluation for One Right Answer",
     "section": "Evaluation 4",
-    "text": "Evaluation 4\n\ncustomer_msg_4 = f\"\"\"\ntell me about the CineView TV, the 8K one, Gamesphere console, the X one.\nI'm on a budget, what computers do you have?\"\"\"\n\nproducts_by_category_4 = find_category_and_product_v1(customer_msg_4,\n                                                      products_and_category)\nprint(products_by_category_4)\n\n\n\n \n    [{'category': 'Televisions and Home Theater Systems', 'products': ['CineView 8K TV']}, {'category': 'Gaming Consoles and Accessories', 'products': ['GameSphere X']}, {'category': 'Computers and Laptops', 'products': ['TechPro Ultrabook', 'BlueWave Gaming Laptop', 'PowerLite Convertible', 'TechPro Desktop', 'BlueWave Chromebook']}]"
+    "text": "Evaluation 4\n\ncustomer_msg_4 = f\"\"\"\ntell me about the CineView TV, the 8K one, Gamesphere console, the X one.\nI'm on a budget, what computers do you have?\"\"\"\n\nproducts_by_category_4 = find_category_and_product_v1(customer_msg_4,\n                                                      products_and_category)\nprint(products_by_category_4)\n\n\n\n \n    [{'category': 'Televisions and Home Theater Systems', 'products': ['CineView 4K TV', 'CineView 8K TV']}]\n    [{'category': 'Gaming Consoles and Accessories', 'products': ['GameSphere X']}]\n    [{'category': 'Computers and Laptops', 'products': ['TechPro Ultrabook', 'BlueWave Gaming Laptop', 'PowerLite Convertible', 'TechPro Desktop', 'BlueWave Chromebook']}]"
   },
   {
     "objectID": "slides/evaluation.html#find-product-and-category-names-v2",
@@ -886,7 +886,7 @@
     "href": "slides/evaluation.html#evaluation-3-v2",
     "title": "Evaluation for One Right Answer",
     "section": "Evaluation 3 (V2)",
-    "text": "Evaluation 3 (V2)\nEvaluate the modified prompt on the hard tests cases\n\ncustomer_msg_3 = f\"\"\"\ntell me about the smartx pro phone and the fotosnap camera, the dslr one.\nAlso, what TVs do you have?\"\"\"\n\nproducts_by_category_3 = find_category_and_product_v2(customer_msg_3,\n                                                      products_and_category)\nprint(products_by_category_3)"
+    "text": "Evaluation 3 (V2)\nEvaluate the modified prompt on the hard tests cases\n\ncustomer_msg_3 = f\"\"\"\ntell me about the smartx pro phone and the fotosnap camera, the dslr one.\nAlso, what TVs do you have?\"\"\"\n\nproducts_by_category_3 = find_category_and_product_v2(customer_msg_3,\n                                                      products_and_category)\nprint(products_by_category_3)\n\n\n\n \n    [{'category': 'Smartphones and Accessories', 'products': ['SmartX ProPhone']}, {'category': 'Cameras and Camcorders', 'products': ['FotoSnap DSLR Camera']}, {'category': 'Televisions and Home Theater Systems', 'products': ['CineView 4K TV', 'SoundMax Home Theater', 'CineView 8K TV', 'SoundMax Soundbar', 'CineView OLED TV']}]"
   },
   {
     "objectID": "slides/evaluation.html#evaluation-3-v2-output",
@@ -921,14 +921,14 @@
     "href": "slides/evaluation.html#message-and-ideal-answer",
     "title": "Evaluation for One Right Answer",
     "section": "Message and ideal answer",
-    "text": "Message and ideal answer\n\nprint(f'Customer message: {msg_ideal_pairs_set[7][\"customer_msg\"]}')\nprint(f'Ideal answer: {msg_ideal_pairs_set[7][\"ideal_answer\"]}')\n\n\n\nCustomer message: What Gaming consoles would be good for my friend who is into racing games?\nIdeal answer: {'Gaming Consoles and Accessories': {'ProGamer Controller', 'ProGamer Racing Wheel', 'GameSphere VR Headset', 'GameSphere Y', 'GameSphere X'}}"
+    "text": "Message and ideal answer\n\nprint(f'Customer message: {msg_ideal_pairs_set[7][\"customer_msg\"]}')\nprint(f'Ideal answer: {msg_ideal_pairs_set[7][\"ideal_answer\"]}')\n\n\n\nCustomer message: What Gaming consoles would be good for my friend who is into racing games?\nIdeal answer: {'Gaming Consoles and Accessories': {'GameSphere X', 'ProGamer Racing Wheel', 'GameSphere VR Headset', 'GameSphere Y', 'ProGamer Controller'}}"
   },
   {
     "objectID": "slides/evaluation.html#output",
     "href": "slides/evaluation.html#output",
     "title": "Evaluation for One Right Answer",
     "section": "Output",
-    "text": "Output\n\nresponse = find_category_and_product_v2(msg_ideal_pairs_set[7][\"customer_msg\"],\n                                        products_and_category)\nprint(f'Resonse: {response}')\n\neval_response_with_ideal(response,\n                         msg_ideal_pairs_set[7][\"ideal_answer\"])"
+    "text": "Output\n\nresponse = find_category_and_product_v2(msg_ideal_pairs_set[7][\"customer_msg\"],\n                                        products_and_category)\nprint(f'Resonse: {response}')\n\neval_response_with_ideal(response,\n                         msg_ideal_pairs_set[7][\"ideal_answer\"])\n\n\n\nResonse:  \n    [{'category': 'Gaming Consoles and Accessories', 'products': ['GameSphere X', 'ProGamer Controller', 'GameSphere Y', 'ProGamer Racing Wheel', 'GameSphere VR Headset']}]\n    \n\n\n1.0"
   },
   {
     "objectID": "slides/evaluation.html#output-output",
@@ -942,6 +942,13 @@
     "href": "slides/evaluation.html#evaluate-all-test-cases",
     "title": "Evaluation for One Right Answer",
     "section": "Evaluate all test cases",
-    "text": "Evaluate all test cases\nRun evaluation on all test cases and calculate the fraction of cases that are correct\nWe don’t run actualle this code in this presentation\n\n# Note, this will not work if any of the api calls time out\nscore_accum = 0\nfor i, pair in enumerate(msg_ideal_pairs_set):\n    print(f\"example {i}\")\n\n    customer_msg = pair['customer_msg']\n    ideal = pair['ideal_answer']\n\n    # print(\"Customer message\",customer_msg)\n    # print(\"ideal:\",ideal)\n    response = find_category_and_product_v2(customer_msg,\n                                            products_and_category)\n\n    # print(\"products_by_category\",products_by_category)\n    score = eval_response_with_ideal(response, ideal, debug=False)\n    print(f\"{i}: {score}\")\n    score_accum += score\n\n\nn_examples = len(msg_ideal_pairs_set)\nfraction_correct = score_accum / n_examples\nprint(f\"Fraction correct out of {n_examples}: {fraction_correct}\")\n\nexample 0\n0: 1.0\nexample 1\nincorrect\nprod_set: {'MobiTech Wireless Charger', 'SmartX ProPhone', 'SmartX MiniPhone', 'MobiTech PowerCase', 'SmartX EarBuds'}\nprod_set_ideal: {'MobiTech Wireless Charger', 'SmartX EarBuds', 'MobiTech PowerCase'}\nresponse is a superset of the ideal answer\n1: 0.0\nexample 2\n2: 1.0\nexample 3\n3: 1.0\nexample 4\nincorrect\nprod_set: {'SoundMax Home Theater', 'CineView 8K TV', 'CineView 4K TV', 'CineView OLED TV', 'SoundMax Soundbar'}\nprod_set_ideal: {'CineView 8K TV'}\nresponse is a superset of the ideal answer\nincorrect\nprod_set: {'ProGamer Controller', 'ProGamer Racing Wheel', 'GameSphere VR Headset', 'GameSphere Y', 'GameSphere X'}\nprod_set_ideal: {'GameSphere X'}\nresponse is a superset of the ideal answer\n4: 0.3333333333333333\nexample 5\n5: 1.0\nexample 6\n6: 1.0\nexample 7\n7: 1.0\nexample 8\n8: 1.0\nexample 9\n9: 1\nFraction correct out of 10: 0.8333333333333334\n\n\n\n\nJan Kirenz"
+    "text": "Evaluate all test cases\nRun evaluation on all test cases and calculate the fraction of cases that are correct\n\n# Note, this will not work if any of the api calls time out\nscore_accum = 0\nfor i, pair in enumerate(msg_ideal_pairs_set):\n    print(f\"example {i}\")\n\n    customer_msg = pair['customer_msg']\n    ideal = pair['ideal_answer']\n\n    # print(\"Customer message\",customer_msg)\n    # print(\"ideal:\",ideal)\n    response = find_category_and_product_v2(customer_msg,\n                                            products_and_category)\n\n    # print(\"products_by_category\",products_by_category)\n    score = eval_response_with_ideal(response, ideal, debug=False)\n    print(f\"{i}: {score}\")\n    score_accum += score\n\n\nn_examples = len(msg_ideal_pairs_set)\nfraction_correct = score_accum / n_examples\nprint(f\"Fraction correct out of {n_examples}: {fraction_correct}\")\n\n\n\n\nJan Kirenz"
+  },
+  {
+    "objectID": "slides/evaluation.html#evaluate-all-test-cases-output",
+    "href": "slides/evaluation.html#evaluate-all-test-cases-output",
+    "title": "Evaluation for One Right Answer",
+    "section": "Evaluate all test cases",
+    "text": "Evaluate all test cases\n\nexample 0\n0: 1.0\nexample 1\nincorrect\nprod_set: {'SmartX ProPhone', 'SmartX MiniPhone', 'SmartX EarBuds', 'MobiTech PowerCase', 'MobiTech Wireless Charger'}\nprod_set_ideal: {'MobiTech Wireless Charger', 'SmartX EarBuds', 'MobiTech PowerCase'}\nresponse is a superset of the ideal answer\n1: 0.0\nexample 2\n2: 1.0\nexample 3\n3: 1.0\nexample 4\nincorrect\nprod_set: {'CineView 4K TV', 'SoundMax Home Theater', 'CineView OLED TV', 'SoundMax Soundbar', 'CineView 8K TV'}\nprod_set_ideal: {'CineView 8K TV'}\nresponse is a superset of the ideal answer\nincorrect\nprod_set: {'GameSphere X', 'ProGamer Racing Wheel', 'GameSphere VR Headset', 'GameSphere Y', 'ProGamer Controller'}\nprod_set_ideal: {'GameSphere X'}\nresponse is a superset of the ideal answer\n4: 0.3333333333333333\nexample 5\n5: 1.0\nexample 6\n6: 1.0\nexample 7\n7: 1.0\nexample 8\n8: 1.0\nexample 9\n9: 1\nFraction correct out of 10: 0.8333333333333334"
   }
 ]
