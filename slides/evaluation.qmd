@@ -37,6 +37,10 @@ format:
 
 ## Python
 
+You need to download the following files:
+
+- [products.json](/slides/products.json)
+- [utils_2.py](/slides/utils_2.py)
 
 ```{python}
 import json
@@ -44,7 +48,7 @@ import os
 import openai
 # import sys
 # sys.path.append('../..')
-import utils
+import utils_2
 from dotenv import load_dotenv, find_dotenv
 _ = load_dotenv(find_dotenv())  # read local .env file
 
@@ -242,7 +246,6 @@ print(products_by_category_4)
 Modify the prompt to work on the hard test cases
 
 ```{python}
-# | output-location: slide
 
 
 def find_category_and_product_v2(user_input, products_and_category):
@@ -314,7 +317,7 @@ def find_category_and_product_v2(user_input, products_and_category):
 Evaluate the modified prompt on the hard tests cases
 
 ```{python}
-# | output-location: slide
+# | output-location: fragment
 
 customer_msg_3 = f"""
 tell me about the smartx pro phone and the fotosnap camera, the dslr one.
@@ -538,7 +541,7 @@ print(f'Ideal answer: {msg_ideal_pairs_set[7]["ideal_answer"]}')
 ## Output 
 
 ```{python}
-# | output-location: slide
+# | output-location: fragment
 
 response = find_category_and_product_v2(msg_ideal_pairs_set[7]["customer_msg"],
                                         products_and_category)
@@ -552,9 +555,8 @@ eval_response_with_ideal(response,
 
 Run evaluation on all test cases and calculate the fraction of cases that are correct
 
-We don't run actualle this code in this presentation
-
 ```{python}
+# | output-location: slide
 
 # Note, this will not work if any of the api calls time out
 score_accum = 0
