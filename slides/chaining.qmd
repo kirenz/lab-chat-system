@@ -33,6 +33,8 @@ format:
     footer: Jan Kirenz
 ---
 
+# Chaining Prompts
+
 # Setup
 
 ## Python
