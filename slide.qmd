@@ -10,7 +10,7 @@ Take a look at the [slides tutorial](https://kirenz.github.io/lab-toolkit/slides
 
 :::
 
-
+*The following tutorials are mainly based on an excellent course provided by Isa Fulford from OpenAI and Andrew Ng from DeepLearning.AI.*
 
 ## Basics: Tokens and chat format
 
@@ -70,3 +70,10 @@ You need to download the following files:
 
 - [products.json](/slides/products.json)
 - [utils_2.py](/slides/utils_2.py)
+
+
+## Evaluation Part 2
+
+Evaluate LLM responses where there isn't a single "right answer."
+
+- [🖥️ Evaluate your system, part 2](/slides/evaluation_2.qmd)
