@@ -13,6 +13,7 @@ Take a look at the [slides tutorial](https://kirenz.github.io/lab-toolkit/slides
 :::
 
 
+
 ## Basics: Tokens and chat format
 
 In this tutorial, you'll learn some basic properties of Large Language Models: Tokens and the chat format:
@@ -21,12 +22,9 @@ In this tutorial, you'll learn some basic properties of Large Language Models: T
 
 ::: {.callout-tip appearance="simple" icon=false}
 ## Download files
-- [Jupyter Notebook](/code/basics.ipynb)
+- [💻 basics.ipynb](https://colab.research.google.com/github/kirenz/lab-chat-system/blob/main/code/basics.ipynb)
 :::
 
-<a href="https://raw.githubusercontent.com/kirenz/lab-chat-system/main/code/basics.ipynb" download>Download .ipynb-Datei</a>
-
-- [Download]("https://raw.githubusercontent.com/kirenz/lab-chat-system/main/code/basics.ipynb")
 
 ## Classification 
 
@@ -34,10 +32,9 @@ Learn how to classify different customer queries:
 
 - [🖥️ Classification](/slides/classification.qmd)
 
-
 ::: {.callout-tip appearance="simple" icon=false}
 ## Download files
-- [Jupyter Notebook](/code/classification.ipynb)
+- [💻 classification.ipynb](https://colab.research.google.com/github/kirenz/lab-chat-system/blob/main/code/classification.ipynb)
 :::
 
 ## Moderation
@@ -48,7 +45,7 @@ The moderations endpoint is a tool you can use to check whether content complies
 
 ::: {.callout-tip appearance="simple" icon=false}
 ## Download files
-- [Jupyter Notebook](/code/moderation.ipynb)
+- [💻 moderation.ipynb](https://colab.research.google.com/github/kirenz/lab-chat-system/blob/main/code/moderation.ipynb)
 :::
 
 ## Chain of Thought Reasoning
@@ -59,7 +56,7 @@ Chain-of-thought (CoT) prompting enables complex reasoning capabilities through 
 
 ::: {.callout-tip appearance="simple" icon=false}
 ## Download files
-- [Jupyter Notebook](/code/reasoning.ipynb)
+- [💻 reasoning.ipynb](https://colab.research.google.com/github/kirenz/lab-chat-system/blob/main/code/reasoning.ipynb)
 :::
 
 ## Chaining Prompts
@@ -70,7 +67,7 @@ Prompt Chaining is a technique of connecting multiple tasks to generate complex 
 
 ::: {.callout-tip appearance="simple" icon=false}
 ## Download files
-- [Jupyter Notebook](/code/chaining.ipynb)
+- [💻 chaining.ipynb](https://colab.research.google.com/github/kirenz/lab-chat-system/blob/main/code/chaining.ipynb)
 :::
 
 ## Check Model Output 
@@ -81,7 +78,7 @@ Ask the model to verify its own outputs:
 
 ::: {.callout-tip appearance="simple" icon=false}
 ## Download files
-- [Jupyter Notebook](/code/outputcheck.ipynb)
+- [💻 outputcheck.ipynb](https://colab.research.google.com/github/kirenz/lab-chat-system/blob/main/code/outputcheck.ipynb)
 :::
 
 ## Build an End-to-End System
@@ -92,13 +89,10 @@ This puts together the chain of prompts that you saw throughout the tutorials:
 
 ::: {.callout-tip appearance="simple" icon=false}
 ## Download files
-- [Jupyter Notebook](/code/system.ipynb)
+- [💻 system.ipynb](https://colab.research.google.com/github/kirenz/lab-chat-system/blob/main/code/system.ipynb)
 - [products.json](/slides/products.json)
 - [utils.py](/slides/utils.py)
 :::
-
-You need to download the following files:
-
 
 
 ## Evaluation
@@ -109,7 +103,7 @@ Evaluate LLM responses when there is a single "right answer".
 
 ::: {.callout-tip appearance="simple" icon=false}
 ## Download files
-- [Jupyter Notebook](/code/evaluation.ipynb)
+- [💻 evaluation.ipynb](https://colab.research.google.com/github/kirenz/lab-chat-system/blob/main/code/evaluation.ipynb)
 - [products.json](/slides/products.json)
 - [utils.py](/slides/utils_2.py)
 :::
@@ -122,5 +116,5 @@ Evaluate LLM responses where there isn't a single "right answer."
 
 ::: {.callout-tip appearance="simple" icon=false}
 ## Download files
-- [Jupyter Notebook](/code/evaluation_2.ipynb)
+- [💻 evaluation_2.ipynb](https://colab.research.google.com/github/kirenz/lab-chat-system/blob/main/code/evaluation_2.ipynb)
 :::
