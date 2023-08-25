@@ -24,6 +24,8 @@ In this tutorial, you'll learn some basic properties of Large Language Models: T
 - [Jupyter Notebook](/code/basics.ipynb)
 :::
 
+{{< embed /code/basics.ipynb >}}
+
 ## Classification 
 
 Learn how to classify different customer queries:
