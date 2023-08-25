@@ -33,6 +33,8 @@ format:
     footer: Jan Kirenz
 ---
 
+# Tokens and Chat Format
+
 # Setup
 
 ## Python
