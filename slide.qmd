@@ -55,9 +55,18 @@ This puts together the chain of prompts that you saw throughout the tutorials:
 
 - [🖥️ End-to-end system](/slides/system.qmd)
 
+You need to download the following files:
+
+- [products.json](/slides/products.json)
+- [utils.py](/slides/utils_2.py)
 
 ## Evaluation
 
 Evaluate LLM responses when there is a single "right answer".
 
 - [🖥️ Evaluate your system](/slides/evaluation.qmd)
+
+You need to download the following files:
+
+- [products.json](/slides/products.json)
+- [utils_2.py](/slides/utils_2.py)
