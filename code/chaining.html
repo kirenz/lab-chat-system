@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Chat System - Setup</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="..//images/logo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Chat System</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../slide.html" rel="" target="">
+ <span class="menu-text">Slides</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../requirements.html" rel="" target="">
+ <span class="menu-text">Requirements</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../assignments.html" rel="" target="">
+ <span class="menu-text">Assignments</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#python" id="toc-python" class="nav-link active" data-scroll-target="#python">Python</a></li>
+  <li><a href="#helper-function" id="toc-helper-function" class="nav-link" data-scroll-target="#helper-function">Helper function</a></li>
+  <li><a href="#multiple-prompts" id="toc-multiple-prompts" class="nav-link" data-scroll-target="#multiple-prompts">Multiple Prompts</a>
+  <ul class="collapse">
+  <li><a href="#system-message" id="toc-system-message" class="nav-link" data-scroll-target="#system-message">System message</a></li>
+  <li><a href="#user-message-1" id="toc-user-message-1" class="nav-link" data-scroll-target="#user-message-1">User message 1</a></li>
+  <li><a href="#messages" id="toc-messages" class="nav-link" data-scroll-target="#messages">Messages</a></li>
+  <li><a href="#response" id="toc-response" class="nav-link" data-scroll-target="#response">Response</a></li>
+  <li><a href="#user-message-2" id="toc-user-message-2" class="nav-link" data-scroll-target="#user-message-2">User message 2</a></li>
+  <li><a href="#messages-1" id="toc-messages-1" class="nav-link" data-scroll-target="#messages-1">Messages</a></li>
+  <li><a href="#response-1" id="toc-response-1" class="nav-link" data-scroll-target="#response-1">Response</a></li>
+  </ul></li>
+  <li><a href="#detailed-product-information" id="toc-detailed-product-information" class="nav-link" data-scroll-target="#detailed-product-information">Detailed Product Information</a>
+  <ul class="collapse">
+  <li><a href="#product-information" id="toc-product-information" class="nav-link" data-scroll-target="#product-information">Product information</a></li>
+  <li><a href="#helper-function-get-product-by-name" id="toc-helper-function-get-product-by-name" class="nav-link" data-scroll-target="#helper-function-get-product-by-name">Helper function: get product by name</a></li>
+  <li><a href="#helper-function-get-product-by-category" id="toc-helper-function-get-product-by-category" class="nav-link" data-scroll-target="#helper-function-get-product-by-category">Helper function: get product by category</a></li>
+  <li><a href="#category-and-product-response-1" id="toc-category-and-product-response-1" class="nav-link" data-scroll-target="#category-and-product-response-1">Category and product response 1</a></li>
+  <li><a href="#helper-function-string-into-dictionaries" id="toc-helper-function-string-into-dictionaries" class="nav-link" data-scroll-target="#helper-function-string-into-dictionaries">Helper function: String into dictionaries</a></li>
+  <li><a href="#category-and-product-list" id="toc-category-and-product-list" class="nav-link" data-scroll-target="#category-and-product-list">Category and product list</a></li>
+  <li><a href="#helper-function-generate-output-string" id="toc-helper-function-generate-output-string" class="nav-link" data-scroll-target="#helper-function-generate-output-string">Helper function: Generate output string</a></li>
+  <li><a href="#product-info-for-user-message-1" id="toc-product-info-for-user-message-1" class="nav-link" data-scroll-target="#product-info-for-user-message-1">Product info for user message 1</a></li>
+  </ul></li>
+  <li><a href="#answer-with-detailed-product-information" id="toc-answer-with-detailed-product-information" class="nav-link" data-scroll-target="#answer-with-detailed-product-information">Answer with detailed product information</a>
+  <ul class="collapse">
+  <li><a href="#system-message-1" id="toc-system-message-1" class="nav-link" data-scroll-target="#system-message-1">System message</a></li>
+  <li><a href="#user-message-1-1" id="toc-user-message-1-1" class="nav-link" data-scroll-target="#user-message-1-1">User message 1</a></li>
+  <li><a href="#messages-2" id="toc-messages-2" class="nav-link" data-scroll-target="#messages-2">Messages</a></li>
+  <li><a href="#response-2" id="toc-response-2" class="nav-link" data-scroll-target="#response-2">Response</a></li>
+  </ul></li>
+  <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next">What’s next?</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Setup</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="python" class="level2">
+<h2 class="anchored" data-anchor-id="python">Python</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> openai</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv, find_dotenv</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> load_dotenv(find_dotenv())  <span class="co"># read local .env file</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>openai.api_key <span class="op">=</span> os.environ[<span class="st">'OPENAI_API_KEY'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="helper-function" class="level2">
+<h2 class="anchored" data-anchor-id="helper-function">Helper function</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion_from_messages(messages,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                                 model<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                                 temperature<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                                 max_tokens<span class="op">=</span><span class="dv">500</span>):</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> openai.ChatCompletion.create(</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        model<span class="op">=</span>model,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        messages<span class="op">=</span>messages,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        temperature<span class="op">=</span>temperature,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        max_tokens<span class="op">=</span>max_tokens,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> response.choices[<span class="dv">0</span>].message[<span class="st">"content"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="multiple-prompts" class="level1">
+<h1>Multiple Prompts</h1>
+<p>Implement a complex task with multiple prompts</p>
+<section id="system-message" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="system-message">System message</h2>
+<p>Extract relevant product and category names</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>delimiter <span class="op">=</span> <span class="st">"####"</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>system_message <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ss">You will be provided with customer service queries. </span><span class="ch">\</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ss">The customer service query will be delimited with </span><span class="ch">\</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> characters.</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="ss">Output a python list of objects, where each object has </span><span class="ch">\</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ss">the following format:</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="ss">    'category': &lt;one of Computers and Laptops, </span><span class="ch">\</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="ss">    Smartphones and Accessories, </span><span class="ch">\</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="ss">    Televisions and Home Theater Systems, </span><span class="ch">\</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="ss">    Gaming Consoles and Accessories, </span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="ss">    Audio Equipment, Cameras and Camcorders&gt;,</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="ss">OR</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="ss">    'products': &lt;a list of products that must </span><span class="ch">\</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="ss">    be found in the allowed products below&gt;</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="ss">Where the categories and products must be found in </span><span class="ch">\</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="ss">the customer service query.</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="ss">If a product is mentioned, it must be associated with </span><span class="ch">\</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="ss">the correct category in the allowed products list below.</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="ss">If no products or categories are found, output an </span><span class="ch">\</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="ss">empty list.</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="ss">Allowed products: </span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="ss">Computers and Laptops category:</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="ss">TechPro Ultrabook</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="ss">BlueWave Gaming Laptop</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="ss">PowerLite Convertible</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="ss">TechPro Desktop</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="ss">BlueWave Chromebook</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="ss">Smartphones and Accessories category:</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="ss">SmartX ProPhone</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="ss">MobiTech PowerCase</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="ss">SmartX MiniPhone</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="ss">MobiTech Wireless Charger</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="ss">SmartX EarBuds</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="ss">Televisions and Home Theater Systems category:</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="ss">CineView 4K TV</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="ss">SoundMax Home Theater</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="ss">CineView 8K TV</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="ss">SoundMax Soundbar</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="ss">CineView OLED TV</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="ss">Gaming Consoles and Accessories category:</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="ss">GameSphere X</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="ss">ProGamer Controller</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="ss">GameSphere Y</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="ss">ProGamer Racing Wheel</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="ss">GameSphere VR Headset</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="ss">Audio Equipment category:</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="ss">AudioPhonic Noise-Canceling Headphones</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="ss">WaveSound Bluetooth Speaker</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="ss">AudioPhonic True Wireless Earbuds</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a><span class="ss">WaveSound Soundbar</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="ss">AudioPhonic Turntable</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="ss">Cameras and Camcorders category:</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="ss">FotoSnap DSLR Camera</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a><span class="ss">ActionCam 4K</span></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a><span class="ss">FotoSnap Mirrorless Camera</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a><span class="ss">ZoomMaster Camcorder</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a><span class="ss">FotoSnap Instant Camera</span></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a><span class="ss">Only output the list of objects, with nothing else.</span></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="user-message-1" class="level2">
+<h2 class="anchored" data-anchor-id="user-message-1">User message 1</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>user_message_1 <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ss"> tell me about the smartx pro phone and </span><span class="ch">\</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ss"> the fotosnap camera, the dslr one. </span><span class="ch">\</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ss"> Also tell me about your tvs """</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="messages" class="level2">
+<h2 class="anchored" data-anchor-id="messages">Messages</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'system'</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>     <span class="st">'content'</span>: system_message},</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'user'</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>     <span class="st">'content'</span>: <span class="ss">f"</span><span class="sc">{</span>delimiter<span class="sc">}{</span>user_message_1<span class="sc">}{</span>delimiter<span class="sc">}</span><span class="ss">"</span>},</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="response" class="level2">
+<h2 class="anchored" data-anchor-id="response">Response</h2>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>category_and_product_response_1 <span class="op">=</span> get_completion_from_messages(messages)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(category_and_product_response_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="user-message-2" class="level2">
+<h2 class="anchored" data-anchor-id="user-message-2">User message 2</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>user_message_2 <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ss">my router isn't working"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="messages-1" class="level2">
+<h2 class="anchored" data-anchor-id="messages-1">Messages</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'system'</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>     <span class="st">'content'</span>: system_message},</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'user'</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>     <span class="st">'content'</span>: <span class="ss">f"</span><span class="sc">{</span>delimiter<span class="sc">}{</span>user_message_2<span class="sc">}{</span>delimiter<span class="sc">}</span><span class="ss">"</span>},</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="response-1" class="level2">
+<h2 class="anchored" data-anchor-id="response-1">Response</h2>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion_from_messages(messages)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="detailed-product-information" class="level1">
+<h1>Detailed Product Information</h1>
+<p>Retrieve detailed product information for extracted products and categories</p>
+<section id="product-information" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="product-information">Product information</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># product information</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>products <span class="op">=</span> {</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"TechPro Ultrabook"</span>: {</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"TechPro Ultrabook"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Computers and Laptops"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"TechPro"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"TP-UB100"</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.5</span>,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"13.3-inch display"</span>, <span class="st">"8GB RAM"</span>, <span class="st">"256GB SSD"</span>, <span class="st">"Intel Core i5 processor"</span>],</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A sleek and lightweight ultrabook for everyday use."</span>,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">799.99</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BlueWave Gaming Laptop"</span>: {</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"BlueWave Gaming Laptop"</span>,</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Computers and Laptops"</span>,</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"BlueWave"</span>,</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"BW-GL200"</span>,</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"2 years"</span>,</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.7</span>,</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"15.6-inch display"</span>, <span class="st">"16GB RAM"</span>, <span class="st">"512GB SSD"</span>, <span class="st">"NVIDIA GeForce RTX 3060"</span>],</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A high-performance gaming laptop for an immersive experience."</span>,</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">1199.99</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"PowerLite Convertible"</span>: {</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"PowerLite Convertible"</span>,</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Computers and Laptops"</span>,</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"PowerLite"</span>,</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"PL-CV300"</span>,</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.3</span>,</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"14-inch touchscreen"</span>, <span class="st">"8GB RAM"</span>, <span class="st">"256GB SSD"</span>, <span class="st">"360-degree hinge"</span>],</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A versatile convertible laptop with a responsive touchscreen."</span>,</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">699.99</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">"TechPro Desktop"</span>: {</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"TechPro Desktop"</span>,</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Computers and Laptops"</span>,</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"TechPro"</span>,</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"TP-DT500"</span>,</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.4</span>,</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Intel Core i7 processor"</span>, <span class="st">"16GB RAM"</span>, <span class="st">"1TB HDD"</span>, <span class="st">"NVIDIA GeForce GTX 1660"</span>],</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A powerful desktop computer for work and play."</span>,</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">999.99</span></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BlueWave Chromebook"</span>: {</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"BlueWave Chromebook"</span>,</span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Computers and Laptops"</span>,</span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"BlueWave"</span>,</span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"BW-CB100"</span>,</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.1</span>,</span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"11.6-inch display"</span>, <span class="st">"4GB RAM"</span>, <span class="st">"32GB eMMC"</span>, <span class="st">"Chrome OS"</span>],</span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A compact and affordable Chromebook for everyday tasks."</span>,</span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">249.99</span></span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SmartX ProPhone"</span>: {</span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"SmartX ProPhone"</span>,</span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Smartphones and Accessories"</span>,</span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"SmartX"</span>,</span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"SX-PP10"</span>,</span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.6</span>,</span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"6.1-inch display"</span>, <span class="st">"128GB storage"</span>, <span class="st">"12MP dual camera"</span>, <span class="st">"5G"</span>],</span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A powerful smartphone with advanced camera features."</span>,</span>
+<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">899.99</span></span>
+<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>    <span class="st">"MobiTech PowerCase"</span>: {</span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"MobiTech PowerCase"</span>,</span>
+<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Smartphones and Accessories"</span>,</span>
+<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"MobiTech"</span>,</span>
+<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"MT-PC20"</span>,</span>
+<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.3</span>,</span>
+<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"5000mAh battery"</span>, <span class="st">"Wireless charging"</span>, <span class="st">"Compatible with SmartX ProPhone"</span>],</span>
+<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A protective case with built-in battery for extended usage."</span>,</span>
+<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">59.99</span></span>
+<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SmartX MiniPhone"</span>: {</span>
+<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"SmartX MiniPhone"</span>,</span>
+<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Smartphones and Accessories"</span>,</span>
+<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"SmartX"</span>,</span>
+<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"SX-MP5"</span>,</span>
+<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.2</span>,</span>
+<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"4.7-inch display"</span>, <span class="st">"64GB storage"</span>, <span class="st">"8MP camera"</span>, <span class="st">"4G"</span>],</span>
+<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A compact and affordable smartphone for basic tasks."</span>,</span>
+<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">399.99</span></span>
+<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a>    <span class="st">"MobiTech Wireless Charger"</span>: {</span>
+<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"MobiTech Wireless Charger"</span>,</span>
+<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Smartphones and Accessories"</span>,</span>
+<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"MobiTech"</span>,</span>
+<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"MT-WC10"</span>,</span>
+<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.5</span>,</span>
+<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"10W fast charging"</span>, <span class="st">"Qi-compatible"</span>, <span class="st">"LED indicator"</span>, <span class="st">"Compact design"</span>],</span>
+<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A convenient wireless charger for a clutter-free workspace."</span>,</span>
+<span id="cb10-100"><a href="#cb10-100" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">29.99</span></span>
+<span id="cb10-101"><a href="#cb10-101" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SmartX EarBuds"</span>: {</span>
+<span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"SmartX EarBuds"</span>,</span>
+<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Smartphones and Accessories"</span>,</span>
+<span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"SmartX"</span>,</span>
+<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"SX-EB20"</span>,</span>
+<span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.4</span>,</span>
+<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"True wireless"</span>, <span class="st">"Bluetooth 5.0"</span>, <span class="st">"Touch controls"</span>, <span class="st">"24-hour battery life"</span>],</span>
+<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"Experience true wireless freedom with these comfortable earbuds."</span>,</span>
+<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">99.99</span></span>
+<span id="cb10-112"><a href="#cb10-112" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-114"><a href="#cb10-114" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CineView 4K TV"</span>: {</span>
+<span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"CineView 4K TV"</span>,</span>
+<span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Televisions and Home Theater Systems"</span>,</span>
+<span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"CineView"</span>,</span>
+<span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"CV-4K55"</span>,</span>
+<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"2 years"</span>,</span>
+<span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.8</span>,</span>
+<span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"55-inch display"</span>, <span class="st">"4K resolution"</span>, <span class="st">"HDR"</span>, <span class="st">"Smart TV"</span>],</span>
+<span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A stunning 4K TV with vibrant colors and smart features."</span>,</span>
+<span id="cb10-123"><a href="#cb10-123" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">599.99</span></span>
+<span id="cb10-124"><a href="#cb10-124" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SoundMax Home Theater"</span>: {</span>
+<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"SoundMax Home Theater"</span>,</span>
+<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Televisions and Home Theater Systems"</span>,</span>
+<span id="cb10-128"><a href="#cb10-128" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"SoundMax"</span>,</span>
+<span id="cb10-129"><a href="#cb10-129" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"SM-HT100"</span>,</span>
+<span id="cb10-130"><a href="#cb10-130" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.4</span>,</span>
+<span id="cb10-132"><a href="#cb10-132" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"5.1 channel"</span>, <span class="st">"1000W output"</span>, <span class="st">"Wireless subwoofer"</span>, <span class="st">"Bluetooth"</span>],</span>
+<span id="cb10-133"><a href="#cb10-133" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A powerful home theater system for an immersive audio experience."</span>,</span>
+<span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">399.99</span></span>
+<span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CineView 8K TV"</span>: {</span>
+<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"CineView 8K TV"</span>,</span>
+<span id="cb10-138"><a href="#cb10-138" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Televisions and Home Theater Systems"</span>,</span>
+<span id="cb10-139"><a href="#cb10-139" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"CineView"</span>,</span>
+<span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"CV-8K65"</span>,</span>
+<span id="cb10-141"><a href="#cb10-141" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"2 years"</span>,</span>
+<span id="cb10-142"><a href="#cb10-142" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.9</span>,</span>
+<span id="cb10-143"><a href="#cb10-143" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"65-inch display"</span>, <span class="st">"8K resolution"</span>, <span class="st">"HDR"</span>, <span class="st">"Smart TV"</span>],</span>
+<span id="cb10-144"><a href="#cb10-144" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"Experience the future of television with this stunning 8K TV."</span>,</span>
+<span id="cb10-145"><a href="#cb10-145" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">2999.99</span></span>
+<span id="cb10-146"><a href="#cb10-146" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-147"><a href="#cb10-147" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SoundMax Soundbar"</span>: {</span>
+<span id="cb10-148"><a href="#cb10-148" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"SoundMax Soundbar"</span>,</span>
+<span id="cb10-149"><a href="#cb10-149" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Televisions and Home Theater Systems"</span>,</span>
+<span id="cb10-150"><a href="#cb10-150" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"SoundMax"</span>,</span>
+<span id="cb10-151"><a href="#cb10-151" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"SM-SB50"</span>,</span>
+<span id="cb10-152"><a href="#cb10-152" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-153"><a href="#cb10-153" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.3</span>,</span>
+<span id="cb10-154"><a href="#cb10-154" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"2.1 channel"</span>, <span class="st">"300W output"</span>, <span class="st">"Wireless subwoofer"</span>, <span class="st">"Bluetooth"</span>],</span>
+<span id="cb10-155"><a href="#cb10-155" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"Upgrade your TV's audio with this sleek and powerful soundbar."</span>,</span>
+<span id="cb10-156"><a href="#cb10-156" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">199.99</span></span>
+<span id="cb10-157"><a href="#cb10-157" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-158"><a href="#cb10-158" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CineView OLED TV"</span>: {</span>
+<span id="cb10-159"><a href="#cb10-159" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"CineView OLED TV"</span>,</span>
+<span id="cb10-160"><a href="#cb10-160" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Televisions and Home Theater Systems"</span>,</span>
+<span id="cb10-161"><a href="#cb10-161" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"CineView"</span>,</span>
+<span id="cb10-162"><a href="#cb10-162" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"CV-OLED55"</span>,</span>
+<span id="cb10-163"><a href="#cb10-163" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"2 years"</span>,</span>
+<span id="cb10-164"><a href="#cb10-164" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.7</span>,</span>
+<span id="cb10-165"><a href="#cb10-165" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"55-inch display"</span>, <span class="st">"4K resolution"</span>, <span class="st">"HDR"</span>, <span class="st">"Smart TV"</span>],</span>
+<span id="cb10-166"><a href="#cb10-166" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"Experience true blacks and vibrant colors with this OLED TV."</span>,</span>
+<span id="cb10-167"><a href="#cb10-167" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">1499.99</span></span>
+<span id="cb10-168"><a href="#cb10-168" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-169"><a href="#cb10-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-170"><a href="#cb10-170" aria-hidden="true" tabindex="-1"></a>    <span class="st">"GameSphere X"</span>: {</span>
+<span id="cb10-171"><a href="#cb10-171" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"GameSphere X"</span>,</span>
+<span id="cb10-172"><a href="#cb10-172" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Gaming Consoles and Accessories"</span>,</span>
+<span id="cb10-173"><a href="#cb10-173" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"GameSphere"</span>,</span>
+<span id="cb10-174"><a href="#cb10-174" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"GS-X"</span>,</span>
+<span id="cb10-175"><a href="#cb10-175" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-176"><a href="#cb10-176" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.9</span>,</span>
+<span id="cb10-177"><a href="#cb10-177" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"4K gaming"</span>, <span class="st">"1TB storage"</span>, <span class="st">"Backward compatibility"</span>, <span class="st">"Online multiplayer"</span>],</span>
+<span id="cb10-178"><a href="#cb10-178" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A next-generation gaming console for the ultimate gaming experience."</span>,</span>
+<span id="cb10-179"><a href="#cb10-179" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">499.99</span></span>
+<span id="cb10-180"><a href="#cb10-180" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-181"><a href="#cb10-181" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ProGamer Controller"</span>: {</span>
+<span id="cb10-182"><a href="#cb10-182" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"ProGamer Controller"</span>,</span>
+<span id="cb10-183"><a href="#cb10-183" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Gaming Consoles and Accessories"</span>,</span>
+<span id="cb10-184"><a href="#cb10-184" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"ProGamer"</span>,</span>
+<span id="cb10-185"><a href="#cb10-185" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"PG-C100"</span>,</span>
+<span id="cb10-186"><a href="#cb10-186" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-187"><a href="#cb10-187" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.2</span>,</span>
+<span id="cb10-188"><a href="#cb10-188" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Ergonomic design"</span>, <span class="st">"Customizable buttons"</span>, <span class="st">"Wireless"</span>, <span class="st">"Rechargeable battery"</span>],</span>
+<span id="cb10-189"><a href="#cb10-189" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A high-quality gaming controller for precision and comfort."</span>,</span>
+<span id="cb10-190"><a href="#cb10-190" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">59.99</span></span>
+<span id="cb10-191"><a href="#cb10-191" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-192"><a href="#cb10-192" aria-hidden="true" tabindex="-1"></a>    <span class="st">"GameSphere Y"</span>: {</span>
+<span id="cb10-193"><a href="#cb10-193" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"GameSphere Y"</span>,</span>
+<span id="cb10-194"><a href="#cb10-194" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Gaming Consoles and Accessories"</span>,</span>
+<span id="cb10-195"><a href="#cb10-195" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"GameSphere"</span>,</span>
+<span id="cb10-196"><a href="#cb10-196" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"GS-Y"</span>,</span>
+<span id="cb10-197"><a href="#cb10-197" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-198"><a href="#cb10-198" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.8</span>,</span>
+<span id="cb10-199"><a href="#cb10-199" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"4K gaming"</span>, <span class="st">"500GB storage"</span>, <span class="st">"Backward compatibility"</span>, <span class="st">"Online multiplayer"</span>],</span>
+<span id="cb10-200"><a href="#cb10-200" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A compact gaming console with powerful performance."</span>,</span>
+<span id="cb10-201"><a href="#cb10-201" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">399.99</span></span>
+<span id="cb10-202"><a href="#cb10-202" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-203"><a href="#cb10-203" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ProGamer Racing Wheel"</span>: {</span>
+<span id="cb10-204"><a href="#cb10-204" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"ProGamer Racing Wheel"</span>,</span>
+<span id="cb10-205"><a href="#cb10-205" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Gaming Consoles and Accessories"</span>,</span>
+<span id="cb10-206"><a href="#cb10-206" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"ProGamer"</span>,</span>
+<span id="cb10-207"><a href="#cb10-207" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"PG-RW200"</span>,</span>
+<span id="cb10-208"><a href="#cb10-208" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-209"><a href="#cb10-209" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.5</span>,</span>
+<span id="cb10-210"><a href="#cb10-210" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Force feedback"</span>, <span class="st">"Adjustable pedals"</span>, <span class="st">"Paddle shifters"</span>, <span class="st">"Compatible with GameSphere X"</span>],</span>
+<span id="cb10-211"><a href="#cb10-211" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"Enhance your racing games with this realistic racing wheel."</span>,</span>
+<span id="cb10-212"><a href="#cb10-212" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">249.99</span></span>
+<span id="cb10-213"><a href="#cb10-213" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-214"><a href="#cb10-214" aria-hidden="true" tabindex="-1"></a>    <span class="st">"GameSphere VR Headset"</span>: {</span>
+<span id="cb10-215"><a href="#cb10-215" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"GameSphere VR Headset"</span>,</span>
+<span id="cb10-216"><a href="#cb10-216" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Gaming Consoles and Accessories"</span>,</span>
+<span id="cb10-217"><a href="#cb10-217" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"GameSphere"</span>,</span>
+<span id="cb10-218"><a href="#cb10-218" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"GS-VR"</span>,</span>
+<span id="cb10-219"><a href="#cb10-219" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-220"><a href="#cb10-220" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.6</span>,</span>
+<span id="cb10-221"><a href="#cb10-221" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Immersive VR experience"</span>, <span class="st">"Built-in headphones"</span>, <span class="st">"Adjustable headband"</span>, <span class="st">"Compatible with GameSphere X"</span>],</span>
+<span id="cb10-222"><a href="#cb10-222" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"Step into the world of virtual reality with this comfortable VR headset."</span>,</span>
+<span id="cb10-223"><a href="#cb10-223" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">299.99</span></span>
+<span id="cb10-224"><a href="#cb10-224" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-225"><a href="#cb10-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-226"><a href="#cb10-226" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AudioPhonic Noise-Canceling Headphones"</span>: {</span>
+<span id="cb10-227"><a href="#cb10-227" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"AudioPhonic Noise-Canceling Headphones"</span>,</span>
+<span id="cb10-228"><a href="#cb10-228" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Audio Equipment"</span>,</span>
+<span id="cb10-229"><a href="#cb10-229" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"AudioPhonic"</span>,</span>
+<span id="cb10-230"><a href="#cb10-230" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"AP-NC100"</span>,</span>
+<span id="cb10-231"><a href="#cb10-231" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-232"><a href="#cb10-232" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.6</span>,</span>
+<span id="cb10-233"><a href="#cb10-233" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Active noise-canceling"</span>, <span class="st">"Bluetooth"</span>, <span class="st">"20-hour battery life"</span>, <span class="st">"Comfortable fit"</span>],</span>
+<span id="cb10-234"><a href="#cb10-234" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"Experience immersive sound with these noise-canceling headphones."</span>,</span>
+<span id="cb10-235"><a href="#cb10-235" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">199.99</span></span>
+<span id="cb10-236"><a href="#cb10-236" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-237"><a href="#cb10-237" aria-hidden="true" tabindex="-1"></a>    <span class="st">"WaveSound Bluetooth Speaker"</span>: {</span>
+<span id="cb10-238"><a href="#cb10-238" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"WaveSound Bluetooth Speaker"</span>,</span>
+<span id="cb10-239"><a href="#cb10-239" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Audio Equipment"</span>,</span>
+<span id="cb10-240"><a href="#cb10-240" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"WaveSound"</span>,</span>
+<span id="cb10-241"><a href="#cb10-241" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"WS-BS50"</span>,</span>
+<span id="cb10-242"><a href="#cb10-242" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-243"><a href="#cb10-243" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.5</span>,</span>
+<span id="cb10-244"><a href="#cb10-244" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Portable"</span>, <span class="st">"10-hour battery life"</span>, <span class="st">"Water-resistant"</span>, <span class="st">"Built-in microphone"</span>],</span>
+<span id="cb10-245"><a href="#cb10-245" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A compact and versatile Bluetooth speaker for music on the go."</span>,</span>
+<span id="cb10-246"><a href="#cb10-246" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">49.99</span></span>
+<span id="cb10-247"><a href="#cb10-247" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-248"><a href="#cb10-248" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AudioPhonic True Wireless Earbuds"</span>: {</span>
+<span id="cb10-249"><a href="#cb10-249" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"AudioPhonic True Wireless Earbuds"</span>,</span>
+<span id="cb10-250"><a href="#cb10-250" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Audio Equipment"</span>,</span>
+<span id="cb10-251"><a href="#cb10-251" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"AudioPhonic"</span>,</span>
+<span id="cb10-252"><a href="#cb10-252" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"AP-TW20"</span>,</span>
+<span id="cb10-253"><a href="#cb10-253" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-254"><a href="#cb10-254" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.4</span>,</span>
+<span id="cb10-255"><a href="#cb10-255" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"True wireless"</span>, <span class="st">"Bluetooth 5.0"</span>, <span class="st">"Touch controls"</span>, <span class="st">"18-hour battery life"</span>],</span>
+<span id="cb10-256"><a href="#cb10-256" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"Enjoy music without wires with these comfortable true wireless earbuds."</span>,</span>
+<span id="cb10-257"><a href="#cb10-257" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">79.99</span></span>
+<span id="cb10-258"><a href="#cb10-258" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-259"><a href="#cb10-259" aria-hidden="true" tabindex="-1"></a>    <span class="st">"WaveSound Soundbar"</span>: {</span>
+<span id="cb10-260"><a href="#cb10-260" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"WaveSound Soundbar"</span>,</span>
+<span id="cb10-261"><a href="#cb10-261" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Audio Equipment"</span>,</span>
+<span id="cb10-262"><a href="#cb10-262" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"WaveSound"</span>,</span>
+<span id="cb10-263"><a href="#cb10-263" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"WS-SB40"</span>,</span>
+<span id="cb10-264"><a href="#cb10-264" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-265"><a href="#cb10-265" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.3</span>,</span>
+<span id="cb10-266"><a href="#cb10-266" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"2.0 channel"</span>, <span class="st">"80W output"</span>, <span class="st">"Bluetooth"</span>, <span class="st">"Wall-mountable"</span>],</span>
+<span id="cb10-267"><a href="#cb10-267" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"Upgrade your TV's audio with this slim and powerful soundbar."</span>,</span>
+<span id="cb10-268"><a href="#cb10-268" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">99.99</span></span>
+<span id="cb10-269"><a href="#cb10-269" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-270"><a href="#cb10-270" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AudioPhonic Turntable"</span>: {</span>
+<span id="cb10-271"><a href="#cb10-271" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"AudioPhonic Turntable"</span>,</span>
+<span id="cb10-272"><a href="#cb10-272" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Audio Equipment"</span>,</span>
+<span id="cb10-273"><a href="#cb10-273" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"AudioPhonic"</span>,</span>
+<span id="cb10-274"><a href="#cb10-274" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"AP-TT10"</span>,</span>
+<span id="cb10-275"><a href="#cb10-275" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-276"><a href="#cb10-276" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.2</span>,</span>
+<span id="cb10-277"><a href="#cb10-277" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"3-speed"</span>, <span class="st">"Built-in speakers"</span>, <span class="st">"Bluetooth"</span>, <span class="st">"USB recording"</span>],</span>
+<span id="cb10-278"><a href="#cb10-278" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"Rediscover your vinyl collection with this modern turntable."</span>,</span>
+<span id="cb10-279"><a href="#cb10-279" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">149.99</span></span>
+<span id="cb10-280"><a href="#cb10-280" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-281"><a href="#cb10-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-282"><a href="#cb10-282" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FotoSnap DSLR Camera"</span>: {</span>
+<span id="cb10-283"><a href="#cb10-283" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"FotoSnap DSLR Camera"</span>,</span>
+<span id="cb10-284"><a href="#cb10-284" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Cameras and Camcorders"</span>,</span>
+<span id="cb10-285"><a href="#cb10-285" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"FotoSnap"</span>,</span>
+<span id="cb10-286"><a href="#cb10-286" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"FS-DSLR200"</span>,</span>
+<span id="cb10-287"><a href="#cb10-287" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-288"><a href="#cb10-288" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.7</span>,</span>
+<span id="cb10-289"><a href="#cb10-289" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"24.2MP sensor"</span>, <span class="st">"1080p video"</span>, <span class="st">"3-inch LCD"</span>, <span class="st">"Interchangeable lenses"</span>],</span>
+<span id="cb10-290"><a href="#cb10-290" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"Capture stunning photos and videos with this versatile DSLR camera."</span>,</span>
+<span id="cb10-291"><a href="#cb10-291" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">599.99</span></span>
+<span id="cb10-292"><a href="#cb10-292" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-293"><a href="#cb10-293" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ActionCam 4K"</span>: {</span>
+<span id="cb10-294"><a href="#cb10-294" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"ActionCam 4K"</span>,</span>
+<span id="cb10-295"><a href="#cb10-295" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Cameras and Camcorders"</span>,</span>
+<span id="cb10-296"><a href="#cb10-296" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"ActionCam"</span>,</span>
+<span id="cb10-297"><a href="#cb10-297" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"AC-4K"</span>,</span>
+<span id="cb10-298"><a href="#cb10-298" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-299"><a href="#cb10-299" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.4</span>,</span>
+<span id="cb10-300"><a href="#cb10-300" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"4K video"</span>, <span class="st">"Waterproof"</span>, <span class="st">"Image stabilization"</span>, <span class="st">"Wi-Fi"</span>],</span>
+<span id="cb10-301"><a href="#cb10-301" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"Record your adventures with this rugged and compact 4K action camera."</span>,</span>
+<span id="cb10-302"><a href="#cb10-302" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">299.99</span></span>
+<span id="cb10-303"><a href="#cb10-303" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-304"><a href="#cb10-304" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FotoSnap Mirrorless Camera"</span>: {</span>
+<span id="cb10-305"><a href="#cb10-305" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"FotoSnap Mirrorless Camera"</span>,</span>
+<span id="cb10-306"><a href="#cb10-306" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Cameras and Camcorders"</span>,</span>
+<span id="cb10-307"><a href="#cb10-307" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"FotoSnap"</span>,</span>
+<span id="cb10-308"><a href="#cb10-308" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"FS-ML100"</span>,</span>
+<span id="cb10-309"><a href="#cb10-309" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-310"><a href="#cb10-310" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.6</span>,</span>
+<span id="cb10-311"><a href="#cb10-311" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"20.1MP sensor"</span>, <span class="st">"4K video"</span>, <span class="st">"3-inch touchscreen"</span>, <span class="st">"Interchangeable lenses"</span>],</span>
+<span id="cb10-312"><a href="#cb10-312" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A compact and lightweight mirrorless camera with advanced features."</span>,</span>
+<span id="cb10-313"><a href="#cb10-313" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">799.99</span></span>
+<span id="cb10-314"><a href="#cb10-314" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-315"><a href="#cb10-315" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ZoomMaster Camcorder"</span>: {</span>
+<span id="cb10-316"><a href="#cb10-316" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"ZoomMaster Camcorder"</span>,</span>
+<span id="cb10-317"><a href="#cb10-317" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Cameras and Camcorders"</span>,</span>
+<span id="cb10-318"><a href="#cb10-318" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"ZoomMaster"</span>,</span>
+<span id="cb10-319"><a href="#cb10-319" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"ZM-CM50"</span>,</span>
+<span id="cb10-320"><a href="#cb10-320" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-321"><a href="#cb10-321" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.3</span>,</span>
+<span id="cb10-322"><a href="#cb10-322" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"1080p video"</span>, <span class="st">"30x optical zoom"</span>, <span class="st">"3-inch LCD"</span>, <span class="st">"Image stabilization"</span>],</span>
+<span id="cb10-323"><a href="#cb10-323" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"Capture life's moments with this easy-to-use camcorder."</span>,</span>
+<span id="cb10-324"><a href="#cb10-324" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">249.99</span></span>
+<span id="cb10-325"><a href="#cb10-325" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-326"><a href="#cb10-326" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FotoSnap Instant Camera"</span>: {</span>
+<span id="cb10-327"><a href="#cb10-327" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"FotoSnap Instant Camera"</span>,</span>
+<span id="cb10-328"><a href="#cb10-328" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Cameras and Camcorders"</span>,</span>
+<span id="cb10-329"><a href="#cb10-329" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"FotoSnap"</span>,</span>
+<span id="cb10-330"><a href="#cb10-330" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_number"</span>: <span class="st">"FS-IC10"</span>,</span>
+<span id="cb10-331"><a href="#cb10-331" aria-hidden="true" tabindex="-1"></a>        <span class="st">"warranty"</span>: <span class="st">"1 year"</span>,</span>
+<span id="cb10-332"><a href="#cb10-332" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.1</span>,</span>
+<span id="cb10-333"><a href="#cb10-333" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Instant prints"</span>, <span class="st">"Built-in flash"</span>, <span class="st">"Selfie mirror"</span>, <span class="st">"Battery-powered"</span>],</span>
+<span id="cb10-334"><a href="#cb10-334" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"Create instant memories with this fun and portable instant camera."</span>,</span>
+<span id="cb10-335"><a href="#cb10-335" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">69.99</span></span>
+<span id="cb10-336"><a href="#cb10-336" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb10-337"><a href="#cb10-337" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="helper-function-get-product-by-name" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="helper-function-get-product-by-name">Helper function: get product by name</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_product_by_name(name):</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> products.get(name, <span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(get_product_by_name(<span class="st">"TechPro Ultrabook"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="helper-function-get-product-by-category" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="helper-function-get-product-by-category">Helper function: get product by category</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_products_by_category(category):</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [product <span class="cf">for</span> product <span class="kw">in</span> products.values() <span class="cf">if</span> product[<span class="st">"category"</span>] <span class="op">==</span> category]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(get_products_by_category(<span class="st">"Computers and Laptops"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="category-and-product-response-1" class="level2">
+<h2 class="anchored" data-anchor-id="category-and-product-response-1">Category and product response 1</h2>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(user_message_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-output-location="slide">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(category_and_product_response_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="helper-function-string-into-dictionaries" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="helper-function-string-into-dictionaries">Helper function: String into dictionaries</h2>
+<p>Read Python string into Python list of dictionaries</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_string_to_list(input_string):</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> input_string <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Replace single quotes with double quotes for valid JSON</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        input_string <span class="op">=</span> input_string.replace(<span class="st">"'"</span>, <span class="st">"</span><span class="ch">\"</span><span class="st">"</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> json.loads(input_string)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> data</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> json.JSONDecodeError:</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Error: Invalid JSON string"</span>)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="category-and-product-list" class="level2">
+<h2 class="anchored" data-anchor-id="category-and-product-list">Category and product list</h2>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>category_and_product_list <span class="op">=</span> read_string_to_list(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    category_and_product_response_1)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(category_and_product_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="helper-function-generate-output-string" class="level2">
+<h2 class="anchored" data-anchor-id="helper-function-generate-output-string">Helper function: Generate output string</h2>
+<p>Retrieve detailed product information for the relevant products and categories</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_output_string(data_list):</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    output_string <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> data_list <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> output_string</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> data <span class="kw">in</span> data_list:</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="st">"products"</span> <span class="kw">in</span> data:</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>                products_list <span class="op">=</span> data[<span class="st">"products"</span>]</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> product_name <span class="kw">in</span> products_list:</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>                    product <span class="op">=</span> get_product_by_name(product_name)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> product:</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>                        output_string <span class="op">+=</span> json.dumps(product, indent<span class="op">=</span><span class="dv">4</span>) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">else</span>:</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">print</span>(<span class="ss">f"Error: Product '</span><span class="sc">{</span>product_name<span class="sc">}</span><span class="ss">' not found"</span>)</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> <span class="st">"category"</span> <span class="kw">in</span> data:</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>                category_name <span class="op">=</span> data[<span class="st">"category"</span>]</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>                category_products <span class="op">=</span> get_products_by_category(category_name)</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> product <span class="kw">in</span> category_products:</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>                    output_string <span class="op">+=</span> json.dumps(product, indent<span class="op">=</span><span class="dv">4</span>) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">"Error: Invalid object format"</span>)</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"Error: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> output_string</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="product-info-for-user-message-1" class="level2">
+<h2 class="anchored" data-anchor-id="product-info-for-user-message-1">Product info for user message 1</h2>
+<div class="cell" data-output-location="slide">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>product_information_for_user_message_1 <span class="op">=</span> generate_output_string(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    category_and_product_list)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(product_information_for_user_message_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="answer-with-detailed-product-information" class="level1">
+<h1>Answer with detailed product information</h1>
+<p>Generate answer to user query based on detailed product information</p>
+<section id="system-message-1" class="level2">
+<h2 class="anchored" data-anchor-id="system-message-1">System message</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>system_message <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ss">You are a customer service assistant for a </span><span class="ch">\</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="ss">large electronic store. </span><span class="ch">\</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="ss">Respond in a friendly and helpful tone, </span><span class="ch">\</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="ss">with very concise answers. </span><span class="ch">\</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="ss">Make sure to ask the user relevant follow up questions.</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="user-message-1-1" class="level2">
+<h2 class="anchored" data-anchor-id="user-message-1-1">User message 1</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>user_message_1 <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ss">tell me about the smartx pro phone and </span><span class="ch">\</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="ss">the fotosnap camera, the dslr one. </span><span class="ch">\</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="ss">Also tell me about your tvs"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="messages-2" class="level2">
+<h2 class="anchored" data-anchor-id="messages-2">Messages</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'system'</span>,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>     <span class="st">'content'</span>: system_message},</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'user'</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>     <span class="st">'content'</span>: user_message_1},</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'assistant'</span>,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">'content'</span>: <span class="ss">f"""Relevant product information:</span><span class="ch">\n\</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="ss"> </span><span class="sc">{</span>product_information_for_user_message_1<span class="sc">}</span><span class="ss">"""</span>},</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="response-2" class="level2">
+<h2 class="anchored" data-anchor-id="response-2">Response</h2>
+<div class="cell" data-output-location="slide">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>final_response <span class="op">=</span> get_completion_from_messages(messages)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(final_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="whats-next" class="level1" data-background-image="../images/logo.png" data-background-opacity="0.5">
+<h1 data-background-image="../images/logo.png" data-background-opacity="0.5">What’s next?</h1>
+<p><strong>Congratulations! You have completed this tutorial</strong> 👍</p>
+<p><strong>Next, you may want to go back to the <a href="https://kirenz.github.io/lab-chat-system/">lab’s website</a></strong></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© <a href="https://www.kirenz.com/">Jan Kirenz</a>, 2023</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../slide.html">Slides</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../requirements.html">Requirements</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../assignments.html">Assignments</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://moodle.hdm-stuttgart.de/login/index.php">
+      <i class="bi bi-person-circle" role="img" aria-label="Moodle">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>
