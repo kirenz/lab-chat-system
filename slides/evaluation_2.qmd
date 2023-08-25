@@ -1,0 +1,411 @@
+---
+title: "Evaluation Part 2 (no single right answer)"
+title-slide-attributes:
+  data-background-image: ../images/logo.png
+  data-background-size: contain
+  data-background-opacity: "0.5"
+lang: en
+subtitle: Tutorial 9
+author: Jan Kirenz
+execute:
+  eval: true
+  echo: true
+highlight-style: github
+format:
+  revealjs: 
+    toc: true
+    toc-depth: 1
+    embed-resources: false
+    theme: [dark, ../custom.scss]  
+    incremental: false
+    transition: slide
+    background-transition: fade
+    transition-speed: slow
+    code-copy: true
+    code-line-numbers: true
+    smaller: false
+    scrollable: true
+    slide-number: c
+    preview-links: auto
+    chalkboard: 
+      buttons: false
+   # logo: ../images/logo.png
+    footer: Jan Kirenz
+---
+
+# Setup
+
+## Python
+
+
+```{python}
+import os
+import openai
+# import sys
+# sys.path.append('../..')
+import utils
+from dotenv import load_dotenv, find_dotenv
+_ = load_dotenv(find_dotenv())  # read local .env file
+
+openai.api_key = os.environ['OPENAI_API_KEY']
+```
+
+## Helper function
+
+```{python}
+
+
+def get_completion_from_messages(messages, model="gpt-3.5-turbo", temperature=0, max_tokens=500):
+    response = openai.ChatCompletion.create(
+        model=model,
+        messages=messages,
+        temperature=temperature,
+        max_tokens=max_tokens,
+    )
+    return response.choices[0].message["content"]
+
+
+```
+
+# End-to-End System
+
+Run through the end-to-end system to answer the user query
+
+## Customer message
+
+
+```{python}
+customer_msg = f"""
+tell me about the smartx pro phone and the fotosnap camera, the dslr one.
+Also, what TVs or TV related products do you have?"""
+```
+
+
+## Lists of products and categories {.smaller}
+
+```{python}
+products_by_category = [{'category': 'Smartphones and Accessories', 'products': ['SmartX ProPhone']}, {
+    'category': 'Cameras and Camcorders', 'products': ['FotoSnap DSLR Camera']}, {'category': 'Televisions and Home Theater Systems'}]
+```
+
+```{python}
+category_and_product_list = [{'category': 'Smartphones and Accessories', 'products': ['SmartX ProPhone']},
+                             {'category': 'Cameras and Camcorders',
+                                 'products': ['FotoSnap DSLR Camera']},
+                             {'category': 'Televisions and Home Theater Systems'}]
+```
+
+## Product info {.smaller}
+
+```{python}
+product_info = [{'name': 'SmartX ProPhone',
+                 'category': 'Smartphones and Accessories',
+                 'brand': 'SmartX',
+                 'model_number': 'SX-PP10',
+                 'warranty': '1 year',
+                 'rating': 4.6,
+                 'features': ['6.1-inch display', '128GB storage', '12MP dual camera', '5G'],
+                 'description': 'A powerful smartphone with advanced camera features.',
+                 'price': 899.99},
+                {'name': 'FotoSnap DSLR Camera',
+                 'category': 'Cameras and Camcorders',
+                 'brand': 'FotoSnap',
+                 'model_number': 'FS-DSLR200',
+                 'warranty': '1 year',
+                 'rating': 4.7,
+                 'features': ['24.2MP sensor',
+                              '1080p video',
+                              '3-inch LCD',
+                              'Interchangeable lenses'],
+                 'description': 'Capture stunning photos and videos with this versatile DSLR camera.',
+                 'price': 599.99},
+                {'name': 'CineView 4K TV',
+                 'category': 'Televisions and Home Theater Systems',
+                 'brand': 'CineView',
+                 'model_number': 'CV-4K55',
+                 'warranty': '2 years',
+                 'rating': 4.8,
+                 'features': ['55-inch display', '4K resolution', 'HDR', 'Smart TV'],
+                 'description': 'A stunning 4K TV with vibrant colors and smart features.',
+                 'price': 599.99},
+                {'name': 'SoundMax Home Theater',
+                 'category': 'Televisions and Home Theater Systems',
+                 'brand': 'SoundMax',
+                 'model_number': 'SM-HT100',
+                 'warranty': '1 year',
+                 'rating': 4.4,
+                 'features': ['5.1 channel',
+                              '1000W output',
+                              'Wireless subwoofer',
+                              'Bluetooth'],
+                 'description': 'A powerful home theater system for an immersive audio experience.',
+                 'price': 399.99},
+                {'name': 'CineView 8K TV',
+                 'category': 'Televisions and Home Theater Systems',
+                 'brand': 'CineView',
+                 'model_number': 'CV-8K65',
+                 'warranty': '2 years',
+                 'rating': 4.9,
+                 'features': ['65-inch display', '8K resolution', 'HDR', 'Smart TV'],
+                 'description': 'Experience the future of television with this stunning 8K TV.',
+                 'price': 2999.99},
+                {'name': 'SoundMax Soundbar',
+                 'category': 'Televisions and Home Theater Systems',
+                 'brand': 'SoundMax',
+                 'model_number': 'SM-SB50',
+                 'warranty': '1 year',
+                 'rating': 4.3,
+                 'features': ['2.1 channel',
+                              '300W output',
+                              'Wireless subwoofer',
+                              'Bluetooth'],
+                 'description': "Upgrade your TV's audio with this sleek and powerful soundbar.",
+                 'price': 199.99},
+                {'name': 'CineView OLED TV',
+                 'category': 'Televisions and Home Theater Systems',
+                 'brand': 'CineView',
+                 'model_number': 'CV-OLED55',
+                 'warranty': '2 years',
+                 'rating': 4.7,
+                 'features': ['55-inch display', '4K resolution', 'HDR', 'Smart TV'],
+                 'description': 'Experience true blacks and vibrant colors with this OLED TV.',
+                 'price': 1499.99}]
+```
+
+## Answer
+
+```{python}
+assistant_answer = 'Sure! Let me provide you with some information about the SmartX ProPhone and the FotoSnap DSLR Camera.\n\nThe SmartX ProPhone is a powerful smartphone with advanced camera features. It has a 6.1-inch display, 128GB storage, a 12MP dual camera, and supports 5G connectivity. The SmartX ProPhone is priced at $899.99 and comes with a 1-year warranty.\n\nThe FotoSnap DSLR Camera is a versatile camera that allows you to capture stunning photos and videos. It features a 24.2MP sensor, 1080p video recording, a 3-inch LCD screen, and supports interchangeable lenses. The FotoSnap DSLR Camera is priced at $599.99 and also comes with a 1-year warranty.\n\nAs for TVs and TV-related products, we have a range of options available. Some of our popular TV models include the CineView 4K TV, CineView 8K TV, and CineView OLED TV. We also offer home theater systems like the SoundMax Home Theater and SoundMax Soundbar. Each product has its own unique features and price points. Is there a specific TV or TV-related product you are interested in?'
+```
+
+
+# Evaluation
+
+Evaluate the LLM's answer to the user with a rubric, based on the extracted product information
+
+## Customer message and product info
+
+
+```{python}
+cust_prod_info = {
+    'customer_msg': customer_msg,
+    'context': product_info
+}
+```
+
+## Helper function: Evaluation with rubric
+
+```{python}
+
+
+def eval_with_rubric(test_set, assistant_answer):
+
+    cust_msg = test_set['customer_msg']
+    context = test_set['context']
+    completion = assistant_answer
+
+    system_message = """\
+    You are an assistant that evaluates how well the customer service agent \
+    answers a user question by looking at the context that the customer service \
+    agent is using to generate its response. 
+    """
+
+    user_message = f"""\
+You are evaluating a submitted answer to a question based on the context \
+that the agent uses to answer the question.
+Here is the data:
+    [BEGIN DATA]
+    ************
+    [Question]: {cust_msg}
+    ************
+    [Context]: {context}
+    ************
+    [Submission]: {completion}
+    ************
+    [END DATA]
+
+Compare the factual content of the submitted answer with the context. \
+Ignore any differences in style, grammar, or punctuation.
+Answer the following questions:
+    - Is the Assistant response based only on the context provided? (Y or N)
+    - Does the answer include information that is not provided in the context? (Y or N)
+    - Is there any disagreement between the response and the context? (Y or N)
+    - Count how many questions the user asked. (output a number)
+    - For each question that the user asked, is there a corresponding answer to it?
+      Question 1: (Y or N)
+      Question 2: (Y or N)
+      ...
+      Question N: (Y or N)
+    - Of the number of questions asked, how many of these questions were addressed by the answer? (output a number)
+"""
+
+    messages = [
+        {'role': 'system', 'content': system_message},
+        {'role': 'user', 'content': user_message}
+    ]
+
+    response = get_completion_from_messages(messages)
+    return response
+
+
+```
+
+
+## Output
+
+```{python}
+# | output-location: fragment
+
+evaluation_output = eval_with_rubric(cust_prod_info, assistant_answer)
+print(evaluation_output)
+```
+
+
+## Ideal test set answer {.smaller}
+
+Evaluate the LLM's answer to the user based on an "ideal" / "expert" (human generated) answer.
+
+```{python}
+test_set_ideal = {
+    'customer_msg': """\
+tell me about the smartx pro phone and the fotosnap camera, the dslr one.
+Also, what TVs or TV related products do you have?""",
+    'ideal_answer': """\
+Of course!  The SmartX ProPhone is a powerful \
+smartphone with advanced camera features. \
+For instance, it has a 12MP dual camera. \
+Other features include 5G wireless and 128GB storage. \
+It also has a 6.1-inch display.  The price is $899.99.
+
+The FotoSnap DSLR Camera is great for \
+capturing stunning photos and videos. \
+Some features include 1080p video, \
+3-inch LCD, a 24.2MP sensor, \
+and interchangeable lenses. \
+The price is 599.99.
+
+For TVs and TV related products, we offer 3 TVs \
+
+
+All TVs offer HDR and Smart TV.
+
+The CineView 4K TV has vibrant colors and smart features. \
+Some of these features include a 55-inch display, \
+'4K resolution. It's priced at 599.
+
+The CineView 8K TV is a stunning 8K TV. \
+Some features include a 65-inch display and \
+8K resolution.  It's priced at 2999.99
+
+The CineView OLED TV lets you experience vibrant colors. \
+Some features include a 55-inch display and 4K resolution. \
+It's priced at 1499.99.
+
+We also offer 2 home theater products, both which include bluetooth.\
+The SoundMax Home Theater is a powerful home theater system for \
+an immmersive audio experience.
+Its features include 5.1 channel, 1000W output, and wireless subwoofer.
+It's priced at 399.99.
+
+The SoundMax Soundbar is a sleek and powerful soundbar.
+It's features include 2.1 channel, 300W output, and wireless subwoofer.
+It's priced at 199.99
+
+Are there any questions additional you may have about these products \
+that you mentioned here?
+Or may do you have other questions I can help you with?
+    """
+}
+```
+
+## Evaluation prompt
+
+- Check if the LLM's response agrees with or disagrees with the expert answer
+
+- This evaluation prompt is from the [OpenAI evals](https://github.com/openai/evals/blob/main/evals/registry/modelgraded/fact.yaml) project.
+
+## Helper function: Evaluate vs ideal {.smaller}
+
+```{python}
+
+
+def eval_vs_ideal(test_set, assistant_answer):
+
+    cust_msg = test_set['customer_msg']
+    ideal = test_set['ideal_answer']
+    completion = assistant_answer
+
+    system_message = """\
+    You are an assistant that evaluates how well the customer service agent \
+    answers a user question by comparing the response to the ideal (expert) response
+    Output a single letter and nothing else. 
+    """
+
+    user_message = f"""\
+You are comparing a submitted answer to an expert answer on a given question. Here is the data:
+    [BEGIN DATA]
+    ************
+    [Question]: {cust_msg}
+    ************
+    [Expert]: {ideal}
+    ************
+    [Submission]: {completion}
+    ************
+    [END DATA]
+
+Compare the factual content of the submitted answer with the expert answer. Ignore any differences in style, grammar, or punctuation.
+    The submitted answer may either be a subset or superset of the expert answer, or it may conflict with it. Determine which case applies. Answer the question by selecting one of the following options:
+    (A) The submitted answer is a subset of the expert answer and is fully consistent with it.
+    (B) The submitted answer is a superset of the expert answer and is fully consistent with it.
+    (C) The submitted answer contains all the same details as the expert answer.
+    (D) There is a disagreement between the submitted answer and the expert answer.
+    (E) The answers differ, but these differences don't matter from the perspective of factuality.
+  choice_strings: ABCDE
+"""
+
+    messages = [
+        {'role': 'system', 'content': system_message},
+        {'role': 'user', 'content': user_message}
+    ]
+
+    response = get_completion_from_messages(messages)
+    return response
+
+
+```
+
+## Assistant answer 1
+
+```{python}
+# | output-location: fragment
+print(assistant_answer)
+```
+
+## Evaluation of assistant answer
+
+```{python}
+eval_vs_ideal(test_set_ideal, assistant_answer)
+```
+
+## Assistant answer 2
+
+```{python}
+assistant_answer_2 = "Learning to program ChatGPT in Python: where you ask a machine how to teach it to talk, and hope it does not get smarter than you! 💬🐍"
+```
+
+
+## Evaluation of assistant answer 2
+
+```{python}
+eval_vs_ideal(test_set_ideal, assistant_answer_2)
+```
+
+
+
+# What's next? {background-image="../images/logo.png" background-opacity="0.5"}
+
+**Congratulations! You have completed this tutorial** 👍
+
+
+**Next, you may want to go back to the [lab's website](https://kirenz.github.io/lab-chat-system/)**
+
