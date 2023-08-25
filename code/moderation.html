@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Chat System - Setup</title>
+<title>Chat System - Moderation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -148,8 +148,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#python" id="toc-python" class="nav-link active" data-scroll-target="#python">Python</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link active" data-scroll-target="#setup">Setup</a>
+  <ul class="collapse">
+  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python">Python</a></li>
   <li><a href="#helper-function" id="toc-helper-function" class="nav-link" data-scroll-target="#helper-function">Helper function</a></li>
+  </ul></li>
   <li><a href="#moderation-api-basics" id="toc-moderation-api-basics" class="nav-link" data-scroll-target="#moderation-api-basics">Moderation API Basics</a>
   <ul class="collapse">
   <li><a href="#moderation-example" id="toc-moderation-example" class="nav-link" data-scroll-target="#moderation-example">Moderation example</a></li>
@@ -168,7 +171,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#messages" id="toc-messages" class="nav-link" data-scroll-target="#messages">Messages</a></li>
   <li><a href="#response-1" id="toc-response-1" class="nav-link" data-scroll-target="#response-1">Response</a></li>
   </ul></li>
-  <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next">What’s next?</a></li>
   </ul>
 </nav>
     </div>
@@ -177,7 +179,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Setup</h1>
+<h1 class="title">Moderation</h1>
 </div>
 
 
@@ -192,6 +194,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<section id="setup" class="level1">
+<h1>Setup</h1>
 <section id="python" class="level2">
 <h2 class="anchored" data-anchor-id="python">Python</h2>
 <div class="cell">
@@ -218,6 +222,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> response.choices[<span class="dv">0</span>].message[<span class="st">"content"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
 </section>
 <section id="moderation-api-basics" class="level1">
 <h1>Moderation API Basics</h1>
@@ -347,14 +352,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion_from_messages(messages, max_tokens<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-</section>
-<section id="whats-next" class="level1" data-background-image="../images/logo.png" data-background-opacity="0.5">
-<h1 data-background-image="../images/logo.png" data-background-opacity="0.5">What’s next?</h1>
-<p><strong>Congratulations! You have completed this tutorial</strong> 👍</p>
-<p><strong>Next, you may want to go back to the <a href="https://kirenz.github.io/lab-chat-system/">lab’s website</a></strong></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

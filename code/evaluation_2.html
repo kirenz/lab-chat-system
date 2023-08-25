@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Chat System - Setup</title>
+<title>Chat System - Evaluation Part 2 (no single right answer)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -148,8 +148,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#python" id="toc-python" class="nav-link active" data-scroll-target="#python">Python</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link active" data-scroll-target="#setup">Setup</a>
+  <ul class="collapse">
+  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python">Python</a></li>
   <li><a href="#helper-function" id="toc-helper-function" class="nav-link" data-scroll-target="#helper-function">Helper function</a></li>
+  </ul></li>
   <li><a href="#end-to-end-system" id="toc-end-to-end-system" class="nav-link" data-scroll-target="#end-to-end-system">End-to-End System</a>
   <ul class="collapse">
   <li><a href="#customer-message" id="toc-customer-message" class="nav-link" data-scroll-target="#customer-message">Customer message</a></li>
@@ -170,7 +173,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#assistant-answer-2" id="toc-assistant-answer-2" class="nav-link" data-scroll-target="#assistant-answer-2">Assistant answer 2</a></li>
   <li><a href="#evaluation-of-assistant-answer-2" id="toc-evaluation-of-assistant-answer-2" class="nav-link" data-scroll-target="#evaluation-of-assistant-answer-2">Evaluation of assistant answer 2</a></li>
   </ul></li>
-  <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next">What’s next?</a></li>
   </ul>
 </nav>
     </div>
@@ -179,7 +181,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Setup</h1>
+<h1 class="title">Evaluation Part 2 (no single right answer)</h1>
 </div>
 
 
@@ -194,6 +196,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<section id="setup" class="level1">
+<h1>Setup</h1>
 <section id="python" class="level2">
 <h2 class="anchored" data-anchor-id="python">Python</h2>
 <div class="cell">
@@ -220,6 +224,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> response.choices[<span class="dv">0</span>].message[<span class="st">"content"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
 </section>
 <section id="end-to-end-system" class="level1">
 <h1>End-to-End System</h1>
@@ -533,14 +538,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>eval_vs_ideal(test_set_ideal, assistant_answer_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-</section>
-<section id="whats-next" class="level1" data-background-image="../images/logo.png" data-background-opacity="0.5">
-<h1 data-background-image="../images/logo.png" data-background-opacity="0.5">What’s next?</h1>
-<p><strong>Congratulations! You have completed this tutorial</strong> 👍</p>
-<p><strong>Next, you may want to go back to the <a href="https://kirenz.github.io/lab-chat-system/">lab’s website</a></strong></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
