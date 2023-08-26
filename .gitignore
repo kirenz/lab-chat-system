@@ -20,3 +20,5 @@ __pycache__/
 workflow.qmd
 quiz.txt
 howto.qmd
+/slides/env/*
+/slides/env/
