@@ -9,6 +9,6 @@ Visit the "[Programming Toolkit-webpage](https://kirenz.github.io/lab-toolkit/)"
 :::
 
 - **Python**: Anaconda, Anaconda Environment `prompt` and Visual Studio Code
-- **Environment**: A folder on your machine called *prompt*, an OpenAI-API key and an environment file with your OpenAI-API keyqu
+- **Environment**: A folder on your machine called *prompt*, an OpenAI-API key and an environment file with your OpenAI-API key
 
 
