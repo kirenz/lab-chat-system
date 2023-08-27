@@ -42,7 +42,7 @@ def generate_csv(lab_name, github_folder, notebook_files, output_filename):
     # Loop through each notebook file and generate the required data
     for idx, file in enumerate(notebook_files, start=1):
         colab_link = base_url.format(lab_name, github_folder, file)
-        markdown_link = "- [💻 {}]({})".format(file, colab_link)
+        markdown_link = "- [💻 Jupyter Notebook]({})".format(colab_link)
 
         row = [idx, lab_name, github_folder, file, colab_link, markdown_link]
         data.append(row)
@@ -77,7 +77,7 @@ def generate_csv(lab_name, github_folder, notebook_files, output_filename):
     # Loop through each notebook file and generate the required data
     for file in notebook_files:
         colab_link = base_url.format(lab_name, github_folder, file)
-        markdown_link = "- [💻 {}]({})".format(file, colab_link)
+        markdown_link = "- [💻 Jupyter Notebook]({})".format(colab_link)
 
         row = [markdown_link]
         data.append(row)
