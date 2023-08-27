@@ -6,17 +6,19 @@ Welcome to the lab *"chat system"*
 
 ![](/images/logo.png){width="60%"}
 
-In this lab, we will use OpenAI's API to leverage Large Language Models (LLMs) like *GPT-3.5 Turbo* and *GPT-4* into  Python based chat applications.
+In this lab, we will use[ OpenAI's](https://openai.com/) ChatGPT API to leverage Large Language Models (LLMs) into  Python based chat applications. You will learn how to build chains of prompts that interact with the completions of prior prompts and how to create a customer service chatbot.
 
 ::: {.callout-important}
 Make sure you meet all the [requirements](/requirements.qmd) and have read the lecture [slides](/slide.qmd) before you start with the [assignments](/assignments.qmd) 
 :::
 
-What you will learn in this lab:
+In this lab you’ll learn:
 
-
-
-
----
-
-*This lab is mainly based on an excellent course provided by Isa Fulford from OpenAI and Andrew Ng from DeepLearning.AI.*
+- Some basic properties of LLMs
+- How to classify user queries to a chat agent’s response
+- How to evaluate user queries for safety
+- Chain-of-thought (CoT) prompting 
+- Chain prompting to connect multiple tasks 
+- Verification of model output 
+- How to build an end-to-end chat system
+- Evaluation strategies to optimize your system
