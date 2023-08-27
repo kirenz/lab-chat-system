@@ -956,77 +956,77 @@
     "href": "slide.html",
     "title": "Slides",
     "section": "",
-    "text": "The following tutorials are mainly based on an excellent course provided by Isa Fulford from OpenAI and Andrew Ng from DeepLearning.AI.\nFor cost reasons we mainly use OpenAI’s gpt-3.5-turbo model in our tutorials. However, you can simply replace model=\"gpt-3.5-turbo\" with model=\"gpt-4\" in the helper function. Note the price difference between the two models."
+    "text": "The following tutorials are mainly based on the excellent course “Building Systems with the ChatGPT API” provided by Isa Fulford from OpenAI and Andrew Ng from DeepLearning.AI.\nFor cost reasons we mainly use OpenAI’s gpt-3.5-turbo model in our tutorials. However, you can simply replace model=\"gpt-3.5-turbo\" with model=\"gpt-4\" in the helper function. Note the price difference between the two models."
   },
   {
     "objectID": "slide.html#basics-tokens-and-chat-format",
     "href": "slide.html#basics-tokens-and-chat-format",
     "title": "Slides",
     "section": "1 Basics: Tokens and chat format",
-    "text": "1 Basics: Tokens and chat format\nIn this tutorial, you’ll learn some basic properties of Large Language Models: Tokens and the chat format:\n\n🖥️ Basics\n\n\n\n\n\n\n\nDownload files\n\n\n\n\n💻 basics.ipynb"
+    "text": "1 Basics: Tokens and chat format\nIn this tutorial, you’ll learn some basic properties of Large Language Models (tokens and the chat format):\n\n\n\n\n\n\n\n🖥️ Presentation\n💻 Jupyter Notebook"
   },
   {
     "objectID": "slide.html#classification",
     "href": "slide.html#classification",
     "title": "Slides",
     "section": "2 Classification",
-    "text": "2 Classification\nLearn how to classify different customer queries:\n\n🖥️ Classification\n\n\n\n\n\n\n\nDownload files\n\n\n\n\n💻 classification.ipynb"
+    "text": "2 Classification\nLearn how to classify different customer queries:\n\n\n\n\n\n\n\n🖥️ Presentation\n💻 Jupyter Notebook"
   },
   {
     "objectID": "slide.html#moderation",
     "href": "slide.html#moderation",
     "title": "Slides",
     "section": "3 Moderation",
-    "text": "3 Moderation\nThe moderations endpoint is a tool you can use to check whether content complies with our usage policies:\n\n🖥️ Moderation\n\n\n\n\n\n\n\nDownload files\n\n\n\n\n💻 moderation.ipynb"
+    "text": "3 Moderation\nThe moderations endpoint is a tool you can use to check whether content complies with our usage policies:\n\n\n\n\n\n\n\n🖥️ Presentation\n💻 Jupyter Notebook"
   },
   {
     "objectID": "slide.html#chain-of-thought-reasoning",
     "href": "slide.html#chain-of-thought-reasoning",
     "title": "Slides",
     "section": "4 Chain of Thought Reasoning",
-    "text": "4 Chain of Thought Reasoning\nChain-of-thought (CoT) prompting enables complex reasoning capabilities through intermediate reasoning steps. You can combine it with few-shot prompting to get better results on more complex tasks that require reasoning before responding:\n\n🖥️ Chain of Thought Reasoning\n\n\n\n\n\n\n\nDownload files\n\n\n\n\n💻 reasoning.ipynb"
+    "text": "4 Chain of Thought Reasoning\nChain-of-thought (CoT) prompting enables complex reasoning capabilities through intermediate reasoning steps. You can combine it with few-shot prompting to get better results on more complex tasks that require reasoning before responding:\n\n\n\n\n\n\n\n🖥️ Presentation\n💻 Jupyter Notebook"
   },
   {
-    "objectID": "slide.html#chaining-prompts",
-    "href": "slide.html#chaining-prompts",
+    "objectID": "slide.html#prompt-chaining",
+    "href": "slide.html#prompt-chaining",
     "title": "Slides",
-    "section": "5 Chaining Prompts",
-    "text": "5 Chaining Prompts\nPrompt Chaining is a technique of connecting multiple tasks to generate complex content by breaking down a large generative task into smaller, more manageable pieces. Examples of prompt chaining are generating product descriptions, creating personalized email campaigns, and generating complex chatbot responses.\n\n🖥️ Chaining prompts\n\n\n\n\n\n\n\nDownload files\n\n\n\n\n💻 chaining.ipynb"
+    "section": "5 Prompt Chaining",
+    "text": "5 Prompt Chaining\nPrompt Chaining is a technique of connecting multiple tasks to generate complex content by breaking down a large generative task into smaller, more manageable pieces. Examples of prompt chaining are generating product descriptions, creating personalized email campaigns, and generating complex chatbot responses.\n\n\n\n\n\n\n\n🖥️ Presentation\n💻 Jupyter Notebook"
   },
   {
     "objectID": "slide.html#check-model-output",
     "href": "slide.html#check-model-output",
     "title": "Slides",
     "section": "6 Check Model Output",
-    "text": "6 Check Model Output\nAsk the model to verify its own outputs:\n\n🖥️ Output check\n\n\n\n\n\n\n\nDownload files\n\n\n\n\n💻 outputcheck.ipynb"
+    "text": "6 Check Model Output\nAsk the model to verify its own outputs:\n\n\n\n\n\n\n\n🖥️ Presentation\n💻 Jupyter Notebook"
   },
   {
     "objectID": "slide.html#build-an-end-to-end-system",
     "href": "slide.html#build-an-end-to-end-system",
     "title": "Slides",
     "section": "7 Build an End-to-End System",
-    "text": "7 Build an End-to-End System\nThis puts together the chain of prompts that you saw throughout the tutorials:\n\n🖥️ End-to-end system\n\n\n\n\n\n\n\nDownload files\n\n\n\n\n💻 system.ipynb\nproducts.json\nutils.py"
+    "text": "7 Build an End-to-End System\nThis puts together the chain of prompts that you saw throughout the tutorials:\n\n\n\n\n\n\n\n🖥️ Presentation\n💻 Jupyter Notebook\nproducts.json\nutils.py"
   },
   {
     "objectID": "slide.html#evaluation",
     "href": "slide.html#evaluation",
     "title": "Slides",
     "section": "8 Evaluation",
-    "text": "8 Evaluation\nEvaluate LLM responses when there is a single “right answer”.\n\n🖥️ Evaluate your system\n\n\n\n\n\n\n\nDownload files\n\n\n\n\n💻 evaluation.ipynb\nproducts.json\nutils.py"
+    "text": "8 Evaluation\nEvaluate LLM responses when there is a single “right answer”.\n\n\n\n\n\n\n\n🖥️ Presentation\n💻 evaluation.ipynb\nproducts.json\nutils.py"
   },
   {
     "objectID": "slide.html#evaluation-part-2",
     "href": "slide.html#evaluation-part-2",
     "title": "Slides",
     "section": "9 Evaluation Part 2",
-    "text": "9 Evaluation Part 2\nEvaluate LLM responses where there isn’t a single “right answer.”\n\n🖥️ Evaluate your system, part 2\n\n\n\n\n\n\n\nDownload files\n\n\n\n\n💻 evaluation_2.ipynb"
+    "text": "9 Evaluation Part 2\nEvaluate LLM responses where there isn’t a single “right answer.”\n\n\n\n\n\n\n\n🖥️ Presentation\n💻 Jupyter Notebook"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Welcome 👋",
     "section": "",
-    "text": "Welcome to the lab “chat system”\n\nIn this lab, we will use OpenAI’s API to leverage Large Language Models (LLMs) like GPT-3.5 Turbo and GPT-4 into Python based chat applications.\n\n\n\n\n\n\nImportant\n\n\n\nMake sure you meet all the requirements and have read the lecture slides before you start with the assignments\n\n\nWhat you will learn in this lab:\n\nThis lab is mainly based on an excellent course provided by Isa Fulford from OpenAI and Andrew Ng from DeepLearning.AI."
+    "text": "Welcome to the lab “chat system”\n\nIn this lab, we will useOpenAI’s ChatGPT API to leverage Large Language Models (LLMs) into Python based chat applications. You will learn how to build chains of prompts that interact with the completions of prior prompts and how to create a customer service chatbot.\n\n\n\n\n\n\nImportant\n\n\n\nMake sure you meet all the requirements and have read the lecture slides before you start with the assignments\n\n\nIn this lab you’ll learn:\n\nSome basic properties of LLMs\nHow to classify user queries to a chat agent’s response\nHow to evaluate user queries for safety\nChain-of-thought (CoT) prompting\nChain prompting to connect multiple tasks\nVerification of model output\nHow to build an end-to-end chat system\nEvaluation strategies to optimize your system"
   },
   {
     "objectID": "code/evaluation.html",
