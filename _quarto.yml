@@ -17,7 +17,7 @@ website:
       - text: "Slides"
         href: slide.qmd
       - text: "Requirements"
-        href: requirements.qmd  
+        href: require.qmd 
       - text: "Assignments"
         href: assignments.qmd
     right:
@@ -29,7 +29,7 @@ website:
       - href: index.qmd
         text: Home
       - slide.qmd
-      - requirements.qmd
+      - require.qmd
       - assignments.qmd
 
 format:
