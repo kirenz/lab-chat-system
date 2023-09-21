@@ -872,7 +872,21 @@
     "href": "require.html",
     "title": "Requirements",
     "section": "",
-    "text": "To start this lab, you’ll need:\n\n\n\n\n\n\nImportant\n\n\n\nVisit the “Programming Toolkit-webpage” to learn how to meet all requirements.\n\n\n\nPython: Anaconda, Anaconda Environment prompt and Visual Studio Code\nEnvironment: A folder on your machine called prompt, an OpenAI-API key and an environment file with your OpenAI-API key"
+    "text": "To start this lab on your local machine, you’ll need:\n\n\n\n\n\n\nImportant\n\n\n\nVisit the “Programming Toolkit-webpage” to learn how to meet all requirements.\n\n\n\nPython: Anaconda, Anaconda Environment prompt and Visual Studio Code\nEnvironment: A folder on your machine called prompt, an OpenAI-API key and an environment file with your OpenAI-API key"
+  },
+  {
+    "objectID": "require.html#local-development",
+    "href": "require.html#local-development",
+    "title": "Requirements",
+    "section": "",
+    "text": "To start this lab on your local machine, you’ll need:\n\n\n\n\n\n\nImportant\n\n\n\nVisit the “Programming Toolkit-webpage” to learn how to meet all requirements.\n\n\n\nPython: Anaconda, Anaconda Environment prompt and Visual Studio Code\nEnvironment: A folder on your machine called prompt, an OpenAI-API key and an environment file with your OpenAI-API key"
+  },
+  {
+    "objectID": "require.html#cloud-development",
+    "href": "require.html#cloud-development",
+    "title": "Requirements",
+    "section": "Cloud development",
+    "text": "Cloud development\nInstead of local development, you may also work in a fully configured dev environment in the cloud with GitHub Codespaces. Take a look at this site to learn more about the different options."
   },
   {
     "objectID": "index.html",
