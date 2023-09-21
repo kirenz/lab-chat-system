@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Chat System - Slides</title>
+<title>Chat System - Requirements</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -87,11 +87,11 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./slide.html" rel="" target="" aria-current="page">
+    <a class="nav-link" href="./slide.html" rel="" target="">
  <span class="menu-text">Slides</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./require.html" rel="" target="">
+    <a class="nav-link active" href="./require.html" rel="" target="" aria-current="page">
  <span class="menu-text">Requirements</span></a>
   </li>  
   <li class="nav-item">
@@ -110,28 +110,14 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#basics-tokens-and-chat-format" id="toc-basics-tokens-and-chat-format" class="nav-link active" data-scroll-target="#basics-tokens-and-chat-format"><span class="header-section-number">1</span> Basics: Tokens and chat format</a></li>
-  <li><a href="#classification" id="toc-classification" class="nav-link" data-scroll-target="#classification"><span class="header-section-number">2</span> Classification</a></li>
-  <li><a href="#moderation" id="toc-moderation" class="nav-link" data-scroll-target="#moderation"><span class="header-section-number">3</span> Moderation</a></li>
-  <li><a href="#chain-of-thought-reasoning" id="toc-chain-of-thought-reasoning" class="nav-link" data-scroll-target="#chain-of-thought-reasoning"><span class="header-section-number">4</span> Chain of Thought Reasoning</a></li>
-  <li><a href="#prompt-chaining" id="toc-prompt-chaining" class="nav-link" data-scroll-target="#prompt-chaining"><span class="header-section-number">5</span> Prompt Chaining</a></li>
-  <li><a href="#check-model-output" id="toc-check-model-output" class="nav-link" data-scroll-target="#check-model-output"><span class="header-section-number">6</span> Check Model Output</a></li>
-  <li><a href="#build-an-end-to-end-system" id="toc-build-an-end-to-end-system" class="nav-link" data-scroll-target="#build-an-end-to-end-system"><span class="header-section-number">7</span> Build an End-to-End System</a></li>
-  <li><a href="#evaluation" id="toc-evaluation" class="nav-link" data-scroll-target="#evaluation"><span class="header-section-number">8</span> Evaluation</a></li>
-  <li><a href="#evaluation-part-2" id="toc-evaluation-part-2" class="nav-link" data-scroll-target="#evaluation-part-2"><span class="header-section-number">9</span> Evaluation Part 2</a></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Slides</h1>
+<h1 class="title">Requirements</h1>
 </div>
 
 
@@ -146,184 +132,26 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p><em>The following tutorials are mainly based on the excellent course <a href="https://www.deeplearning.ai/short-courses/building-systems-with-chatgpt/">“Building Systems with the ChatGPT API”</a> provided by Isa Fulford from OpenAI and Andrew Ng from DeepLearning.AI.</em></p>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
+<p>To start this lab, you’ll need:</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-body-container">
-<p>Take a look at the <a href="https://kirenz.github.io/lab-toolkit/slides/slides.html#/title-slide">slides tutorial</a> to learn how to use all slide options.</p>
+<div class="callout-title-container flex-fill">
+Important
 </div>
 </div>
+<div class="callout-body-container callout-body">
+<p>Visit the “<a href="https://kirenz.github.io/lab-toolkit/">Programming Toolkit-webpage</a>” to learn how to meet all requirements.</p>
 </div>
-<p>You have several options to start code development:</p>
-<ol type="1">
-<li><p><strong>Colab</strong>: Click on one of the links “💻 Jupyter Notebook” to start a Colab session.</p></li>
-<li><p><strong>Local</strong>: Click on one of the links “💻 Jupyter Notebook” below, go to the Colab menu and choose “File” &gt; “Download” &gt; “Download .ipynb”</p></li>
-<li><p><strong>Cloud Codespace</strong>: Work in a fully configured dev environment in the cloud with a <a href="./https://github.com/kirenz/lab-chat-system/blob/main/README.md">GitHub Codespace VS Code Browser</a> environment.</p></li>
-<li><p><strong>Local VS Code with Codespace</strong>: Use <a href="https://docs.github.com/en/codespaces/developing-in-codespaces/using-github-codespaces-in-visual-studio-code">GitHub Codespaces in your local Visual Studio Code environment</a>.</p></li>
-</ol>
-<p>For cost reasons we mainly use OpenAI’s <code>gpt-3.5-turbo</code> model in our tutorials. However, you can simply replace <code>model="gpt-3.5-turbo"</code> with <code>model="gpt-4"</code> in the helper function. Note the <a href="https://openai.com/pricing">price difference</a> between the two models.</p>
-<section id="basics-tokens-and-chat-format" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="basics-tokens-and-chat-format"><span class="header-section-number">1</span> Basics: Tokens and chat format</h2>
-<p>In this tutorial, you’ll learn some basic properties of Large Language Models (tokens and the chat format):</p>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-body-container">
 <ul>
-<li><a href="./slides/basics.html">🖥️ Presentation</a></li>
-<li><a href="https://colab.research.google.com/github/kirenz/lab-chat-system/blob/main/code/basics.ipynb">💻 Jupyter Notebook</a></li>
+<li><strong>Python</strong>: Anaconda, Anaconda Environment <code>prompt</code> and Visual Studio Code</li>
+<li><strong>Environment</strong>: A folder on your machine called <em>prompt</em>, an OpenAI-API key and an environment file with your OpenAI-API key</li>
 </ul>
-</div>
-</div>
-</div>
-</section>
-<section id="classification" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="classification"><span class="header-section-number">2</span> Classification</h2>
-<p>Learn how to classify different customer queries:</p>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<ul>
-<li><a href="./slides/classification.html">🖥️ Presentation</a></li>
-<li><a href="https://colab.research.google.com/github/kirenz/lab-chat-system/blob/main/code/classification.ipynb">💻 Jupyter Notebook</a></li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<section id="moderation" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="moderation"><span class="header-section-number">3</span> Moderation</h2>
-<p>The moderations endpoint is a tool you can use to check whether content complies with our usage policies:</p>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<ul>
-<li><a href="./slides/moderation.html">🖥️ Presentation</a></li>
-<li><a href="https://colab.research.google.com/github/kirenz/lab-chat-system/blob/main/code/moderation.ipynb">💻 Jupyter Notebook</a></li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<section id="chain-of-thought-reasoning" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="chain-of-thought-reasoning"><span class="header-section-number">4</span> Chain of Thought Reasoning</h2>
-<p>Chain-of-thought (CoT) prompting enables complex reasoning capabilities through intermediate reasoning steps. You can combine it with few-shot prompting to get better results on more complex tasks that require reasoning before responding:</p>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<ul>
-<li><a href="./slides/reasoning.html">🖥️ Presentation</a></li>
-<li><a href="https://colab.research.google.com/github/kirenz/lab-chat-system/blob/main/code/reasoning.ipynb">💻 Jupyter Notebook</a></li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<section id="prompt-chaining" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="prompt-chaining"><span class="header-section-number">5</span> Prompt Chaining</h2>
-<p>Prompt Chaining is a technique of connecting multiple tasks to generate complex content by breaking down a large generative task into smaller, more manageable pieces. Examples of prompt chaining are generating product descriptions, creating personalized email campaigns, and generating complex chatbot responses.</p>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<ul>
-<li><a href="./slides/chaining.html">🖥️ Presentation</a></li>
-<li><a href="https://colab.research.google.com/github/kirenz/lab-chat-system/blob/main/code/chaining.ipynb">💻 Jupyter Notebook</a></li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<section id="check-model-output" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="check-model-output"><span class="header-section-number">6</span> Check Model Output</h2>
-<p>Ask the model to verify its own outputs:</p>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<ul>
-<li><a href="./slides/outputcheck.html">🖥️ Presentation</a></li>
-<li><a href="https://colab.research.google.com/github/kirenz/lab-chat-system/blob/main/code/outputcheck.ipynb">💻 Jupyter Notebook</a></li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<section id="build-an-end-to-end-system" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="build-an-end-to-end-system"><span class="header-section-number">7</span> Build an End-to-End System</h2>
-<p>This puts together the chain of prompts that you saw throughout the tutorials:</p>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<ul>
-<li><a href="./slides/system.html">🖥️ Presentation</a></li>
-<li><a href="https://colab.research.google.com/github/kirenz/lab-chat-system/blob/main/code/system.ipynb">💻 Jupyter Notebook</a></li>
-<li><a href="./slides/products.json">products.json</a></li>
-<li><a href="./slides/utils.py">utils.py</a></li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<section id="evaluation" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="evaluation"><span class="header-section-number">8</span> Evaluation</h2>
-<p>Evaluate LLM responses when there is a single “right answer”.</p>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<ul>
-<li><a href="./slides/evaluation.html">🖥️ Presentation</a></li>
-<li><a href="https://colab.research.google.com/github/kirenz/lab-chat-system/blob/main/code/evaluation.ipynb">💻 evaluation.ipynb</a></li>
-<li><a href="./slides/products.json">products.json</a></li>
-<li><a href="./slides/utils_2.py">utils.py</a></li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<section id="evaluation-part-2" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="evaluation-part-2"><span class="header-section-number">9</span> Evaluation Part 2</h2>
-<p>Evaluate LLM responses where there isn’t a single “right answer.”</p>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<ul>
-<li><a href="./slides/evaluation_2.html">🖥️ Presentation</a></li>
-<li><a href="https://colab.research.google.com/github/kirenz/lab-chat-system/blob/main/code/evaluation_2.ipynb">💻 Jupyter Notebook</a></li>
-</ul>
-</div>
-</div>
-</div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
