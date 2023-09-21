@@ -16,7 +16,7 @@ You have several options to start code development:
 
 2. **Local**: Click on one of the links "💻 Jupyter Notebook" below, go to the Colab menu and choose "File" > "Download" > "Download .ipynb"
 
-3. **Cloud Codespace**: Work in a fully configured dev environment in the cloud with a [GitHub Codespace VS Code Browser](/https://github.com/kirenz/lab-chat-system/blob/main/README.md) environment.
+3. **Cloud Codespace**: Work in a fully configured dev environment in the cloud with a [GitHub Codespace VS Code Browser](https://github.com/kirenz/lab-chat-system/blob/main/README.md) environment.
 
 4. **Local VS Code with Codespace**: Use [GitHub Codespaces in your local Visual Studio Code environment](https://docs.github.com/en/codespaces/developing-in-codespaces/using-github-codespaces-in-visual-studio-code).
 
