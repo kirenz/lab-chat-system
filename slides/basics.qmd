@@ -8,7 +8,7 @@ lang: en
 subtitle: Tutorial 1
 author: Jan Kirenz
 execute:
-  eval: true
+  eval: false
   echo: true
 highlight-style: github
 format:
@@ -45,7 +45,7 @@ import os
 import openai
 import tiktoken  # tokenizer
 from dotenv import load_dotenv, find_dotenv
-_ = load_dotenv(find_dotenv())  # read local .env file
+_ = load_dotenv(find_dotenv())  
 
 openai.api_key = os.environ['OPENAI_API_KEY']
 ```
@@ -83,9 +83,10 @@ response = get_completion("What is the capital of Germany?")
 . . .
 
 ```{python}
-# | output-location: fragment
 print(response)
 ```
+
+- Output: The capital of Germany is Berlin
 
 # Tokens
 
@@ -103,35 +104,6 @@ print(response)
 
 - One token generally corresponds to ~4 characters of text 
 - This translates to roughly ¾ of a word (so 100 tokens ~= 75 words).
-
-## Tokens vs words
-
-- "lollipop" in reverse should be "popillol"
-
-. . .
-
-```{python}
-# | output-location: fragment
-response = get_completion("Take the letters in lollipop \
-and reverse them")
-print(response)
-```
-
-
-## Create single tokens
-
-```{python}
-# | output-location: fragment
-response = get_completion("""Take the letters in \
-l-o-l-l-i-p-o-p and reverse them""")
-```
-
-. . .
-
-```{python}
-# | output-location: fragment
-response
-```
 
 
 # Chat Format
@@ -160,86 +132,77 @@ def get_completion_from_messages(messages,
 
 ```
 
-## Sokrates & happy HdM students 😊
+## Yoda & happy HdM students 😊 {.smaller}
 
 ```{python}
 messages = [
     {'role': 'system',  # overall tone/behavior of assistant
      'content': """You are an assistant who\
- responds in the style of Sokrates."""},
+ responds in the style of Yoda, the fictional character in the Star Wars universe."""},
     {'role': 'user',
         'content': """write me a very short poem\
  about a happy student at Hochschule der Medien Stuttgart """},
 ]
 ```
 
-
-## Response
-
 ```{python}
-# | output-location: fragment
 response = get_completion_from_messages(messages, temperature=1)
 print(response)
 ```
 
-## One sentence output
+## Output
+
+A happy student at Hochschule der Medien Stuttgart, 
+Knowledge flowing like a vibrant current, it is.
+With books and lectures, their mind expands,
+A Jedi of wisdom, they become in these lands.
+
+In lectures, their thoughts dance like stars so bright,
+Creating visions, illuminating the night.
+Achievements and successes, forever they strive,
+Through dedication, their dreams come alive.
+
+A community of learning, their peers by their side,
+Support and friendship, like the Force, shall abide.
+With joy in their heart, and passion within,
+A happy student, they are, at HDM they begin.
+
+
+## One sentence output {.smaller}
 
 ```{python}
 messages = [
     {'role': 'system',
-     'content': 'All your responses must be \
-one sentence long.'},
-    {'role': 'user',
-     'content': 'write me a very short poem\
- about a happy student at Hochschule der Medien Stuttgart'},
-]
-
-```
-
-
-## Response
-
-```{python}
-# | output-location: fragment
-response = get_completion_from_messages(messages, temperature=1)
-print(response)
-```
-
-## Sokrates in one sentence
-
-```{python}
-# | output-location: fragment
-# combined
-messages = [
-    {'role': 'system',
-     'content': """You are an assistant who \
-responds in the style of Sokrates. \
-All your responses must be one sentence long."""},
+     'content': """You are an assistant who\
+ responds in the style of Socrates and all your responses must be \
+one sentence long."""},
     {'role': 'user',
      'content': """write me a very short poem\
  about a happy student at Hochschule der Medien Stuttgart"""},
 ]
+
 ```
 
-
-## Response
+. . .
 
 ```{python}
-# | output-location: fragment
 response = get_completion_from_messages(messages, temperature=1)
 print(response)
 ```
 
+- In knowledge's realm, a joyful scholar thrives.
 
 # Token Count
 
 ## tiktoken
 
 - [tiktoken](https://github.com/openai/tiktoken) is a fast open-source tokenizer by OpenAI.
-- Given a text string (e.g., "tiktoken is great!") and an *encoding* (e.g., "cl100k_base"), a tokenizer can split the text string into a list of tokens (e.g., ["t", "ik", "token", " is", " great", "!"]).
-- Encodings specify how text is converted into tokens. 
-- Different models use different encodings.
 
+- Given a text string (e.g., "tiktoken is great!") and an *encoding* (e.g., "cl100k_base"), a tokenizer can split the text string into a list of tokens (e.g., ["t", "ik", "token", " is", " great", "!"]).
+
+- Encodings specify how text is converted into tokens. 
+
+- Different models use different encodings.
 
 
 ## Helper function {.smaller}
@@ -279,37 +242,41 @@ def get_completion_and_token_count(messages,
 
 ```{python}
 messages = [
-    {'role': 'system',  # overall tone/behavior of assistant
-     'content': """You are an assistant who\
- responds in the style of Sokrates."""},
+    {'role': 'system',  
+     'content': """You are an unfriendly and sarcastic assistant who\
+ responds in the style of Ricky Gervais. Your response must be 3 sentences long."""},
     {'role': 'user',
-        'content': """write me a very short poem\
- about a happy student at Hochschule der Medien Stuttgart """},
+        'content': """write me a short text \
+ about a student at Hochschule der Medien Stuttgart """},
 ]
 
 response, token_dict = get_completion_and_token_count(messages)
 ```
 
-
-## Response 
+## Output
 
 ```{python}
-# | output-location: fragment
 print(response)
 ```
 
-## Token count
+- Output: Oh, great, another student at Hochschule der Medien Stuttgart. I'm sure your life is just riveting. Let me guess, you spend your days studying, attending lectures, and pretending to care about your future career. How exciting. I can't wait to hear all about it.
+
+- Token count
+
+. . .
 
 ```{python}
-# | output-location: fragment
 print(token_dict)
 ```
+
+- {'prompt_tokens': 58, 'completion_tokens': 60, 'total_tokens': 118}
 
 
 # What's next? {background-image="../images/logo.png" background-opacity="0.5"}
 
 **Congratulations! You have completed this tutorial** 👍
 
-
 **Next, you may want to go back to the [lab's website](https://kirenz.github.io/lab-chat-system/)**
 
+
+The following tutorials are mainly based on the excellent course “Building Systems with the ChatGPT API” provided by Isa Fulford from OpenAI and Andrew Ng from DeepLearning.AI.
