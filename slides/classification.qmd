@@ -8,7 +8,7 @@ lang: en
 subtitle: Tutorial 2
 author: Jan Kirenz
 execute:
-  eval: true
+  eval: false
   echo: true
 highlight-style: github
 format:
@@ -35,6 +35,9 @@ format:
 
 # Classification of Customer queries
 
+Learn how to classify different customer queries
+
+
 # Setup
 
 ## Python
@@ -44,7 +47,7 @@ format:
 import os
 import openai
 from dotenv import load_dotenv, find_dotenv
-_ = load_dotenv(find_dotenv())  # read local .env file
+_ = load_dotenv(find_dotenv())  
 
 openai.api_key = os.environ['OPENAI_API_KEY']
 ```
@@ -70,12 +73,7 @@ def get_completion_from_messages(messages,
 ```
 
 
-# Classification of Customer queries
-
-Classify customer queries to handle different cases
-
-
-## System message {.smaller}
+# System message {.smaller}
 
 
 ```{python}
@@ -120,7 +118,7 @@ Speak to a human
 
 ```
 
-## User message
+# User message 1
 
 ```{python}
 user_message = f"""\
@@ -136,14 +134,13 @@ messages = [
 ## Output
 
 ```{python}
-# | output-location: fragment
-
 response = get_completion_from_messages(messages)
 print(response)
 ```
 
+- Output: {"primary": "Account Management", "secondary": "Close account"}
 
-## User message 2
+# User message 2
 
 
 ```{python}
@@ -159,14 +156,25 @@ messages = [
 ```
 
 
-# Output
+## Output
 
 ```{python}
-# | output-location: fragment
-
 response = get_completion_from_messages(messages)
 print(response)
 ```
+
+
+
+{
+  "primary": "General Inquiry",
+  "secondary": "Product information"
+}
+
+
+
+# Acknowledgments
+
+This tutorial is mainly based on the excellent course “Building Systems with the ChatGPT API” provided by Isa Fulford from OpenAI and Andrew Ng from DeepLearning.AI
 
 # What's next? {background-image="../images/logo.png" background-opacity="0.5"}
 
