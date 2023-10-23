@@ -8,7 +8,7 @@ lang: en
 subtitle: Tutorial 4
 author: Jan Kirenz
 execute:
-  eval: true
+  eval: false
   echo: true
 highlight-style: github
 format:
@@ -34,6 +34,10 @@ format:
 ---
 
 # Chain of Thought Reasoning
+
+Chain-of-thought (CoT) prompting enables complex reasoning capabilities through intermediate reasoning steps. 
+
+You can combine it with few-shot prompting to get better results on more complex tasks that require reasoning before responding.
 
 # Setup
 
@@ -74,18 +78,18 @@ def get_completion_from_messages(messages,
 
 
 ```{python}
-delimiter = "####"
+delimiter = "##"
 
 system_message = f"""
 Follow these steps to answer the customer queries.
 The customer query will be delimited with four hashtags,\
 i.e. {delimiter}. 
 
-Step 1:{delimiter} First decide whether the user is \
+Step 1: {delimiter} First decide whether the user is \
 asking a question about a specific product or products. \
 Product cateogry doesn't count. 
 
-Step 2:{delimiter} If the user is asking about \
+Step 2: {delimiter} If the user is asking about \
 specific products, identify whether \
 the products are in the following list.
 All available products: 
@@ -139,17 +143,17 @@ All available products:
    Description: A compact and affordable Chromebook for everyday tasks.
    Price: $249.99
 
-Step 3:{delimiter} If the message contains products \
+Step 3: {delimiter} If the message contains products \
 in the list above, list any assumptions that the \
 user is making in their \
 message e.g. that Laptop X is bigger than \
 Laptop Y, or that Laptop Z has a 2 year warranty.
 
-Step 4:{delimiter}: If the user made any assumptions, \
+Step 4: {delimiter}: If the user made any assumptions, \
 figure out whether the assumption is true based on your \
 product information. 
 
-Step 5:{delimiter}: First, politely correct the \
+Step 5: {delimiter}: First, politely correct the \
 customer's incorrect assumptions if applicable. \
 Only mention or reference products in the list of \
 5 available products, as these are the only 5 \
@@ -157,13 +161,14 @@ products that the store sells. \
 Answer the customer in a friendly tone.
 
 Use the following format:
-Step 1:{delimiter} <step 1 reasoning>
-Step 2:{delimiter} <step 2 reasoning>
-Step 3:{delimiter} <step 3 reasoning>
-Step 4:{delimiter} <step 4 reasoning>
-Response to user:{delimiter} <response to customer>
+Step 1: {delimiter} <step 1 reasoning>
+Step 2: {delimiter} <step 2 reasoning>
+Step 3: {delimiter} <step 3 reasoning>
+Step 4: {delimiter} <step 4 reasoning>
+Response to user: {delimiter} <response to customer>
 
-Make sure to include {delimiter} to separate every step.
+Make sure to include {delimiter} to separate every step. 
+
 """
 
 ```
@@ -191,15 +196,23 @@ messages = [
 ```
 
 
-## Response
+## Response {.smaller}
 
 
 ```{python}
-# | output-location: fragment
 response = get_completion_from_messages(messages)
 print(response)
 ```
 
+Step 1: ## The user is asking about the price difference between the BlueWave Chromebook and the TechPro Desktop.
+
+Step 2: ## Both the BlueWave Chromebook and the TechPro Desktop are available products.
+
+Step 3: ## The user assumes that the BlueWave Chromebook is more expensive than the TechPro Desktop.
+
+Step 4: ## The assumption is incorrect. The TechPro Desktop is priced at $999.99, while the BlueWave Chromebook is priced at $249.99. Therefore, the BlueWave Chromebook is actually less expensive than the TechPro Desktop.
+
+Response to user: ## The BlueWave Chromebook is actually less expensive than the TechPro Desktop. The BlueWave Chromebook is priced at $249.99, while the TechPro Desktop is priced at $999.99. Let me know if there's anything else I can assist you with
 
 # Chain-of-Thought Prompting 2
 
@@ -207,8 +220,7 @@ print(response)
 
 
 ```{python}
-user_message = f"""
-do you sell tvs"""
+user_message = f"""do you sell tvs"""
 ```
 
 . . .
@@ -225,19 +237,17 @@ messages = [
 ## Response
 
 ```{python}
-# | output-location: fragment
-
 response = get_completion_from_messages(messages)
 print(response)
 ```
 
+- Step 1:## The user is asking if the store sells TVs. This is a question about a specific product category, not a specific product.
 
 ## Inner Monologue
 
 - Since we asked the LLM to separate its reasoning steps by a delimiter, we can hide the chain-of-thought reasoning from the final output that the user sees.
 
 ```{python}
-# | output-location: fragment
 try:
     final_response = response.split(delimiter)[-1].strip()
 except Exception as e:
@@ -246,10 +256,16 @@ except Exception as e:
 print(final_response)
 ```
 
+- The BlueWave Chromebook is actually less expensive than the TechPro Desktop. The BlueWave Chromebook is priced at $249.99, while the TechPro Desktop is priced at $999.99. Let me know if there's anything else I can assist you with!
+
+# Acknowledgments
+
+This tutorial is mainly based on the excellent course “Building Systems with the ChatGPT API” provided by Isa Fulford from OpenAI and Andrew Ng from DeepLearning.AI
+
+
 # What's next? {background-image="../images/logo.png" background-opacity="0.5"}
 
 **Congratulations! You have completed this tutorial** 👍
-
 
 **Next, you may want to go back to the [lab's website](https://kirenz.github.io/lab-chat-system/)**
 
