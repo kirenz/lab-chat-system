@@ -8,7 +8,7 @@ lang: en
 subtitle: Tutorial 5
 author: Jan Kirenz
 execute:
-  eval: true
+  eval: false
   echo: true
 highlight-style: github
 format:
@@ -35,6 +35,10 @@ format:
 
 # Chaining Prompts
 
+Prompt Chaining is a technique of connecting multiple tasks to generate complex content by breaking down a large generative task into smaller, more manageable pieces. 
+
+Examples of prompt chaining are generating product descriptions, creating personalized email campaigns, and generating complex chatbot responses.
+
 # Setup
 
 ## Python
@@ -45,7 +49,7 @@ import json
 import os
 import openai
 from dotenv import load_dotenv, find_dotenv
-_ = load_dotenv(find_dotenv())  # read local .env file
+_ = load_dotenv(find_dotenv()) 
 
 openai.api_key = os.environ['OPENAI_API_KEY']
 ```
@@ -79,7 +83,7 @@ Implement a complex task with multiple prompts
 Extract relevant product and category names
 
 ```{python}
-delimiter = "####"
+delimiter = "##"
 
 system_message = f"""
 You will be provided with customer service queries. \
@@ -177,19 +181,20 @@ messages = [
 ## Response
 
 ```{python}
-# | output-location: fragment
 category_and_product_response_1 = get_completion_from_messages(messages)
 print(category_and_product_response_1)
 ```
 
-## User message 2
+- [{'category': 'Smartphones and Accessories'}, {'category': 'Cameras and Camcorders'}, {'category': 'Televisions and Home Theater Systems'}]
+
+## User message 2 {.smaller}
 
 ```{python}
 user_message_2 = f"""
 my router isn't working"""
 ```
 
-## Messages
+. . .
 
 ```{python}
 messages = [
@@ -200,14 +205,14 @@ messages = [
 ]
 ```
 
-## Response
+. . .
 
 ```{python}
-# | output-location: fragment
 response = get_completion_from_messages(messages)
 print(response)
 ```
 
+- []
 
 # Detailed Product Information
 
@@ -569,9 +574,10 @@ def get_product_by_name(name):
 . . .
 
 ```{python}
-# | output-location: fragment
 print(get_product_by_name("TechPro Ultrabook"))
 ```
+
+- {'name': 'TechPro Ultrabook', 'category': 'Computers and Laptops', 'brand': 'TechPro', 'model_number': 'TP-UB100', 'warranty': '1 year', 'rating': 4.5, 'features': ['13.3-inch display', '8GB RAM', '256GB SSD', 'Intel Core i5 processor'], 'description': 'A sleek and lightweight ultrabook for everyday use.', 'price': 799.99}
 
 ## Helper function: get product by category {.smaller}
 
@@ -587,24 +593,26 @@ def get_products_by_category(category):
 . . .
 
 ```{python}
-# | output-location: fragment
 print(get_products_by_category("Computers and Laptops"))
 ```
+
+- [{'name': 'TechPro Ultrabook', 'category': 'Computers and Laptops', 'brand': 'TechPro', 'model_number': 'TP-UB100', 'warranty': '1 year', 'rating': 4.5, 'features': ['13.3-inch display', '8GB RAM', '256GB SSD', 'Intel Core i5 processor'], 'description': 'A sleek and lightweight ultrabook for everyday use.', 'price': 799.99}, {'name': 'BlueWave Gaming Laptop', 'category': 'Computers and Laptops', 'brand': 'BlueWave', 'model_number': 'BW-GL200', 'warranty': '2 years', 'rating': 4.7, 'features': ['15.6-inch display', '16GB RAM', '512GB SSD', 'NVIDIA GeForce RTX 3060'], 'description': 'A high-performance gaming laptop for an immersive experience.', 'price': 1199.99}, {'name': 'PowerLite Convertible', 'category': 'Computers and Laptops', 'brand': 'PowerLite', 'model_number': 'PL-CV300', 'warranty': '1 year', 'rating': 4.3, 'features': ['14-inch touchscreen', '8GB RAM', '256GB SSD', '360-degree hinge'], 'description': 'A versatile convertible laptop with a responsive touchscreen.', 'price': 699.99}, {'name': 'TechPro Desktop', 'category': 'Computers and Laptops', 'brand': 'TechPro', 'model_number': 'TP-DT500', 'warranty': '1 year', 'rating': 4.4, 'features': ['Intel Core i7 processor', '16GB RAM', '1TB HDD', 'NVIDIA GeForce GTX 1660'], 'description': 'A powerful desktop computer for work and play.', 'price': 999.99}, {'name': 'BlueWave Chromebook', 'category': 'Computers and Laptops', 'brand': 'BlueWave', 'model_number': 'BW-CB100', 'warranty': '1 year', 'rating': 4.1, 'features': ['11.6-inch display', '4GB RAM', '32GB eMMC', 'Chrome OS'], 'description': 'A compact and affordable Chromebook for everyday tasks.', 'price': 249.99}]
 
 ## Category and product response 1
 
 ```{python}
-# | output-location: fragment
 print(user_message_1)
 ```
+
+-  tell me about the smartx pro phone and  the fotosnap camera, the dslr one.  Also tell me about your tvs 
 
 . . .
 
 ```{python}
-# | output-location: slide
 print(category_and_product_response_1)
 ```
 
+- [{'category': 'Smartphones and Accessories'}, {'category': 'Cameras and Camcorders'}, {'category': 'Televisions and Home Theater Systems'}]
 
 ## Helper function: String into dictionaries {.smaller}
 
@@ -633,12 +641,12 @@ def read_string_to_list(input_string):
 ## Category and product list
 
 ```{python}
-# | output-location: fragment
-
 category_and_product_list = read_string_to_list(
     category_and_product_response_1)
 print(category_and_product_list)
 ```
+
+- [{'category': 'Smartphones and Accessories'}, {'category': 'Cameras and Camcorders'}, {'category': 'Televisions and Home Theater Systems'}]
 
 ## Helper function: Generate output string
 
@@ -681,10 +689,253 @@ def generate_output_string(data_list):
 ## Product info for user message 1
 
 ```{python}
-# | output-location: slide
 product_information_for_user_message_1 = generate_output_string(
     category_and_product_list)
 print(product_information_for_user_message_1)
+```
+
+. . .
+
+```json
+{
+    "name": "SmartX ProPhone",
+    "category": "Smartphones and Accessories",
+    "brand": "SmartX",
+    "model_number": "SX-PP10",
+    "warranty": "1 year",
+    "rating": 4.6,
+    "features": [
+        "6.1-inch display",
+        "128GB storage",
+        "12MP dual camera",
+        "5G"
+    ],
+    "description": "A powerful smartphone with advanced camera features.",
+    "price": 899.99
+}
+{
+    "name": "MobiTech PowerCase",
+    "category": "Smartphones and Accessories",
+    "brand": "MobiTech",
+    "model_number": "MT-PC20",
+    "warranty": "1 year",
+    "rating": 4.3,
+    "features": [
+        "5000mAh battery",
+        "Wireless charging",
+        "Compatible with SmartX ProPhone"
+    ],
+    "description": "A protective case with built-in battery for extended usage.",
+    "price": 59.99
+}
+{
+    "name": "SmartX MiniPhone",
+    "category": "Smartphones and Accessories",
+    "brand": "SmartX",
+    "model_number": "SX-MP5",
+    "warranty": "1 year",
+    "rating": 4.2,
+    "features": [
+        "4.7-inch display",
+        "64GB storage",
+        "8MP camera",
+        "4G"
+    ],
+    "description": "A compact and affordable smartphone for basic tasks.",
+    "price": 399.99
+}
+{
+    "name": "MobiTech Wireless Charger",
+    "category": "Smartphones and Accessories",
+    "brand": "MobiTech",
+    "model_number": "MT-WC10",
+    "warranty": "1 year",
+    "rating": 4.5,
+    "features": [
+        "10W fast charging",
+        "Qi-compatible",
+        "LED indicator",
+        "Compact design"
+    ],
+    "description": "A convenient wireless charger for a clutter-free workspace.",
+    "price": 29.99
+}
+{
+    "name": "SmartX EarBuds",
+    "category": "Smartphones and Accessories",
+    "brand": "SmartX",
+    "model_number": "SX-EB20",
+    "warranty": "1 year",
+    "rating": 4.4,
+    "features": [
+        "True wireless",
+        "Bluetooth 5.0",
+        "Touch controls",
+        "24-hour battery life"
+    ],
+    "description": "Experience true wireless freedom with these comfortable earbuds.",
+    "price": 99.99
+}
+{
+    "name": "FotoSnap DSLR Camera",
+    "category": "Cameras and Camcorders",
+    "brand": "FotoSnap",
+    "model_number": "FS-DSLR200",
+    "warranty": "1 year",
+    "rating": 4.7,
+    "features": [
+        "24.2MP sensor",
+        "1080p video",
+        "3-inch LCD",
+        "Interchangeable lenses"
+    ],
+    "description": "Capture stunning photos and videos with this versatile DSLR camera.",
+    "price": 599.99
+}
+{
+    "name": "ActionCam 4K",
+    "category": "Cameras and Camcorders",
+    "brand": "ActionCam",
+    "model_number": "AC-4K",
+    "warranty": "1 year",
+    "rating": 4.4,
+    "features": [
+        "4K video",
+        "Waterproof",
+        "Image stabilization",
+        "Wi-Fi"
+    ],
+    "description": "Record your adventures with this rugged and compact 4K action camera.",
+    "price": 299.99
+}
+{
+    "name": "FotoSnap Mirrorless Camera",
+    "category": "Cameras and Camcorders",
+    "brand": "FotoSnap",
+    "model_number": "FS-ML100",
+    "warranty": "1 year",
+    "rating": 4.6,
+    "features": [
+        "20.1MP sensor",
+        "4K video",
+        "3-inch touchscreen",
+        "Interchangeable lenses"
+    ],
+    "description": "A compact and lightweight mirrorless camera with advanced features.",
+    "price": 799.99
+}
+{
+    "name": "ZoomMaster Camcorder",
+    "category": "Cameras and Camcorders",
+    "brand": "ZoomMaster",
+    "model_number": "ZM-CM50",
+    "warranty": "1 year",
+    "rating": 4.3,
+    "features": [
+        "1080p video",
+        "30x optical zoom",
+        "3-inch LCD",
+        "Image stabilization"
+    ],
+    "description": "Capture life's moments with this easy-to-use camcorder.",
+    "price": 249.99
+}
+{
+    "name": "FotoSnap Instant Camera",
+    "category": "Cameras and Camcorders",
+    "brand": "FotoSnap",
+    "model_number": "FS-IC10",
+    "warranty": "1 year",
+    "rating": 4.1,
+    "features": [
+        "Instant prints",
+        "Built-in flash",
+        "Selfie mirror",
+        "Battery-powered"
+    ],
+    "description": "Create instant memories with this fun and portable instant camera.",
+    "price": 69.99
+}
+{
+    "name": "CineView 4K TV",
+    "category": "Televisions and Home Theater Systems",
+    "brand": "CineView",
+    "model_number": "CV-4K55",
+    "warranty": "2 years",
+    "rating": 4.8,
+    "features": [
+        "55-inch display",
+        "4K resolution",
+        "HDR",
+        "Smart TV"
+    ],
+    "description": "A stunning 4K TV with vibrant colors and smart features.",
+    "price": 599.99
+}
+{
+    "name": "SoundMax Home Theater",
+    "category": "Televisions and Home Theater Systems",
+    "brand": "SoundMax",
+    "model_number": "SM-HT100",
+    "warranty": "1 year",
+    "rating": 4.4,
+    "features": [
+        "5.1 channel",
+        "1000W output",
+        "Wireless subwoofer",
+        "Bluetooth"
+    ],
+    "description": "A powerful home theater system for an immersive audio experience.",
+    "price": 399.99
+}
+{
+    "name": "CineView 8K TV",
+    "category": "Televisions and Home Theater Systems",
+    "brand": "CineView",
+    "model_number": "CV-8K65",
+    "warranty": "2 years",
+    "rating": 4.9,
+    "features": [
+        "65-inch display",
+        "8K resolution",
+        "HDR",
+        "Smart TV"
+    ],
+    "description": "Experience the future of television with this stunning 8K TV.",
+    "price": 2999.99
+}
+{
+    "name": "SoundMax Soundbar",
+    "category": "Televisions and Home Theater Systems",
+    "brand": "SoundMax",
+    "model_number": "SM-SB50",
+    "warranty": "1 year",
+    "rating": 4.3,
+    "features": [
+        "2.1 channel",
+        "300W output",
+        "Wireless subwoofer",
+        "Bluetooth"
+    ],
+    "description": "Upgrade your TV's audio with this sleek and powerful soundbar.",
+    "price": 199.99
+}
+{
+    "name": "CineView OLED TV",
+    "category": "Televisions and Home Theater Systems",
+    "brand": "CineView",
+    "model_number": "CV-OLED55",
+    "warranty": "2 years",
+    "rating": 4.7,
+    "features": [
+        "55-inch display",
+        "4K resolution",
+        "HDR",
+        "Smart TV"
+    ],
+    "description": "Experience true blacks and vibrant colors with this OLED TV.",
+    "price": 1499.99
+}
 ```
 
 # Answer with detailed product information
@@ -733,10 +984,20 @@ messages = [
 ## Response
 
 ```{python}
-# | output-location: slide
 final_response = get_completion_from_messages(messages)
 print(final_response)
 ```
+
+The SmartX ProPhone is a powerful smartphone with a 6.1-inch display, 128GB storage, a 12MP dual camera, and 5G capability. It is priced at $899.99. Is there anything specific you would like to know about the SmartX ProPhone?
+
+The FotoSnap DSLR Camera is a versatile camera with a 24.2MP sensor, 1080p video recording, a 3-inch LCD, and interchangeable lenses. It is priced at $599.99. Is there anything specific you would like to know about the FotoSnap DSLR Camera?
+
+We have a wide range of TVs available. Can you please specify if you are looking for a particular brand, size, or feature in a TV?
+
+
+# Acknowledgments
+
+This tutorial is mainly based on the excellent course “Building Systems with the ChatGPT API” provided by Isa Fulford from OpenAI and Andrew Ng from DeepLearning.AI
 
 
 # What's next? {background-image="../images/logo.png" background-opacity="0.5"}
