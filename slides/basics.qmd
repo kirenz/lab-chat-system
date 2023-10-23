@@ -35,6 +35,9 @@ format:
 
 # Tokens and Chat Format
 
+In this tutorial, you’ll learn some basic properties of Large Language Models (tokens and the chat format)
+
+
 # Setup
 
 ## Python
@@ -103,8 +106,8 @@ print(response)
 ## How long is a token?
 
 - One token generally corresponds to ~4 characters of text 
-- This translates to roughly ¾ of a word (so 100 tokens ~= 75 words).
 
+- This translates to roughly ¾ of a word (so 100 tokens ~= 75 words).
 
 # Chat Format
 
@@ -124,8 +127,8 @@ def get_completion_from_messages(messages,
     response = openai.ChatCompletion.create(
         model=model,
         messages=messages,
-        temperature=temperature,  # this is the degree of randomness of the model's output
-        max_tokens=max_tokens,  # the maximum number of tokens the model can ouptut
+        temperature=temperature, 
+        max_tokens=max_tokens, 
     )
     return response.choices[0].message["content"]
 
@@ -145,12 +148,12 @@ messages = [
 ]
 ```
 
+## Output {.smaller}
+
 ```{python}
 response = get_completion_from_messages(messages, temperature=1)
 print(response)
 ```
-
-## Output
 
 A happy student at Hochschule der Medien Stuttgart, 
 Knowledge flowing like a vibrant current, it is.
@@ -253,7 +256,7 @@ messages = [
 response, token_dict = get_completion_and_token_count(messages)
 ```
 
-## Output
+## Output {.smaller}
 
 ```{python}
 print(response)
@@ -272,11 +275,12 @@ print(token_dict)
 - {'prompt_tokens': 58, 'completion_tokens': 60, 'total_tokens': 118}
 
 
+# Acknowledgments
+
+This tutorial is mainly based on the excellent course “Building Systems with the ChatGPT API” provided by Isa Fulford from OpenAI and Andrew Ng from DeepLearning.AI
+
 # What's next? {background-image="../images/logo.png" background-opacity="0.5"}
 
 **Congratulations! You have completed this tutorial** 👍
 
 **Next, you may want to go back to the [lab's website](https://kirenz.github.io/lab-chat-system/)**
-
-
-The following tutorials are mainly based on the excellent course “Building Systems with the ChatGPT API” provided by Isa Fulford from OpenAI and Andrew Ng from DeepLearning.AI.
