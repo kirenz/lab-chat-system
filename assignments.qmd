@@ -1,5 +1,102 @@
 ---
 title: "Assignments"
+number-sections: true
 ---
 
-tbd.
+
+# Basics: Tokens and chat format
+
+::: {.callout-note}
+You have learned some basic properties of Large Language Models (tokens and the chat format):
+:::
+
+You should be able to solve the following tasks:
+
+- What is a token?
+- Explain the helper function for the chat format.
+- Explain the Python code which counts the tokens of an API call.
+
+
+# Classification 
+
+::: {.callout-note}
+You have learned how to classify different customer queries
+:::
+
+You should be able to solve the following task:
+
+- Write a prompt to classify customer queries.
+
+# Moderation
+
+::: {.callout-note}
+The moderations endpoint is a tool you can use to check whether content complies with our usage policies
+:::
+
+You should be able to solve the following tasks:
+
+- Explain the task and output of the moderations endpoint.
+- Use the moderations endpoint to determine prompt injection.
+
+
+# Chain of Thought Reasoning
+
+::: {.callout-note}
+Chain-of-thought (CoT) prompting enables complex reasoning capabilities through intermediate reasoning steps. You can combine it with few-shot prompting to get better results on more complex tasks that require reasoning before responding
+:::
+
+You should be able to solve the following task:
+
+- Implement a chain-of-thought prompt using an inner monologue.
+
+# Prompt Chaining
+
+::: {.callout-note}
+Prompt Chaining is a technique of connecting multiple tasks to generate complex content by breaking down a large generative task into smaller, more manageable pieces. Examples of prompt chaining are generating product descriptions, creating personalized email campaigns, and generating complex chatbot responses.
+:::
+
+You should be able to solve the following tasks:
+
+- Explain the concept of prompt chaining.
+
+
+# Check Model Output 
+
+::: {.callout-note}
+You have learned how to ask the model to verify its own outputs.
+:::
+
+You should be able to solve the following tasks:
+
+- Write a prompt to check if an output is factually based on the provided information.
+- Use questions and answer pairs to check if the response used the retrieved information correctly.
+
+
+# Build an End-to-End System
+
+::: {.callout-note}
+This puts together the chain of prompts that you saw throughout the tutorials.
+:::
+
+*There are no specific tasks/questions for this presentation*
+
+
+# Evaluation
+
+::: {.callout-note}
+Evaluate LLM responses when there is a single "right answer".
+:::
+
+You should be able to solve the following tasks:
+
+tbd
+
+# Evaluation Part 2
+
+::: {.callout-note}
+Evaluate LLM responses where there isn't a single "right answer."
+:::
+
+You should be able to solve the following tasks:
+
+tbd
