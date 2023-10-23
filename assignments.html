@@ -110,7 +110,21 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#basics-tokens-and-chat-format" id="toc-basics-tokens-and-chat-format" class="nav-link active" data-scroll-target="#basics-tokens-and-chat-format"><span class="header-section-number">1</span> Basics: Tokens and chat format</a></li>
+  <li><a href="#classification" id="toc-classification" class="nav-link" data-scroll-target="#classification"><span class="header-section-number">2</span> Classification</a></li>
+  <li><a href="#moderation" id="toc-moderation" class="nav-link" data-scroll-target="#moderation"><span class="header-section-number">3</span> Moderation</a></li>
+  <li><a href="#chain-of-thought-reasoning" id="toc-chain-of-thought-reasoning" class="nav-link" data-scroll-target="#chain-of-thought-reasoning"><span class="header-section-number">4</span> Chain of Thought Reasoning</a></li>
+  <li><a href="#prompt-chaining" id="toc-prompt-chaining" class="nav-link" data-scroll-target="#prompt-chaining"><span class="header-section-number">5</span> Prompt Chaining</a></li>
+  <li><a href="#check-model-output" id="toc-check-model-output" class="nav-link" data-scroll-target="#check-model-output"><span class="header-section-number">6</span> Check Model Output</a></li>
+  <li><a href="#build-an-end-to-end-system" id="toc-build-an-end-to-end-system" class="nav-link" data-scroll-target="#build-an-end-to-end-system"><span class="header-section-number">7</span> Build an End-to-End System</a></li>
+  <li><a href="#evaluation" id="toc-evaluation" class="nav-link" data-scroll-target="#evaluation"><span class="header-section-number">8</span> Evaluation</a></li>
+  <li><a href="#evaluation-part-2" id="toc-evaluation-part-2" class="nav-link" data-scroll-target="#evaluation-part-2"><span class="header-section-number">9</span> Evaluation Part 2</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -132,9 +146,185 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>tbd.</p>
+<section id="basics-tokens-and-chat-format" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Basics: Tokens and chat format</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You have learned some basic properties of Large Language Models (tokens and the chat format):</p>
+</div>
+</div>
+<p>You should be able to solve the following tasks:</p>
+<ul>
+<li>What is a token?</li>
+<li>Explain the helper function for the chat format.</li>
+<li>Explain the Python code which counts the tokens of an API call.</li>
+</ul>
+</section>
+<section id="classification" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Classification</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You have learned how to classify different customer queries</p>
+</div>
+</div>
+<p>You should be able to solve the following task:</p>
+<ul>
+<li>Write a prompt to classify customer queries.</li>
+</ul>
+</section>
+<section id="moderation" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Moderation</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The moderations endpoint is a tool you can use to check whether content complies with our usage policies</p>
+</div>
+</div>
+<p>You should be able to solve the following tasks:</p>
+<ul>
+<li>Explain the task and output of the moderations endpoint.</li>
+<li>Use the moderations endpoint to determine prompt injection.</li>
+</ul>
+</section>
+<section id="chain-of-thought-reasoning" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Chain of Thought Reasoning</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Chain-of-thought (CoT) prompting enables complex reasoning capabilities through intermediate reasoning steps. You can combine it with few-shot prompting to get better results on more complex tasks that require reasoning before responding</p>
+</div>
+</div>
+<p>You should be able to solve the following task:</p>
+<ul>
+<li>Implement a chain-of-thought prompt using an inner monologue.</li>
+</ul>
+</section>
+<section id="prompt-chaining" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Prompt Chaining</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Prompt Chaining is a technique of connecting multiple tasks to generate complex content by breaking down a large generative task into smaller, more manageable pieces. Examples of prompt chaining are generating product descriptions, creating personalized email campaigns, and generating complex chatbot responses.</p>
+</div>
+</div>
+<p>You should be able to solve the following tasks:</p>
+<ul>
+<li>Explain the concept of prompt chaining.</li>
+</ul>
+</section>
+<section id="check-model-output" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Check Model Output</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You have learned how to ask the model to verify its own outputs.</p>
+</div>
+</div>
+<p>You should be able to solve the following tasks:</p>
+<ul>
+<li>Write a prompt to check if an output is factually based on the provided information.</li>
+<li>Use questions and answer pairs to check if the response used the retrieved information correctly.</li>
+</ul>
+</section>
+<section id="build-an-end-to-end-system" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Build an End-to-End System</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This puts together the chain of prompts that you saw throughout the tutorials.</p>
+</div>
+</div>
+<p><em>There are no specific tasks/questions for this presentation</em></p>
+</section>
+<section id="evaluation" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Evaluation</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Evaluate LLM responses when there is a single “right answer”.</p>
+</div>
+</div>
+<p>You should be able to solve the following tasks:</p>
+<p>tbd</p>
+</section>
+<section id="evaluation-part-2" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Evaluation Part 2</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Evaluate LLM responses where there isn’t a single “right answer.”</p>
+</div>
+</div>
+<p>You should be able to solve the following tasks:</p>
+<p>tbd</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
