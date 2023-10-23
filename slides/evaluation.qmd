@@ -51,13 +51,15 @@ You need to download the following files:
 import json
 import os
 import openai
-# import sys
-# sys.path.append('../..')
 import utils_2
 from dotenv import load_dotenv, find_dotenv
-_ = load_dotenv(find_dotenv())  # read local .env file
+_ = load_dotenv(find_dotenv()) 
 
 openai.api_key = os.environ['OPENAI_API_KEY']
+
+# only relevant if you not develop locally:
+# import sys 
+# sys.path.append('../..')
 ```
 
 ## Helper function
@@ -116,7 +118,7 @@ products_and_category = {'Computers and Laptops': ['TechPro Ultrabook',
                                                     'FotoSnap Instant Camera']}
 ```
 
-## Find product and category names (V1)
+## Find product and category names (V1) {.smaller}
 
 This could be the version that is running in production.
 
