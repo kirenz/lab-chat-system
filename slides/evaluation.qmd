@@ -8,7 +8,7 @@ lang: en
 subtitle: Tutorial 8
 author: Jan Kirenz
 execute:
-  eval: true
+  eval: false
   echo: true
 highlight-style: github
 format:
@@ -34,6 +34,9 @@ format:
 ---
 
 # Evaluation for One Right Answer
+
+Evaluate LLM responses when there is a single "right answer".
+
 
 # Setup
 
@@ -584,6 +587,9 @@ fraction_correct = score_accum / n_examples
 print(f"Fraction correct out of {n_examples}: {fraction_correct}")
 ```
 
+# Acknowledgments
+
+This tutorial is mainly based on the excellent course “Building Systems with the ChatGPT API” provided by Isa Fulford from OpenAI and Andrew Ng from DeepLearning.AI
 
 
 # What's next? {background-image="../images/logo.png" background-opacity="0.5"}
