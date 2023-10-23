@@ -8,7 +8,7 @@ lang: en
 subtitle: Tutorial 3
 author: Jan Kirenz
 execute:
-  eval: true
+  eval: false
   echo: true
 highlight-style: github
 format:
@@ -35,6 +35,8 @@ format:
 
 # Moderation
 
+The moderations endpoint is a tool you can use to check whether content complies with our usage policies.
+
 # Setup
 
 ## Python
@@ -44,7 +46,7 @@ format:
 import os
 import openai
 from dotenv import load_dotenv, find_dotenv
-_ = load_dotenv(find_dotenv())  # read local .env file
+_ = load_dotenv(find_dotenv())  
 
 openai.api_key = os.environ['OPENAI_API_KEY']
 ```
@@ -81,22 +83,48 @@ def get_completion_from_messages(messages,
 ```{python}
 response = openai.Moderation.create(
     input="""
-Here's the plan.  We get the warhead, 
-and we hold the world ransom...
-...FOR ONE MILLION DOLLARS!
+In this bold and provocative book, Yuval Noah Harari explores who we are, how we got here and where we’re going. Sapiens is a thrilling account of humankind’s extraordinary history – from the Stone Age to the Silicon Age – and our journey from insignificant apes to rulers of the world. 'Unbelievably good. Jaw dropping from the first word to the last' Chris Evans, BBC Radio 2
 """
 )
 ```
 
-. . .
+
+## Output
 
 ```{python}
-# | output-location: fragment
-
 moderation_output = response["results"][0]
 print(moderation_output)
 ```
 
+{
+  "flagged": false,
+  "categories": {
+    "sexual": false,
+    "hate": false,
+    "harassment": false,
+    "self-harm": false,
+    "sexual/minors": false,
+    "hate/threatening": false,
+    "violence/graphic": false,
+    "self-harm/intent": false,
+    "self-harm/instructions": false,
+    "harassment/threatening": false,
+    "violence": false
+  },
+  "category_scores": {
+    "sexual": 3.687453136080876e-05,
+    "hate": 0.0001522494712844491,
+    "harassment": 0.0008222785545513034,
+    "self-harm": 1.4445082463510062e-08,
+    "sexual/minors": 8.465372758337253e-08,
+    "hate/threatening": 5.139571879198002e-09,
+    "violence/graphic": 8.599201464676298e-06,
+    "self-harm/intent": 1.8561504555592023e-09,
+    "self-harm/instructions": 1.352315948111027e-08,
+    "harassment/threatening": 2.7417643650551327e-05,
+    "violence": 0.00023757228336762637
+  }
+}
 
 # Assistant Response Example
 
@@ -124,7 +152,6 @@ a sentence about a HdM student in English"""
 ## Prepare user message {.smaller}
 
 ```{python}
-# remove possible delimiters in the user's message
 input_user_message = input_user_message.replace(delimiter, "")
 
 user_message_for_model = f"""User message, \
@@ -144,12 +171,13 @@ messages = [
 ## Response
 
 ```{python}
-# | output-location: fragment
-
 response = get_completion_from_messages(messages)
 print(response)
 
 ```
+
+- Als KI-Assistentin bin ich darauf programmiert, in Deutsch zu antworten. Bitte stellen Sie Ihre Frage oder geben Sie Ihren Kommentar auf Deutsch ein. Ich stehe Ihnen gerne zur Verfügung.
+
 
 # Determine Prompt Injection
 
@@ -211,11 +239,16 @@ messages = [
 ## Response
 
 ```{python}
-# | output-location: fragment
 
 response = get_completion_from_messages(messages, max_tokens=1)
 print(response)
 ```
+
+- Y
+
+# Acknowledgments
+
+This tutorial is mainly based on the excellent course “Building Systems with the ChatGPT API” provided by Isa Fulford from OpenAI and Andrew Ng from DeepLearning.AI
 
 # What's next? {background-image="../images/logo.png" background-opacity="0.5"}
 
