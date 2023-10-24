@@ -78,7 +78,9 @@ You should be able to solve the following tasks:
 This puts together the chain of prompts that you saw throughout the tutorials.
 :::
 
-*There are no specific tasks/questions for this presentation*
+You should be able to solve the following tasks:
+
+- Explain the typical steps in a system of chained prompts for processing a user query.
 
 
 # Evaluation
@@ -89,7 +91,8 @@ Evaluate LLM responses when there is a single "right answer".
 
 You should be able to solve the following tasks:
 
-tbd
+- Explain how you could evaluate LLM responses when there is a single "right answer".
+
 
 # Evaluation Part 2
 
@@ -99,4 +102,8 @@ Evaluate LLM responses where there isn't a single "right answer."
 
 You should be able to solve the following tasks:
 
-tbd
+- Explain how you could evaluate LLM responses when there is no single "right answer".
+
+- Create a meaningful rubric to evaluate the LLM's answer to a user.
+
+- What is an "eval" in the context of LLMs?
