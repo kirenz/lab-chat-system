@@ -105,6 +105,7 @@ def process_user_message(user_input, all_messages, debug=True):
     category_and_product_response = utils.find_category_and_product_only(
         user_input, utils.get_products_and_category())
     # print(print(category_and_product_response)
+    
     # Step 2: Extract the list of products
     category_and_product_list = utils.read_string_to_list(
         category_and_product_response)
