@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.268">
+  <meta name="generator" content="quarto-1.3.450">
 
   <meta name="author" content="Jan Kirenz">
   <title>Chat System - Evaluation for One Right Answer</title>
@@ -224,8 +224,7 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    padding-bottom: 0.5rem;
-    margin-bottom: 0;
+    margin-bottom: 0.5rem;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -410,6 +409,7 @@ Jan Kirenz
 <nav role="doc-toc"> 
 <h2 id="toc-title">Table of contents</h2>
 <ul>
+<li><a href="#/evaluation-for-one-right-answer" id="/toc-evaluation-for-one-right-answer">Evaluation for One Right Answer</a></li>
 <li><a href="#/setup" id="/toc-setup">Setup</a></li>
 <li><a href="#/product-catalog" id="/toc-product-catalog">Product catalog</a></li>
 <li><a href="#/evaluation" id="/toc-evaluation">Evaluation</a></li>
@@ -418,9 +418,17 @@ Jan Kirenz
 <li><a href="#/evaluate-modified-prompt" id="/toc-evaluate-modified-prompt">Evaluate Modified Prompt</a></li>
 <li><a href="#/regression-testing" id="/toc-regression-testing">Regression Testing</a></li>
 <li><a href="#/automated-testing-with-development-set" id="/toc-automated-testing-with-development-set">Automated Testing with Development Set</a></li>
+<li><a href="#/output-1" id="/toc-output-1">Output</a></li>
+<li><a href="#/acknowledgments" id="/toc-acknowledgments">Acknowledgments</a></li>
+<li><a href="#/whats-next" id="/toc-whats-next">What’s next?</a></li>
 </ul>
 </nav>
 </section>
+<section id="evaluation-for-one-right-answer" class="title-slide slide level1 center">
+<h1>Evaluation for One Right Answer</h1>
+<p>Evaluate LLM responses when there is a single “right answer”.</p>
+</section>
+
 <section>
 <section id="setup" class="title-slide slide level1 center">
 <h1>Setup</h1>
@@ -428,22 +436,29 @@ Jan Kirenz
 </section>
 <section id="python" class="slide level2">
 <h2>Python</h2>
-<div id="d57e6bf3" class="cell" data-execution_count="1">
+<p>You need to download the following files:</p>
+<ul>
+<li><a href="../slides/products.json">products.json</a></li>
+<li><a href="../slides/utils_2.py">utils_2.py</a></li>
+</ul>
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> json</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> os</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> openai</span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># import sys</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="co"># sys.path.append('../..')</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="im">import</span> utils_2</span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv, find_dotenv</span>
-<span id="cb1-8"><a href="#cb1-8"></a>_ <span class="op">=</span> load_dotenv(find_dotenv())  <span class="co"># read local .env file</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> utils_2</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv, find_dotenv</span>
+<span id="cb1-6"><a href="#cb1-6"></a>_ <span class="op">=</span> load_dotenv(find_dotenv()) </span>
+<span id="cb1-7"><a href="#cb1-7"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a>openai.api_key <span class="op">=</span> os.environ[<span class="st">'OPENAI_API_KEY'</span>]</span>
 <span id="cb1-9"><a href="#cb1-9"></a></span>
-<span id="cb1-10"><a href="#cb1-10"></a>openai.api_key <span class="op">=</span> os.environ[<span class="st">'OPENAI_API_KEY'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="co"># only relevant if you not develop locally:</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="co"># import sys </span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="co"># sys.path.append('../..')</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="helper-function" class="slide level2">
 <h2>Helper function</h2>
-<div id="04829458" class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> get_completion_from_messages(messages, model<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>, temperature<span class="op">=</span><span class="dv">0</span>, max_tokens<span class="op">=</span><span class="dv">500</span>):</span>
 <span id="cb2-2"><a href="#cb2-2"></a>    response <span class="op">=</span> openai.ChatCompletion.create(</span>
 <span id="cb2-3"><a href="#cb2-3"></a>        model<span class="op">=</span>model,</span>
@@ -462,7 +477,7 @@ Jan Kirenz
 <section id="products-and-categories" class="slide level2 smaller">
 <h2>Products and categories</h2>
 <p>List of products and categories that are in the product catalog.</p>
-<div id="9b59461d" class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>products_and_category <span class="op">=</span> {<span class="st">'Computers and Laptops'</span>: [<span class="st">'TechPro Ultrabook'</span>,</span>
 <span id="cb3-2"><a href="#cb3-2"></a>                                                   <span class="st">'BlueWave Gaming Laptop'</span>,</span>
 <span id="cb3-3"><a href="#cb3-3"></a>                                                   <span class="st">'PowerLite Convertible'</span>,</span>
@@ -495,10 +510,10 @@ Jan Kirenz
 <span id="cb3-30"><a href="#cb3-30"></a>                                                    <span class="st">'FotoSnap Instant Camera'</span>]}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="find-product-and-category-names-v1" class="slide level2">
+<section id="find-product-and-category-names-v1" class="slide level2 smaller">
 <h2>Find product and category names (V1)</h2>
 <p>This could be the version that is running in production.</p>
-<div id="e8204350" class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">def</span> find_category_and_product_v1(user_input, products_and_category):</span>
 <span id="cb4-2"><a href="#cb4-2"></a></span>
 <span id="cb4-3"><a href="#cb4-3"></a>    delimiter <span class="op">=</span> <span class="st">"####"</span></span>
@@ -516,32 +531,31 @@ Jan Kirenz
 <span id="cb4-15"><a href="#cb4-15"></a><span class="ss">    If a product is mentioned, it must be associated with the correct category in the allowed products list below.</span></span>
 <span id="cb4-16"><a href="#cb4-16"></a><span class="ss">    If no products or categories are found, output an empty list.</span></span>
 <span id="cb4-17"><a href="#cb4-17"></a><span class="ss">    </span></span>
-<span id="cb4-18"><a href="#cb4-18"></a></span>
-<span id="cb4-19"><a href="#cb4-19"></a><span class="ss">    List out all products that are relevant to the customer service query based on how closely it relates</span></span>
-<span id="cb4-20"><a href="#cb4-20"></a><span class="ss">    to the product name and product category.</span></span>
-<span id="cb4-21"><a href="#cb4-21"></a><span class="ss">    Do not assume, from the name of the product, any features or attributes such as relative quality or price.</span></span>
-<span id="cb4-22"><a href="#cb4-22"></a></span>
-<span id="cb4-23"><a href="#cb4-23"></a><span class="ss">    The allowed products are provided in JSON format.</span></span>
-<span id="cb4-24"><a href="#cb4-24"></a><span class="ss">    The keys of each item represent the category.</span></span>
-<span id="cb4-25"><a href="#cb4-25"></a><span class="ss">    The values of each item is a list of products that are within that category.</span></span>
-<span id="cb4-26"><a href="#cb4-26"></a><span class="ss">    Allowed products: </span><span class="sc">{</span>products_and_category<span class="sc">}</span></span>
-<span id="cb4-27"><a href="#cb4-27"></a><span class="ss">    </span></span>
-<span id="cb4-28"><a href="#cb4-28"></a></span>
-<span id="cb4-29"><a href="#cb4-29"></a><span class="ss">    """</span></span>
-<span id="cb4-30"><a href="#cb4-30"></a></span>
-<span id="cb4-31"><a href="#cb4-31"></a>    few_shot_user_1 <span class="op">=</span> <span class="st">"""I want the most expensive computer."""</span></span>
-<span id="cb4-32"><a href="#cb4-32"></a>    few_shot_assistant_1 <span class="op">=</span> <span class="st">""" </span></span>
-<span id="cb4-33"><a href="#cb4-33"></a><span class="st">    [{'category': 'Computers and Laptops', </span><span class="ch">\</span></span>
-<span id="cb4-34"><a href="#cb4-34"></a><span class="st">'products': ['TechPro Ultrabook', 'BlueWave Gaming Laptop', 'PowerLite Convertible', 'TechPro Desktop', 'BlueWave Chromebook']}]</span></span>
-<span id="cb4-35"><a href="#cb4-35"></a><span class="st">    """</span></span>
-<span id="cb4-36"><a href="#cb4-36"></a></span>
-<span id="cb4-37"><a href="#cb4-37"></a>    messages <span class="op">=</span> [</span>
-<span id="cb4-38"><a href="#cb4-38"></a>        {<span class="st">'role'</span>: <span class="st">'system'</span>, <span class="st">'content'</span>: system_message},</span>
-<span id="cb4-39"><a href="#cb4-39"></a>        {<span class="st">'role'</span>: <span class="st">'user'</span>, <span class="st">'content'</span>: <span class="ss">f"</span><span class="sc">{</span>delimiter<span class="sc">}{</span>few_shot_user_1<span class="sc">}{</span>delimiter<span class="sc">}</span><span class="ss">"</span>},</span>
-<span id="cb4-40"><a href="#cb4-40"></a>        {<span class="st">'role'</span>: <span class="st">'assistant'</span>, <span class="st">'content'</span>: few_shot_assistant_1},</span>
-<span id="cb4-41"><a href="#cb4-41"></a>        {<span class="st">'role'</span>: <span class="st">'user'</span>, <span class="st">'content'</span>: <span class="ss">f"</span><span class="sc">{</span>delimiter<span class="sc">}{</span>user_input<span class="sc">}{</span>delimiter<span class="sc">}</span><span class="ss">"</span>},</span>
-<span id="cb4-42"><a href="#cb4-42"></a>    ]</span>
-<span id="cb4-43"><a href="#cb4-43"></a>    <span class="cf">return</span> get_completion_from_messages(messages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="ss">    List out all products that are relevant to the customer service query based on how closely it relates</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="ss">    to the product name and product category.</span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="ss">    Do not assume, from the name of the product, any features or attributes such as relative quality or price.</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a></span>
+<span id="cb4-22"><a href="#cb4-22"></a><span class="ss">    The allowed products are provided in JSON format.</span></span>
+<span id="cb4-23"><a href="#cb4-23"></a><span class="ss">    The keys of each item represent the category.</span></span>
+<span id="cb4-24"><a href="#cb4-24"></a><span class="ss">    The values of each item is a list of products that are within that category.</span></span>
+<span id="cb4-25"><a href="#cb4-25"></a><span class="ss">    Allowed products: </span><span class="sc">{</span>products_and_category<span class="sc">}</span></span>
+<span id="cb4-26"><a href="#cb4-26"></a><span class="ss">    </span></span>
+<span id="cb4-27"><a href="#cb4-27"></a></span>
+<span id="cb4-28"><a href="#cb4-28"></a><span class="ss">    """</span></span>
+<span id="cb4-29"><a href="#cb4-29"></a></span>
+<span id="cb4-30"><a href="#cb4-30"></a>    few_shot_user_1 <span class="op">=</span> <span class="st">"""I want the most expensive computer."""</span></span>
+<span id="cb4-31"><a href="#cb4-31"></a>    few_shot_assistant_1 <span class="op">=</span> <span class="st">""" </span></span>
+<span id="cb4-32"><a href="#cb4-32"></a><span class="st">    [{'category': 'Computers and Laptops', </span><span class="ch">\</span></span>
+<span id="cb4-33"><a href="#cb4-33"></a><span class="st">'products': ['TechPro Ultrabook', 'BlueWave Gaming Laptop', 'PowerLite Convertible', 'TechPro Desktop', 'BlueWave Chromebook']}]</span></span>
+<span id="cb4-34"><a href="#cb4-34"></a><span class="st">    """</span></span>
+<span id="cb4-35"><a href="#cb4-35"></a></span>
+<span id="cb4-36"><a href="#cb4-36"></a>    messages <span class="op">=</span> [</span>
+<span id="cb4-37"><a href="#cb4-37"></a>        {<span class="st">'role'</span>: <span class="st">'system'</span>, <span class="st">'content'</span>: system_message},</span>
+<span id="cb4-38"><a href="#cb4-38"></a>        {<span class="st">'role'</span>: <span class="st">'user'</span>, <span class="st">'content'</span>: <span class="ss">f"</span><span class="sc">{</span>delimiter<span class="sc">}{</span>few_shot_user_1<span class="sc">}{</span>delimiter<span class="sc">}</span><span class="ss">"</span>},</span>
+<span id="cb4-39"><a href="#cb4-39"></a>        {<span class="st">'role'</span>: <span class="st">'assistant'</span>, <span class="st">'content'</span>: few_shot_assistant_1},</span>
+<span id="cb4-40"><a href="#cb4-40"></a>        {<span class="st">'role'</span>: <span class="st">'user'</span>, <span class="st">'content'</span>: <span class="ss">f"</span><span class="sc">{</span>delimiter<span class="sc">}{</span>user_input<span class="sc">}{</span>delimiter<span class="sc">}</span><span class="ss">"</span>},</span>
+<span id="cb4-41"><a href="#cb4-41"></a>    ]</span>
+<span id="cb4-42"><a href="#cb4-42"></a>    <span class="cf">return</span> get_completion_from_messages(messages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section>
 <section>
@@ -551,70 +565,58 @@ Jan Kirenz
 </section>
 <section id="evaluation-0" class="slide level2">
 <h2>Evaluation 0</h2>
-<div id="ee719329" class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>customer_msg_0 <span class="op">=</span> <span class="ss">f"""Which TV can I buy if I'm on a budget?"""</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a></span>
 <span id="cb5-3"><a href="#cb5-3"></a>products_by_category_0 <span class="op">=</span> find_category_and_product_v1(customer_msg_0,</span>
 <span id="cb5-4"><a href="#cb5-4"></a>                                                      products_and_category)</span>
 <span id="cb5-5"><a href="#cb5-5"></a><span class="bu">print</span>(products_by_category_0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell fragment" data-execution_count="5">
-<div class="cell-output cell-output-stdout">
-<pre><code> 
-    [{'category': 'Televisions and Home Theater Systems', 'products': ['CineView 4K TV', 'SoundMax Home Theater', 'CineView 8K TV', 'SoundMax Soundbar', 'CineView OLED TV']}]</code></pre>
-</div>
-</div>
+<ul>
+<li>[{‘category’: ‘Televisions and Home Theater Systems’, ‘products’: [‘CineView 4K TV’, ‘SoundMax Home Theater’, ‘CineView 8K TV’, ‘SoundMax Soundbar’, ‘CineView OLED TV’]}]</li>
+</ul>
 </section>
 <section id="evaluation-1" class="slide level2">
 <h2>Evaluation 1</h2>
-<div id="d7fdd275" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>customer_msg_1 <span class="op">=</span> <span class="ss">f"""I need a charger for my smartphone"""</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a></span>
-<span id="cb7-3"><a href="#cb7-3"></a>products_by_category_1 <span class="op">=</span> find_category_and_product_v1(customer_msg_1,</span>
-<span id="cb7-4"><a href="#cb7-4"></a>                                                      products_and_category)</span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="bu">print</span>(products_by_category_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>customer_msg_1 <span class="op">=</span> <span class="ss">f"""I need a charger for my smartphone"""</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a>products_by_category_1 <span class="op">=</span> find_category_and_product_v1(customer_msg_1,</span>
+<span id="cb6-4"><a href="#cb6-4"></a>                                                      products_and_category)</span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="bu">print</span>(products_by_category_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell fragment" data-execution_count="6">
-<div class="cell-output cell-output-stdout">
-<pre><code> 
-    [{'category': 'Smartphones and Accessories', 'products': ['MobiTech PowerCase', 'MobiTech Wireless Charger', 'SmartX EarBuds']}]
-    </code></pre>
-</div>
-</div>
+<ul>
+<li>[{‘category’: ‘Smartphones and Accessories’, ‘products’: [‘MobiTech PowerCase’, ‘MobiTech Wireless Charger’, ‘SmartX EarBuds’]}]</li>
+</ul>
 </section>
 <section id="evaluation-2" class="slide level2">
 <h2>Evaluation 2</h2>
-<div id="b20c0c95" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>customer_msg_2 <span class="op">=</span> <span class="ss">f"""</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="ss">What computers do you have?"""</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a></span>
-<span id="cb9-4"><a href="#cb9-4"></a>products_by_category_2 <span class="op">=</span> find_category_and_product_v1(customer_msg_2,</span>
-<span id="cb9-5"><a href="#cb9-5"></a>                                                      products_and_category)</span>
-<span id="cb9-6"><a href="#cb9-6"></a>products_by_category_2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>customer_msg_2 <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="ss">What computers do you have?"""</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a></span>
+<span id="cb7-4"><a href="#cb7-4"></a>products_by_category_2 <span class="op">=</span> find_category_and_product_v1(customer_msg_2,</span>
+<span id="cb7-5"><a href="#cb7-5"></a>                                                      products_and_category)</span>
+<span id="cb7-6"><a href="#cb7-6"></a>products_by_category_2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell fragment" data-execution_count="7">
-<div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>" \n    [{'category': 'Computers and Laptops', 'products': ['TechPro Ultrabook', 'BlueWave Gaming Laptop', 'PowerLite Convertible', 'TechPro Desktop', 'BlueWave Chromebook']}]"</code></pre>
-</div>
-</div>
+<ul>
+<li>” ”</li>
+</ul>
 </section>
 <section id="evaluation-3" class="slide level2">
 <h2>Evaluation 3</h2>
-<div id="f6b0a5de" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>customer_msg_3 <span class="op">=</span> <span class="ss">f"""</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="ss">tell me about the smartx pro phone and the fotosnap camera, the dslr one.</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a><span class="ss">Also, what TVs do you have?"""</span></span>
-<span id="cb11-4"><a href="#cb11-4"></a></span>
-<span id="cb11-5"><a href="#cb11-5"></a>products_by_category_3 <span class="op">=</span> find_category_and_product_v1(customer_msg_3,</span>
-<span id="cb11-6"><a href="#cb11-6"></a>                                                      products_and_category)</span>
-<span id="cb11-7"><a href="#cb11-7"></a><span class="bu">print</span>(products_by_category_3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>customer_msg_3 <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="ss">tell me about the smartx pro phone and the fotosnap camera, the dslr one.</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="ss">Also, what TVs do you have?"""</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a></span>
+<span id="cb8-5"><a href="#cb8-5"></a>products_by_category_3 <span class="op">=</span> find_category_and_product_v1(customer_msg_3,</span>
+<span id="cb8-6"><a href="#cb8-6"></a>                                                      products_and_category)</span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="bu">print</span>(products_by_category_3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell fragment" data-execution_count="8">
-<div class="cell-output cell-output-stdout">
-<pre><code> 
-    [{'category': 'Smartphones and Accessories', 'products': ['SmartX ProPhone']}, {'category': 'Cameras and Camcorders', 'products': ['FotoSnap DSLR Camera']}, {'category': 'Televisions and Home Theater Systems', 'products': ['CineView 4K TV', 'SoundMax Home Theater', 'CineView 8K TV', 'SoundMax Soundbar', 'CineView OLED TV']}]</code></pre>
-</div>
-</div>
+<ul>
+<li>[{‘category’: ‘Smartphones and Accessories’, ‘products’: [‘SmartX ProPhone’]}, {‘category’: ‘Cameras and Camcorders’, ‘products’: [‘FotoSnap DSLR Camera’]}, {‘category’: ‘Televisions and Home Theater Systems’, ‘products’: [‘CineView 4K TV’, ‘CineView 8K TV’, ‘CineView OLED TV’]}]</li>
+</ul>
 </section></section>
 <section>
 <section id="harder-test-case" class="title-slide slide level1 center">
@@ -623,23 +625,18 @@ Jan Kirenz
 </section>
 <section id="evaluation-4" class="slide level2">
 <h2>Evaluation 4</h2>
-<div id="ac31e790" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>customer_msg_4 <span class="op">=</span> <span class="ss">f"""</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="ss">tell me about the CineView TV, the 8K one, Gamesphere console, the X one.</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="ss">I'm on a budget, what computers do you have?"""</span></span>
-<span id="cb13-4"><a href="#cb13-4"></a></span>
-<span id="cb13-5"><a href="#cb13-5"></a>products_by_category_4 <span class="op">=</span> find_category_and_product_v1(customer_msg_4,</span>
-<span id="cb13-6"><a href="#cb13-6"></a>                                                      products_and_category)</span>
-<span id="cb13-7"><a href="#cb13-7"></a><span class="bu">print</span>(products_by_category_4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>customer_msg_4 <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="ss">tell me about the CineView TV, the 8K one, Gamesphere console, the X one.</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="ss">I'm on a budget, what computers do you have?"""</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a></span>
+<span id="cb9-5"><a href="#cb9-5"></a>products_by_category_4 <span class="op">=</span> find_category_and_product_v1(customer_msg_4,</span>
+<span id="cb9-6"><a href="#cb9-6"></a>                                                      products_and_category)</span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="bu">print</span>(products_by_category_4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell fragment" data-execution_count="9">
-<div class="cell-output cell-output-stdout">
-<pre><code> 
-    [{'category': 'Televisions and Home Theater Systems', 'products': ['CineView 4K TV', 'CineView 8K TV']}]
-    [{'category': 'Gaming Consoles and Accessories', 'products': ['GameSphere X']}]
-    [{'category': 'Computers and Laptops', 'products': ['TechPro Ultrabook', 'BlueWave Gaming Laptop', 'PowerLite Convertible', 'TechPro Desktop', 'BlueWave Chromebook']}]</code></pre>
-</div>
-</div>
+<ul>
+<li>[{‘category’: ‘Televisions and Home Theater Systems’, ‘products’: [‘CineView 8K TV’]}, {‘category’: ‘Gaming Consoles and Accessories’, ‘products’: [‘GameSphere X’]}, {‘category’: ‘Computers and Laptops’, ‘products’: [‘TechPro Ultrabook’, ‘BlueWave Gaming Laptop’, ‘PowerLite Convertible’, ‘TechPro Desktop’, ‘BlueWave Chromebook’]}]</li>
+</ul>
 </section></section>
 <section>
 <section id="modify-prompt-v2" class="title-slide slide level1 center">
@@ -649,65 +646,59 @@ Jan Kirenz
 <section id="find-product-and-category-names-v2" class="slide level2 smaller">
 <h2>Find product and category names (V2)</h2>
 <p>Modify the prompt to work on the hard test cases</p>
-<div id="6bf09684" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">def</span> find_category_and_product_v2(user_input, products_and_category):</span>
-<span id="cb15-2"><a href="#cb15-2"></a>    <span class="co">"""</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a><span class="co">    Added: Do not output any additional text that is not in JSON format.</span></span>
-<span id="cb15-4"><a href="#cb15-4"></a><span class="co">    Added a second example (for few-shot prompting) where user asks for </span></span>
-<span id="cb15-5"><a href="#cb15-5"></a><span class="co">    the cheapest computer. In both few-shot examples, the shown response </span></span>
-<span id="cb15-6"><a href="#cb15-6"></a><span class="co">    is the full list of products in JSON only.</span></span>
-<span id="cb15-7"><a href="#cb15-7"></a><span class="co">    """</span></span>
-<span id="cb15-8"><a href="#cb15-8"></a>    delimiter <span class="op">=</span> <span class="st">"####"</span></span>
-<span id="cb15-9"><a href="#cb15-9"></a>    system_message <span class="op">=</span> <span class="ss">f"""</span></span>
-<span id="cb15-10"><a href="#cb15-10"></a><span class="ss">    You will be provided with customer service queries. </span><span class="ch">\</span></span>
-<span id="cb15-11"><a href="#cb15-11"></a><span class="ss">    The customer service query will be delimited with </span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> characters.</span></span>
-<span id="cb15-12"><a href="#cb15-12"></a><span class="ss">    Output a python list of json objects, where each object has the following format:</span></span>
-<span id="cb15-13"><a href="#cb15-13"></a><span class="ss">        'category': &lt;one of Computers and Laptops, Smartphones and Accessories, Televisions and Home Theater Systems, </span><span class="ch">\</span></span>
-<span id="cb15-14"><a href="#cb15-14"></a><span class="ss">    Gaming Consoles and Accessories, Audio Equipment, Cameras and Camcorders&gt;,</span></span>
-<span id="cb15-15"><a href="#cb15-15"></a><span class="ss">    AND</span></span>
-<span id="cb15-16"><a href="#cb15-16"></a><span class="ss">        'products': &lt;a list of products that must be found in the allowed products below&gt;</span></span>
-<span id="cb15-17"><a href="#cb15-17"></a><span class="ss">    Do not output any additional text that is not in JSON format.</span></span>
-<span id="cb15-18"><a href="#cb15-18"></a><span class="ss">    Do not write any explanatory text after outputting the requested JSON.</span></span>
-<span id="cb15-19"><a href="#cb15-19"></a></span>
-<span id="cb15-20"><a href="#cb15-20"></a></span>
-<span id="cb15-21"><a href="#cb15-21"></a><span class="ss">    Where the categories and products must be found in the customer service query.</span></span>
-<span id="cb15-22"><a href="#cb15-22"></a><span class="ss">    If a product is mentioned, it must be associated with the correct category in the allowed products list below.</span></span>
-<span id="cb15-23"><a href="#cb15-23"></a><span class="ss">    If no products or categories are found, output an empty list.</span></span>
-<span id="cb15-24"><a href="#cb15-24"></a><span class="ss">    </span></span>
-<span id="cb15-25"><a href="#cb15-25"></a></span>
-<span id="cb15-26"><a href="#cb15-26"></a><span class="ss">    List out all products that are relevant to the customer service query based on how closely it relates</span></span>
-<span id="cb15-27"><a href="#cb15-27"></a><span class="ss">    to the product name and product category.</span></span>
-<span id="cb15-28"><a href="#cb15-28"></a><span class="ss">    Do not assume, from the name of the product, any features or attributes such as relative quality or price.</span></span>
-<span id="cb15-29"><a href="#cb15-29"></a></span>
-<span id="cb15-30"><a href="#cb15-30"></a><span class="ss">    The allowed products are provided in JSON format.</span></span>
-<span id="cb15-31"><a href="#cb15-31"></a><span class="ss">    The keys of each item represent the category.</span></span>
-<span id="cb15-32"><a href="#cb15-32"></a><span class="ss">    The values of each item is a list of products that are within that category.</span></span>
-<span id="cb15-33"><a href="#cb15-33"></a><span class="ss">    Allowed products: </span><span class="sc">{</span>products_and_category<span class="sc">}</span></span>
-<span id="cb15-34"><a href="#cb15-34"></a><span class="ss">    </span></span>
-<span id="cb15-35"><a href="#cb15-35"></a></span>
-<span id="cb15-36"><a href="#cb15-36"></a><span class="ss">    """</span></span>
-<span id="cb15-37"><a href="#cb15-37"></a></span>
-<span id="cb15-38"><a href="#cb15-38"></a>    few_shot_user_1 <span class="op">=</span> <span class="st">"""I want the most expensive computer. What do you recommend?"""</span></span>
-<span id="cb15-39"><a href="#cb15-39"></a>    few_shot_assistant_1 <span class="op">=</span> <span class="st">""" </span></span>
-<span id="cb15-40"><a href="#cb15-40"></a><span class="st">    [{'category': 'Computers and Laptops', </span><span class="ch">\</span></span>
-<span id="cb15-41"><a href="#cb15-41"></a><span class="st">'products': ['TechPro Ultrabook', 'BlueWave Gaming Laptop', 'PowerLite Convertible', 'TechPro Desktop', 'BlueWave Chromebook']}]</span></span>
-<span id="cb15-42"><a href="#cb15-42"></a><span class="st">    """</span></span>
-<span id="cb15-43"><a href="#cb15-43"></a></span>
-<span id="cb15-44"><a href="#cb15-44"></a>    few_shot_user_2 <span class="op">=</span> <span class="st">"""I want the most cheapest computer. What do you recommend?"""</span></span>
-<span id="cb15-45"><a href="#cb15-45"></a>    few_shot_assistant_2 <span class="op">=</span> <span class="st">""" </span></span>
-<span id="cb15-46"><a href="#cb15-46"></a><span class="st">    [{'category': 'Computers and Laptops', </span><span class="ch">\</span></span>
-<span id="cb15-47"><a href="#cb15-47"></a><span class="st">'products': ['TechPro Ultrabook', 'BlueWave Gaming Laptop', 'PowerLite Convertible', 'TechPro Desktop', 'BlueWave Chromebook']}]</span></span>
-<span id="cb15-48"><a href="#cb15-48"></a><span class="st">    """</span></span>
-<span id="cb15-49"><a href="#cb15-49"></a></span>
-<span id="cb15-50"><a href="#cb15-50"></a>    messages <span class="op">=</span> [</span>
-<span id="cb15-51"><a href="#cb15-51"></a>        {<span class="st">'role'</span>: <span class="st">'system'</span>, <span class="st">'content'</span>: system_message},</span>
-<span id="cb15-52"><a href="#cb15-52"></a>        {<span class="st">'role'</span>: <span class="st">'user'</span>, <span class="st">'content'</span>: <span class="ss">f"</span><span class="sc">{</span>delimiter<span class="sc">}{</span>few_shot_user_1<span class="sc">}{</span>delimiter<span class="sc">}</span><span class="ss">"</span>},</span>
-<span id="cb15-53"><a href="#cb15-53"></a>        {<span class="st">'role'</span>: <span class="st">'assistant'</span>, <span class="st">'content'</span>: few_shot_assistant_1},</span>
-<span id="cb15-54"><a href="#cb15-54"></a>        {<span class="st">'role'</span>: <span class="st">'user'</span>, <span class="st">'content'</span>: <span class="ss">f"</span><span class="sc">{</span>delimiter<span class="sc">}{</span>few_shot_user_2<span class="sc">}{</span>delimiter<span class="sc">}</span><span class="ss">"</span>},</span>
-<span id="cb15-55"><a href="#cb15-55"></a>        {<span class="st">'role'</span>: <span class="st">'assistant'</span>, <span class="st">'content'</span>: few_shot_assistant_2},</span>
-<span id="cb15-56"><a href="#cb15-56"></a>        {<span class="st">'role'</span>: <span class="st">'user'</span>, <span class="st">'content'</span>: <span class="ss">f"</span><span class="sc">{</span>delimiter<span class="sc">}{</span>user_input<span class="sc">}{</span>delimiter<span class="sc">}</span><span class="ss">"</span>},</span>
-<span id="cb15-57"><a href="#cb15-57"></a>    ]</span>
-<span id="cb15-58"><a href="#cb15-58"></a>    <span class="cf">return</span> get_completion_from_messages(messages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">def</span> find_category_and_product_v2(user_input, products_and_category):</span>
+<span id="cb10-2"><a href="#cb10-2"></a>    <span class="co">"""</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="co">    Added: Do not output any additional text that is not in JSON format.</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="co">    Added a second example (for few-shot prompting) where user asks for the cheapest computer. In both few-shot examples, the shown response is the full list of products in JSON only.</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="co">    """</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>    delimiter <span class="op">=</span> <span class="st">"####"</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a>    system_message <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="ss">    You will be provided with customer service queries. </span><span class="ch">\</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="ss">    The customer service query will be delimited with </span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> characters.</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="ss">    Output a python list of json objects, where each object has the following format:</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a><span class="ss">        'category': &lt;one of Computers and Laptops, Smartphones and Accessories, Televisions and Home Theater Systems, </span><span class="ch">\</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a><span class="ss">    Gaming Consoles and Accessories, Audio Equipment, Cameras and Camcorders&gt;,</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a><span class="ss">    AND</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a><span class="ss">        'products': &lt;a list of products that must be found in the allowed products below&gt;</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a><span class="ss">    Do not output any additional text that is not in JSON format.</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a><span class="ss">    Do not write any explanatory text after outputting the requested JSON.</span></span>
+<span id="cb10-17"><a href="#cb10-17"></a></span>
+<span id="cb10-18"><a href="#cb10-18"></a><span class="ss">    Where the categories and products must be found in the customer service query.</span></span>
+<span id="cb10-19"><a href="#cb10-19"></a><span class="ss">    If a product is mentioned, it must be associated with the correct category in the allowed products list below.</span></span>
+<span id="cb10-20"><a href="#cb10-20"></a><span class="ss">    If no products or categories are found, output an empty list.</span></span>
+<span id="cb10-21"><a href="#cb10-21"></a><span class="ss">    </span></span>
+<span id="cb10-22"><a href="#cb10-22"></a><span class="ss">    List out all products that are relevant to the customer service query based on how closely it relates to the product name and product category.</span></span>
+<span id="cb10-23"><a href="#cb10-23"></a><span class="ss">    Do not assume, from the name of the product, any features or attributes such as relative quality or price.</span></span>
+<span id="cb10-24"><a href="#cb10-24"></a></span>
+<span id="cb10-25"><a href="#cb10-25"></a><span class="ss">    The allowed products are provided in JSON format.</span></span>
+<span id="cb10-26"><a href="#cb10-26"></a><span class="ss">    The keys of each item represent the category.</span></span>
+<span id="cb10-27"><a href="#cb10-27"></a><span class="ss">    The values of each item is a list of products that are within that category.</span></span>
+<span id="cb10-28"><a href="#cb10-28"></a><span class="ss">    Allowed products: </span><span class="sc">{</span>products_and_category<span class="sc">}</span></span>
+<span id="cb10-29"><a href="#cb10-29"></a><span class="ss">    </span></span>
+<span id="cb10-30"><a href="#cb10-30"></a><span class="ss">    """</span></span>
+<span id="cb10-31"><a href="#cb10-31"></a></span>
+<span id="cb10-32"><a href="#cb10-32"></a>    few_shot_user_1 <span class="op">=</span> <span class="st">"""I want the most expensive computer. What do you recommend?"""</span></span>
+<span id="cb10-33"><a href="#cb10-33"></a>    few_shot_assistant_1 <span class="op">=</span> <span class="st">""" </span></span>
+<span id="cb10-34"><a href="#cb10-34"></a><span class="st">    [{'category': 'Computers and Laptops', </span><span class="ch">\</span></span>
+<span id="cb10-35"><a href="#cb10-35"></a><span class="st">    'products': ['TechPro Ultrabook', 'BlueWave Gaming Laptop', 'PowerLite Convertible', 'TechPro Desktop', 'BlueWave Chromebook']}]</span></span>
+<span id="cb10-36"><a href="#cb10-36"></a><span class="st">    """</span></span>
+<span id="cb10-37"><a href="#cb10-37"></a></span>
+<span id="cb10-38"><a href="#cb10-38"></a>    few_shot_user_2 <span class="op">=</span> <span class="st">"""I want the most cheapest computer. What do you recommend?"""</span></span>
+<span id="cb10-39"><a href="#cb10-39"></a>    few_shot_assistant_2 <span class="op">=</span> <span class="st">""" </span></span>
+<span id="cb10-40"><a href="#cb10-40"></a><span class="st">    [{'category': 'Computers and Laptops', </span><span class="ch">\</span></span>
+<span id="cb10-41"><a href="#cb10-41"></a><span class="st">    'products': ['TechPro Ultrabook', 'BlueWave Gaming Laptop', 'PowerLite Convertible', 'TechPro Desktop', 'BlueWave Chromebook']}]</span></span>
+<span id="cb10-42"><a href="#cb10-42"></a><span class="st">    """</span></span>
+<span id="cb10-43"><a href="#cb10-43"></a></span>
+<span id="cb10-44"><a href="#cb10-44"></a>    messages <span class="op">=</span> [</span>
+<span id="cb10-45"><a href="#cb10-45"></a>        {<span class="st">'role'</span>: <span class="st">'system'</span>, <span class="st">'content'</span>: system_message},</span>
+<span id="cb10-46"><a href="#cb10-46"></a>        {<span class="st">'role'</span>: <span class="st">'user'</span>, <span class="st">'content'</span>: <span class="ss">f"</span><span class="sc">{</span>delimiter<span class="sc">}{</span>few_shot_user_1<span class="sc">}{</span>delimiter<span class="sc">}</span><span class="ss">"</span>},</span>
+<span id="cb10-47"><a href="#cb10-47"></a>        {<span class="st">'role'</span>: <span class="st">'assistant'</span>, <span class="st">'content'</span>: few_shot_assistant_1},</span>
+<span id="cb10-48"><a href="#cb10-48"></a>        {<span class="st">'role'</span>: <span class="st">'user'</span>, <span class="st">'content'</span>: <span class="ss">f"</span><span class="sc">{</span>delimiter<span class="sc">}{</span>few_shot_user_2<span class="sc">}{</span>delimiter<span class="sc">}</span><span class="ss">"</span>},</span>
+<span id="cb10-49"><a href="#cb10-49"></a>        {<span class="st">'role'</span>: <span class="st">'assistant'</span>, <span class="st">'content'</span>: few_shot_assistant_2},</span>
+<span id="cb10-50"><a href="#cb10-50"></a>        {<span class="st">'role'</span>: <span class="st">'user'</span>, <span class="st">'content'</span>: <span class="ss">f"</span><span class="sc">{</span>delimiter<span class="sc">}{</span>user_input<span class="sc">}{</span>delimiter<span class="sc">}</span><span class="ss">"</span>},</span>
+<span id="cb10-51"><a href="#cb10-51"></a>    ]</span>
+<span id="cb10-52"><a href="#cb10-52"></a>    <span class="cf">return</span> get_completion_from_messages(messages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section>
 <section>
@@ -718,21 +709,18 @@ Jan Kirenz
 <section id="evaluation-3-v2" class="slide level2">
 <h2>Evaluation 3 (V2)</h2>
 <p>Evaluate the modified prompt on the hard tests cases</p>
-<div id="4a81d349" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>customer_msg_3 <span class="op">=</span> <span class="ss">f"""</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a><span class="ss">tell me about the smartx pro phone and the fotosnap camera, the dslr one.</span></span>
-<span id="cb16-3"><a href="#cb16-3"></a><span class="ss">Also, what TVs do you have?"""</span></span>
-<span id="cb16-4"><a href="#cb16-4"></a></span>
-<span id="cb16-5"><a href="#cb16-5"></a>products_by_category_3 <span class="op">=</span> find_category_and_product_v2(customer_msg_3,</span>
-<span id="cb16-6"><a href="#cb16-6"></a>                                                      products_and_category)</span>
-<span id="cb16-7"><a href="#cb16-7"></a><span class="bu">print</span>(products_by_category_3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>customer_msg_3 <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="ss">tell me about the smartx pro phone and the fotosnap camera, the dslr one.</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="ss">Also, what TVs do you have?"""</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a></span>
+<span id="cb11-5"><a href="#cb11-5"></a>products_by_category_3 <span class="op">=</span> find_category_and_product_v2(customer_msg_3,</span>
+<span id="cb11-6"><a href="#cb11-6"></a>                                                      products_and_category)</span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="bu">print</span>(products_by_category_3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell fragment" data-execution_count="11">
-<div class="cell-output cell-output-stdout">
-<pre><code> 
-    [{'category': 'Smartphones and Accessories', 'products': ['SmartX ProPhone']}, {'category': 'Cameras and Camcorders', 'products': ['FotoSnap DSLR Camera']}, {'category': 'Televisions and Home Theater Systems', 'products': ['CineView 4K TV', 'SoundMax Home Theater', 'CineView 8K TV', 'SoundMax Soundbar', 'CineView OLED TV']}]</code></pre>
-</div>
-</div>
+<ul>
+<li>[{‘category’: ‘Smartphones and Accessories’, ‘products’: [‘SmartX ProPhone’]}, {‘category’: ‘Cameras and Camcorders’, ‘products’: [‘FotoSnap DSLR Camera’]}, {‘category’: ‘Televisions and Home Theater Systems’, ‘products’: [‘CineView 4K TV’, ‘SoundMax Home Theater’, ‘CineView 8K TV’, ‘SoundMax Soundbar’, ‘CineView OLED TV’]}]</li>
+</ul>
 </section></section>
 <section>
 <section id="regression-testing" class="title-slide slide level1 center">
@@ -742,20 +730,16 @@ Jan Kirenz
 <section id="test" class="slide level2">
 <h2>Test</h2>
 <p>Check that modifying the model to fix the hard test cases does not negatively affect its performance on previous test cases.</p>
-<div id="a3f31ac6" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>customer_msg_0 <span class="op">=</span> <span class="ss">f"""Which TV can I buy if I'm on a budget?"""</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a></span>
-<span id="cb18-3"><a href="#cb18-3"></a>products_by_category_0 <span class="op">=</span> find_category_and_product_v2(customer_msg_0,</span>
-<span id="cb18-4"><a href="#cb18-4"></a>                                                      products_and_category)</span>
-<span id="cb18-5"><a href="#cb18-5"></a><span class="bu">print</span>(products_by_category_0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>customer_msg_0 <span class="op">=</span> <span class="ss">f"""Which TV can I buy if I'm on a budget?"""</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3"></a>products_by_category_0 <span class="op">=</span> find_category_and_product_v2(customer_msg_0,</span>
+<span id="cb12-4"><a href="#cb12-4"></a>                                                      products_and_category)</span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="bu">print</span>(products_by_category_0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell fragment" data-execution_count="12">
-<div class="cell-output cell-output-stdout">
-<pre><code> 
-    [{'category': 'Televisions and Home Theater Systems', 'products': ['CineView 4K TV', 'SoundMax Home Theater', 'CineView 8K TV', 'SoundMax Soundbar', 'CineView OLED TV']}]
-    </code></pre>
-</div>
-</div>
+<ul>
+<li>[{‘category’: ‘Televisions and Home Theater Systems’, ‘products’: [‘CineView 4K TV’, ‘SoundMax Home Theater’, ‘CineView 8K TV’, ‘SoundMax Soundbar’, ‘CineView OLED TV’]}]</li>
+</ul>
 </section></section>
 <section>
 <section id="automated-testing-with-development-set" class="title-slide slide level1 center">
@@ -765,281 +749,251 @@ Jan Kirenz
 <section id="gather-development-set" class="slide level2 smaller">
 <h2>Gather development set</h2>
 <p>Gather development set for automated testin</p>
-<div id="4a159702" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>msg_ideal_pairs_set <span class="op">=</span> [</span>
-<span id="cb20-2"><a href="#cb20-2"></a></span>
-<span id="cb20-3"><a href="#cb20-3"></a>    <span class="co"># eg 0</span></span>
-<span id="cb20-4"><a href="#cb20-4"></a>    {<span class="st">'customer_msg'</span>: <span class="st">"""Which TV can I buy if I'm on a budget?"""</span>,</span>
-<span id="cb20-5"><a href="#cb20-5"></a>     <span class="st">'ideal_answer'</span>: {</span>
-<span id="cb20-6"><a href="#cb20-6"></a>         <span class="st">'Televisions and Home Theater Systems'</span>: <span class="bu">set</span>(</span>
-<span id="cb20-7"><a href="#cb20-7"></a>             [<span class="st">'CineView 4K TV'</span>, <span class="st">'SoundMax Home Theater'</span>, <span class="st">'CineView 8K TV'</span>,</span>
-<span id="cb20-8"><a href="#cb20-8"></a>              <span class="st">'SoundMax Soundbar'</span>, <span class="st">'CineView OLED TV'</span>]</span>
-<span id="cb20-9"><a href="#cb20-9"></a>         )}</span>
-<span id="cb20-10"><a href="#cb20-10"></a>     },</span>
-<span id="cb20-11"><a href="#cb20-11"></a></span>
-<span id="cb20-12"><a href="#cb20-12"></a>    <span class="co"># eg 1</span></span>
-<span id="cb20-13"><a href="#cb20-13"></a>    {<span class="st">'customer_msg'</span>: <span class="st">"""I need a charger for my smartphone"""</span>,</span>
-<span id="cb20-14"><a href="#cb20-14"></a>     <span class="st">'ideal_answer'</span>: {</span>
-<span id="cb20-15"><a href="#cb20-15"></a>         <span class="st">'Smartphones and Accessories'</span>: <span class="bu">set</span>(</span>
-<span id="cb20-16"><a href="#cb20-16"></a>             [<span class="st">'MobiTech PowerCase'</span>, <span class="st">'MobiTech Wireless Charger'</span>, <span class="st">'SmartX EarBuds'</span>]</span>
-<span id="cb20-17"><a href="#cb20-17"></a>         )}</span>
-<span id="cb20-18"><a href="#cb20-18"></a>     },</span>
-<span id="cb20-19"><a href="#cb20-19"></a>    <span class="co"># eg 2</span></span>
-<span id="cb20-20"><a href="#cb20-20"></a>    {<span class="st">'customer_msg'</span>: <span class="ss">f"""What computers do you have?"""</span>,</span>
-<span id="cb20-21"><a href="#cb20-21"></a>     <span class="st">'ideal_answer'</span>: {</span>
-<span id="cb20-22"><a href="#cb20-22"></a>         <span class="st">'Computers and Laptops'</span>: <span class="bu">set</span>(</span>
-<span id="cb20-23"><a href="#cb20-23"></a>             [<span class="st">'TechPro Ultrabook'</span>, <span class="st">'BlueWave Gaming Laptop'</span>, <span class="st">'PowerLite Convertible'</span>, <span class="st">'TechPro Desktop'</span>, <span class="st">'BlueWave Chromebook'</span></span>
-<span id="cb20-24"><a href="#cb20-24"></a>              ])</span>
-<span id="cb20-25"><a href="#cb20-25"></a>     }</span>
-<span id="cb20-26"><a href="#cb20-26"></a>     },</span>
-<span id="cb20-27"><a href="#cb20-27"></a></span>
-<span id="cb20-28"><a href="#cb20-28"></a>    <span class="co"># eg 3</span></span>
-<span id="cb20-29"><a href="#cb20-29"></a>    {<span class="st">'customer_msg'</span>: <span class="ss">f"""tell me about the smartx pro phone and </span><span class="ch">\</span></span>
-<span id="cb20-30"><a href="#cb20-30"></a><span class="ss">    the fotosnap camera, the dslr one.</span><span class="ch">\</span></span>
-<span id="cb20-31"><a href="#cb20-31"></a><span class="ss">    Also, what TVs do you have?"""</span>,</span>
-<span id="cb20-32"><a href="#cb20-32"></a>     <span class="st">'ideal_answer'</span>: {</span>
-<span id="cb20-33"><a href="#cb20-33"></a>         <span class="st">'Smartphones and Accessories'</span>: <span class="bu">set</span>(</span>
-<span id="cb20-34"><a href="#cb20-34"></a>             [<span class="st">'SmartX ProPhone'</span>]),</span>
-<span id="cb20-35"><a href="#cb20-35"></a>         <span class="st">'Cameras and Camcorders'</span>:<span class="bu">set</span>(</span>
-<span id="cb20-36"><a href="#cb20-36"></a>             [<span class="st">'FotoSnap DSLR Camera'</span>]),</span>
-<span id="cb20-37"><a href="#cb20-37"></a>         <span class="st">'Televisions and Home Theater Systems'</span>:<span class="bu">set</span>(</span>
-<span id="cb20-38"><a href="#cb20-38"></a>             [<span class="st">'CineView 4K TV'</span>, <span class="st">'SoundMax Home Theater'</span>, <span class="st">'CineView 8K TV'</span>, <span class="st">'SoundMax Soundbar'</span>, <span class="st">'CineView OLED TV'</span>])</span>
-<span id="cb20-39"><a href="#cb20-39"></a>     }</span>
-<span id="cb20-40"><a href="#cb20-40"></a>     },</span>
-<span id="cb20-41"><a href="#cb20-41"></a></span>
-<span id="cb20-42"><a href="#cb20-42"></a>    <span class="co"># eg 4</span></span>
-<span id="cb20-43"><a href="#cb20-43"></a>    {<span class="st">'customer_msg'</span>: <span class="st">"""tell me about the CineView TV, the 8K one, Gamesphere console, the X one.</span></span>
-<span id="cb20-44"><a href="#cb20-44"></a><span class="st">I'm on a budget, what computers do you have?"""</span>,</span>
-<span id="cb20-45"><a href="#cb20-45"></a>     <span class="st">'ideal_answer'</span>: {</span>
-<span id="cb20-46"><a href="#cb20-46"></a>         <span class="st">'Televisions and Home Theater Systems'</span>: <span class="bu">set</span>(</span>
-<span id="cb20-47"><a href="#cb20-47"></a>             [<span class="st">'CineView 8K TV'</span>]),</span>
-<span id="cb20-48"><a href="#cb20-48"></a>         <span class="st">'Gaming Consoles and Accessories'</span>:<span class="bu">set</span>(</span>
-<span id="cb20-49"><a href="#cb20-49"></a>             [<span class="st">'GameSphere X'</span>]),</span>
-<span id="cb20-50"><a href="#cb20-50"></a>         <span class="st">'Computers and Laptops'</span>:<span class="bu">set</span>(</span>
-<span id="cb20-51"><a href="#cb20-51"></a>             [<span class="st">'TechPro Ultrabook'</span>, <span class="st">'BlueWave Gaming Laptop'</span>, <span class="st">'PowerLite Convertible'</span>, <span class="st">'TechPro Desktop'</span>, <span class="st">'BlueWave Chromebook'</span>])</span>
-<span id="cb20-52"><a href="#cb20-52"></a>     }</span>
-<span id="cb20-53"><a href="#cb20-53"></a>     },</span>
-<span id="cb20-54"><a href="#cb20-54"></a></span>
-<span id="cb20-55"><a href="#cb20-55"></a>    <span class="co"># eg 5</span></span>
-<span id="cb20-56"><a href="#cb20-56"></a>    {<span class="st">'customer_msg'</span>: <span class="ss">f"""What smartphones do you have?"""</span>,</span>
-<span id="cb20-57"><a href="#cb20-57"></a>     <span class="st">'ideal_answer'</span>: {</span>
-<span id="cb20-58"><a href="#cb20-58"></a>         <span class="st">'Smartphones and Accessories'</span>: <span class="bu">set</span>(</span>
-<span id="cb20-59"><a href="#cb20-59"></a>             [<span class="st">'SmartX ProPhone'</span>, <span class="st">'MobiTech PowerCase'</span>, <span class="st">'SmartX MiniPhone'</span>, <span class="st">'MobiTech Wireless Charger'</span>, <span class="st">'SmartX EarBuds'</span></span>
-<span id="cb20-60"><a href="#cb20-60"></a>              ])</span>
-<span id="cb20-61"><a href="#cb20-61"></a>     }</span>
-<span id="cb20-62"><a href="#cb20-62"></a>     },</span>
-<span id="cb20-63"><a href="#cb20-63"></a>    <span class="co"># eg 6</span></span>
-<span id="cb20-64"><a href="#cb20-64"></a>    {<span class="st">'customer_msg'</span>: <span class="ss">f"""I'm on a budget.  Can you recommend some smartphones to me?"""</span>,</span>
-<span id="cb20-65"><a href="#cb20-65"></a>     <span class="st">'ideal_answer'</span>: {</span>
-<span id="cb20-66"><a href="#cb20-66"></a>         <span class="st">'Smartphones and Accessories'</span>: <span class="bu">set</span>(</span>
-<span id="cb20-67"><a href="#cb20-67"></a>             [<span class="st">'SmartX EarBuds'</span>, <span class="st">'SmartX MiniPhone'</span>, <span class="st">'MobiTech PowerCase'</span>,</span>
-<span id="cb20-68"><a href="#cb20-68"></a>              <span class="st">'SmartX ProPhone'</span>, <span class="st">'MobiTech Wireless Charger'</span>]</span>
-<span id="cb20-69"><a href="#cb20-69"></a>         )}</span>
-<span id="cb20-70"><a href="#cb20-70"></a>     },</span>
-<span id="cb20-71"><a href="#cb20-71"></a></span>
-<span id="cb20-72"><a href="#cb20-72"></a>    <span class="co"># eg 7 # this will output a subset of the ideal answer</span></span>
-<span id="cb20-73"><a href="#cb20-73"></a>    {<span class="st">'customer_msg'</span>: <span class="ss">f"""What Gaming consoles would be good for my friend who is into racing games?"""</span>,</span>
-<span id="cb20-74"><a href="#cb20-74"></a>     <span class="st">'ideal_answer'</span>: {</span>
-<span id="cb20-75"><a href="#cb20-75"></a>         <span class="st">'Gaming Consoles and Accessories'</span>: <span class="bu">set</span>([</span>
-<span id="cb20-76"><a href="#cb20-76"></a>             <span class="st">'GameSphere X'</span>,</span>
-<span id="cb20-77"><a href="#cb20-77"></a>             <span class="st">'ProGamer Controller'</span>,</span>
-<span id="cb20-78"><a href="#cb20-78"></a>             <span class="st">'GameSphere Y'</span>,</span>
-<span id="cb20-79"><a href="#cb20-79"></a>             <span class="st">'ProGamer Racing Wheel'</span>,</span>
-<span id="cb20-80"><a href="#cb20-80"></a>             <span class="st">'GameSphere VR Headset'</span></span>
-<span id="cb20-81"><a href="#cb20-81"></a>         ])}</span>
-<span id="cb20-82"><a href="#cb20-82"></a>     },</span>
-<span id="cb20-83"><a href="#cb20-83"></a>    <span class="co"># eg 8</span></span>
-<span id="cb20-84"><a href="#cb20-84"></a>    {<span class="st">'customer_msg'</span>: <span class="ss">f"""What could be a good present for my videographer friend?"""</span>,</span>
-<span id="cb20-85"><a href="#cb20-85"></a>     <span class="st">'ideal_answer'</span>: {</span>
-<span id="cb20-86"><a href="#cb20-86"></a>         <span class="st">'Cameras and Camcorders'</span>: <span class="bu">set</span>([</span>
-<span id="cb20-87"><a href="#cb20-87"></a>             <span class="st">'FotoSnap DSLR Camera'</span>, <span class="st">'ActionCam 4K'</span>, <span class="st">'FotoSnap Mirrorless Camera'</span>, <span class="st">'ZoomMaster Camcorder'</span>, <span class="st">'FotoSnap Instant Camera'</span></span>
-<span id="cb20-88"><a href="#cb20-88"></a>         ])}</span>
-<span id="cb20-89"><a href="#cb20-89"></a>     },</span>
-<span id="cb20-90"><a href="#cb20-90"></a></span>
-<span id="cb20-91"><a href="#cb20-91"></a>    <span class="co"># eg 9</span></span>
-<span id="cb20-92"><a href="#cb20-92"></a>    {<span class="st">'customer_msg'</span>: <span class="ss">f"""I would like a hot tub time machine."""</span>,</span>
-<span id="cb20-93"><a href="#cb20-93"></a>     <span class="st">'ideal_answer'</span>: []</span>
-<span id="cb20-94"><a href="#cb20-94"></a>     }</span>
-<span id="cb20-95"><a href="#cb20-95"></a></span>
-<span id="cb20-96"><a href="#cb20-96"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>msg_ideal_pairs_set <span class="op">=</span> [</span>
+<span id="cb13-2"><a href="#cb13-2"></a></span>
+<span id="cb13-3"><a href="#cb13-3"></a>    <span class="co"># eg 0</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>    {<span class="st">'customer_msg'</span>: <span class="st">"""Which TV can I buy if I'm on a budget?"""</span>,</span>
+<span id="cb13-5"><a href="#cb13-5"></a>     <span class="st">'ideal_answer'</span>: {</span>
+<span id="cb13-6"><a href="#cb13-6"></a>         <span class="st">'Televisions and Home Theater Systems'</span>: <span class="bu">set</span>(</span>
+<span id="cb13-7"><a href="#cb13-7"></a>             [<span class="st">'CineView 4K TV'</span>, <span class="st">'SoundMax Home Theater'</span>, <span class="st">'CineView 8K TV'</span>,</span>
+<span id="cb13-8"><a href="#cb13-8"></a>              <span class="st">'SoundMax Soundbar'</span>, <span class="st">'CineView OLED TV'</span>]</span>
+<span id="cb13-9"><a href="#cb13-9"></a>         )}</span>
+<span id="cb13-10"><a href="#cb13-10"></a>     },</span>
+<span id="cb13-11"><a href="#cb13-11"></a></span>
+<span id="cb13-12"><a href="#cb13-12"></a>    <span class="co"># eg 1</span></span>
+<span id="cb13-13"><a href="#cb13-13"></a>    {<span class="st">'customer_msg'</span>: <span class="st">"""I need a charger for my smartphone"""</span>,</span>
+<span id="cb13-14"><a href="#cb13-14"></a>     <span class="st">'ideal_answer'</span>: {</span>
+<span id="cb13-15"><a href="#cb13-15"></a>         <span class="st">'Smartphones and Accessories'</span>: <span class="bu">set</span>(</span>
+<span id="cb13-16"><a href="#cb13-16"></a>             [<span class="st">'MobiTech PowerCase'</span>, <span class="st">'MobiTech Wireless Charger'</span>, <span class="st">'SmartX EarBuds'</span>]</span>
+<span id="cb13-17"><a href="#cb13-17"></a>         )}</span>
+<span id="cb13-18"><a href="#cb13-18"></a>     },</span>
+<span id="cb13-19"><a href="#cb13-19"></a>    <span class="co"># eg 2</span></span>
+<span id="cb13-20"><a href="#cb13-20"></a>    {<span class="st">'customer_msg'</span>: <span class="ss">f"""What computers do you have?"""</span>,</span>
+<span id="cb13-21"><a href="#cb13-21"></a>     <span class="st">'ideal_answer'</span>: {</span>
+<span id="cb13-22"><a href="#cb13-22"></a>         <span class="st">'Computers and Laptops'</span>: <span class="bu">set</span>(</span>
+<span id="cb13-23"><a href="#cb13-23"></a>             [<span class="st">'TechPro Ultrabook'</span>, <span class="st">'BlueWave Gaming Laptop'</span>, <span class="st">'PowerLite Convertible'</span>, <span class="st">'TechPro Desktop'</span>, <span class="st">'BlueWave Chromebook'</span></span>
+<span id="cb13-24"><a href="#cb13-24"></a>              ])</span>
+<span id="cb13-25"><a href="#cb13-25"></a>     }</span>
+<span id="cb13-26"><a href="#cb13-26"></a>     },</span>
+<span id="cb13-27"><a href="#cb13-27"></a></span>
+<span id="cb13-28"><a href="#cb13-28"></a>    <span class="co"># eg 3</span></span>
+<span id="cb13-29"><a href="#cb13-29"></a>    {<span class="st">'customer_msg'</span>: <span class="ss">f"""tell me about the smartx pro phone and </span><span class="ch">\</span></span>
+<span id="cb13-30"><a href="#cb13-30"></a><span class="ss">    the fotosnap camera, the dslr one.</span><span class="ch">\</span></span>
+<span id="cb13-31"><a href="#cb13-31"></a><span class="ss">    Also, what TVs do you have?"""</span>,</span>
+<span id="cb13-32"><a href="#cb13-32"></a>     <span class="st">'ideal_answer'</span>: {</span>
+<span id="cb13-33"><a href="#cb13-33"></a>         <span class="st">'Smartphones and Accessories'</span>: <span class="bu">set</span>(</span>
+<span id="cb13-34"><a href="#cb13-34"></a>             [<span class="st">'SmartX ProPhone'</span>]),</span>
+<span id="cb13-35"><a href="#cb13-35"></a>         <span class="st">'Cameras and Camcorders'</span>:<span class="bu">set</span>(</span>
+<span id="cb13-36"><a href="#cb13-36"></a>             [<span class="st">'FotoSnap DSLR Camera'</span>]),</span>
+<span id="cb13-37"><a href="#cb13-37"></a>         <span class="st">'Televisions and Home Theater Systems'</span>:<span class="bu">set</span>(</span>
+<span id="cb13-38"><a href="#cb13-38"></a>             [<span class="st">'CineView 4K TV'</span>, <span class="st">'SoundMax Home Theater'</span>, <span class="st">'CineView 8K TV'</span>, <span class="st">'SoundMax Soundbar'</span>, <span class="st">'CineView OLED TV'</span>])</span>
+<span id="cb13-39"><a href="#cb13-39"></a>     }</span>
+<span id="cb13-40"><a href="#cb13-40"></a>     },</span>
+<span id="cb13-41"><a href="#cb13-41"></a></span>
+<span id="cb13-42"><a href="#cb13-42"></a>    <span class="co"># eg 4</span></span>
+<span id="cb13-43"><a href="#cb13-43"></a>    {<span class="st">'customer_msg'</span>: <span class="st">"""tell me about the CineView TV, the 8K one, Gamesphere console, the X one.</span></span>
+<span id="cb13-44"><a href="#cb13-44"></a><span class="st">    I'm on a budget, what computers do you have?"""</span>,</span>
+<span id="cb13-45"><a href="#cb13-45"></a>     <span class="st">'ideal_answer'</span>: {</span>
+<span id="cb13-46"><a href="#cb13-46"></a>         <span class="st">'Televisions and Home Theater Systems'</span>: <span class="bu">set</span>(</span>
+<span id="cb13-47"><a href="#cb13-47"></a>             [<span class="st">'CineView 8K TV'</span>]),</span>
+<span id="cb13-48"><a href="#cb13-48"></a>         <span class="st">'Gaming Consoles and Accessories'</span>:<span class="bu">set</span>(</span>
+<span id="cb13-49"><a href="#cb13-49"></a>             [<span class="st">'GameSphere X'</span>]),</span>
+<span id="cb13-50"><a href="#cb13-50"></a>         <span class="st">'Computers and Laptops'</span>:<span class="bu">set</span>(</span>
+<span id="cb13-51"><a href="#cb13-51"></a>             [<span class="st">'TechPro Ultrabook'</span>, <span class="st">'BlueWave Gaming Laptop'</span>, <span class="st">'PowerLite Convertible'</span>, <span class="st">'TechPro Desktop'</span>, <span class="st">'BlueWave Chromebook'</span>])</span>
+<span id="cb13-52"><a href="#cb13-52"></a>     }</span>
+<span id="cb13-53"><a href="#cb13-53"></a>     },</span>
+<span id="cb13-54"><a href="#cb13-54"></a></span>
+<span id="cb13-55"><a href="#cb13-55"></a>    <span class="co"># eg 5</span></span>
+<span id="cb13-56"><a href="#cb13-56"></a>    {<span class="st">'customer_msg'</span>: <span class="ss">f"""What smartphones do you have?"""</span>,</span>
+<span id="cb13-57"><a href="#cb13-57"></a>     <span class="st">'ideal_answer'</span>: {</span>
+<span id="cb13-58"><a href="#cb13-58"></a>         <span class="st">'Smartphones and Accessories'</span>: <span class="bu">set</span>(</span>
+<span id="cb13-59"><a href="#cb13-59"></a>             [<span class="st">'SmartX ProPhone'</span>, <span class="st">'MobiTech PowerCase'</span>, <span class="st">'SmartX MiniPhone'</span>, <span class="st">'MobiTech Wireless Charger'</span>, <span class="st">'SmartX EarBuds'</span></span>
+<span id="cb13-60"><a href="#cb13-60"></a>              ])</span>
+<span id="cb13-61"><a href="#cb13-61"></a>     }</span>
+<span id="cb13-62"><a href="#cb13-62"></a>     },</span>
+<span id="cb13-63"><a href="#cb13-63"></a>    <span class="co"># eg 6</span></span>
+<span id="cb13-64"><a href="#cb13-64"></a>    {<span class="st">'customer_msg'</span>: <span class="ss">f"""I'm on a budget.  Can you recommend some      smartphones to me?"""</span>,</span>
+<span id="cb13-65"><a href="#cb13-65"></a>     <span class="st">'ideal_answer'</span>: {</span>
+<span id="cb13-66"><a href="#cb13-66"></a>         <span class="st">'Smartphones and Accessories'</span>: <span class="bu">set</span>(</span>
+<span id="cb13-67"><a href="#cb13-67"></a>             [<span class="st">'SmartX EarBuds'</span>, <span class="st">'SmartX MiniPhone'</span>, <span class="st">'MobiTech PowerCase'</span>,</span>
+<span id="cb13-68"><a href="#cb13-68"></a>              <span class="st">'SmartX ProPhone'</span>, <span class="st">'MobiTech Wireless Charger'</span>]</span>
+<span id="cb13-69"><a href="#cb13-69"></a>         )}</span>
+<span id="cb13-70"><a href="#cb13-70"></a>     },</span>
+<span id="cb13-71"><a href="#cb13-71"></a></span>
+<span id="cb13-72"><a href="#cb13-72"></a>    <span class="co"># eg 7 # this will output a subset of the ideal answer</span></span>
+<span id="cb13-73"><a href="#cb13-73"></a>    {<span class="st">'customer_msg'</span>: <span class="ss">f"""What Gaming consoles would be good for my friend who is into racing games?"""</span>,</span>
+<span id="cb13-74"><a href="#cb13-74"></a>     <span class="st">'ideal_answer'</span>: {</span>
+<span id="cb13-75"><a href="#cb13-75"></a>         <span class="st">'Gaming Consoles and Accessories'</span>: <span class="bu">set</span>([</span>
+<span id="cb13-76"><a href="#cb13-76"></a>             <span class="st">'GameSphere X'</span>,</span>
+<span id="cb13-77"><a href="#cb13-77"></a>             <span class="st">'ProGamer Controller'</span>,</span>
+<span id="cb13-78"><a href="#cb13-78"></a>             <span class="st">'GameSphere Y'</span>,</span>
+<span id="cb13-79"><a href="#cb13-79"></a>             <span class="st">'ProGamer Racing Wheel'</span>,</span>
+<span id="cb13-80"><a href="#cb13-80"></a>             <span class="st">'GameSphere VR Headset'</span></span>
+<span id="cb13-81"><a href="#cb13-81"></a>         ])}</span>
+<span id="cb13-82"><a href="#cb13-82"></a>     },</span>
+<span id="cb13-83"><a href="#cb13-83"></a>    <span class="co"># eg 8</span></span>
+<span id="cb13-84"><a href="#cb13-84"></a>    {<span class="st">'customer_msg'</span>: <span class="ss">f"""What could be a good present for my videographer friend?"""</span>,</span>
+<span id="cb13-85"><a href="#cb13-85"></a>     <span class="st">'ideal_answer'</span>: {</span>
+<span id="cb13-86"><a href="#cb13-86"></a>         <span class="st">'Cameras and Camcorders'</span>: <span class="bu">set</span>([</span>
+<span id="cb13-87"><a href="#cb13-87"></a>             <span class="st">'FotoSnap DSLR Camera'</span>, <span class="st">'ActionCam 4K'</span>, <span class="st">'FotoSnap Mirrorless Camera'</span>, <span class="st">'ZoomMaster Camcorder'</span>, <span class="st">'FotoSnap Instant Camera'</span></span>
+<span id="cb13-88"><a href="#cb13-88"></a>         ])}</span>
+<span id="cb13-89"><a href="#cb13-89"></a>     },</span>
+<span id="cb13-90"><a href="#cb13-90"></a></span>
+<span id="cb13-91"><a href="#cb13-91"></a>    <span class="co"># eg 9</span></span>
+<span id="cb13-92"><a href="#cb13-92"></a>    {<span class="st">'customer_msg'</span>: <span class="ss">f"""I would like a hot tub time machine."""</span>,</span>
+<span id="cb13-93"><a href="#cb13-93"></a>     <span class="st">'ideal_answer'</span>: []</span>
+<span id="cb13-94"><a href="#cb13-94"></a>     }</span>
+<span id="cb13-95"><a href="#cb13-95"></a></span>
+<span id="cb13-96"><a href="#cb13-96"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="evaluate-test-cases" class="slide level2 smaller">
 <h2>Evaluate test cases</h2>
 <p>Evaluate test cases by comparing to the ideal answers</p>
-<div id="46a27ece" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">def</span> eval_response_with_ideal(response,</span>
-<span id="cb21-2"><a href="#cb21-2"></a>                             ideal,</span>
-<span id="cb21-3"><a href="#cb21-3"></a>                             debug<span class="op">=</span><span class="va">False</span>):</span>
-<span id="cb21-4"><a href="#cb21-4"></a></span>
-<span id="cb21-5"><a href="#cb21-5"></a>    <span class="cf">if</span> debug:</span>
-<span id="cb21-6"><a href="#cb21-6"></a>        <span class="bu">print</span>(<span class="st">"response"</span>)</span>
-<span id="cb21-7"><a href="#cb21-7"></a>        <span class="bu">print</span>(response)</span>
-<span id="cb21-8"><a href="#cb21-8"></a></span>
-<span id="cb21-9"><a href="#cb21-9"></a>    <span class="co"># json.loads() expects double quotes, not single quotes</span></span>
-<span id="cb21-10"><a href="#cb21-10"></a>    json_like_str <span class="op">=</span> response.replace(<span class="st">"'"</span>, <span class="st">'"'</span>)</span>
-<span id="cb21-11"><a href="#cb21-11"></a></span>
-<span id="cb21-12"><a href="#cb21-12"></a>    <span class="co"># parse into a list of dictionaries</span></span>
-<span id="cb21-13"><a href="#cb21-13"></a>    l_of_d <span class="op">=</span> json.loads(json_like_str)</span>
-<span id="cb21-14"><a href="#cb21-14"></a></span>
-<span id="cb21-15"><a href="#cb21-15"></a>    <span class="co"># special case when response is empty list</span></span>
-<span id="cb21-16"><a href="#cb21-16"></a>    <span class="cf">if</span> l_of_d <span class="op">==</span> [] <span class="kw">and</span> ideal <span class="op">==</span> []:</span>
-<span id="cb21-17"><a href="#cb21-17"></a>        <span class="cf">return</span> <span class="dv">1</span></span>
-<span id="cb21-18"><a href="#cb21-18"></a></span>
-<span id="cb21-19"><a href="#cb21-19"></a>    <span class="co"># otherwise, response is empty</span></span>
-<span id="cb21-20"><a href="#cb21-20"></a>    <span class="co"># or ideal should be empty, there's a mismatch</span></span>
-<span id="cb21-21"><a href="#cb21-21"></a>    <span class="cf">elif</span> l_of_d <span class="op">==</span> [] <span class="kw">or</span> ideal <span class="op">==</span> []:</span>
-<span id="cb21-22"><a href="#cb21-22"></a>        <span class="cf">return</span> <span class="dv">0</span></span>
-<span id="cb21-23"><a href="#cb21-23"></a></span>
-<span id="cb21-24"><a href="#cb21-24"></a>    correct <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb21-25"><a href="#cb21-25"></a></span>
-<span id="cb21-26"><a href="#cb21-26"></a>    <span class="cf">if</span> debug:</span>
-<span id="cb21-27"><a href="#cb21-27"></a>        <span class="bu">print</span>(<span class="st">"l_of_d is"</span>)</span>
-<span id="cb21-28"><a href="#cb21-28"></a>        <span class="bu">print</span>(l_of_d)</span>
-<span id="cb21-29"><a href="#cb21-29"></a>    <span class="cf">for</span> d <span class="kw">in</span> l_of_d:</span>
-<span id="cb21-30"><a href="#cb21-30"></a></span>
-<span id="cb21-31"><a href="#cb21-31"></a>        cat <span class="op">=</span> d.get(<span class="st">'category'</span>)</span>
-<span id="cb21-32"><a href="#cb21-32"></a>        prod_l <span class="op">=</span> d.get(<span class="st">'products'</span>)</span>
-<span id="cb21-33"><a href="#cb21-33"></a>        <span class="cf">if</span> cat <span class="kw">and</span> prod_l:</span>
-<span id="cb21-34"><a href="#cb21-34"></a>            <span class="co"># convert list to set for comparison</span></span>
-<span id="cb21-35"><a href="#cb21-35"></a>            prod_set <span class="op">=</span> <span class="bu">set</span>(prod_l)</span>
-<span id="cb21-36"><a href="#cb21-36"></a>            <span class="co"># get ideal set of products</span></span>
-<span id="cb21-37"><a href="#cb21-37"></a>            ideal_cat <span class="op">=</span> ideal.get(cat)</span>
-<span id="cb21-38"><a href="#cb21-38"></a>            <span class="cf">if</span> ideal_cat:</span>
-<span id="cb21-39"><a href="#cb21-39"></a>                prod_set_ideal <span class="op">=</span> <span class="bu">set</span>(ideal.get(cat))</span>
-<span id="cb21-40"><a href="#cb21-40"></a>            <span class="cf">else</span>:</span>
-<span id="cb21-41"><a href="#cb21-41"></a>                <span class="cf">if</span> debug:</span>
-<span id="cb21-42"><a href="#cb21-42"></a>                    <span class="bu">print</span>(<span class="ss">f"did not find category </span><span class="sc">{</span>cat<span class="sc">}</span><span class="ss"> in ideal"</span>)</span>
-<span id="cb21-43"><a href="#cb21-43"></a>                    <span class="bu">print</span>(<span class="ss">f"ideal: </span><span class="sc">{</span>ideal<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb21-44"><a href="#cb21-44"></a>                <span class="cf">continue</span></span>
-<span id="cb21-45"><a href="#cb21-45"></a></span>
-<span id="cb21-46"><a href="#cb21-46"></a>            <span class="cf">if</span> debug:</span>
-<span id="cb21-47"><a href="#cb21-47"></a>                <span class="bu">print</span>(<span class="st">"prod_set</span><span class="ch">\n</span><span class="st">"</span>, prod_set)</span>
-<span id="cb21-48"><a href="#cb21-48"></a>                <span class="bu">print</span>()</span>
-<span id="cb21-49"><a href="#cb21-49"></a>                <span class="bu">print</span>(<span class="st">"prod_set_ideal</span><span class="ch">\n</span><span class="st">"</span>, prod_set_ideal)</span>
-<span id="cb21-50"><a href="#cb21-50"></a></span>
-<span id="cb21-51"><a href="#cb21-51"></a>            <span class="cf">if</span> prod_set <span class="op">==</span> prod_set_ideal:</span>
-<span id="cb21-52"><a href="#cb21-52"></a>                <span class="cf">if</span> debug:</span>
-<span id="cb21-53"><a href="#cb21-53"></a>                    <span class="bu">print</span>(<span class="st">"correct"</span>)</span>
-<span id="cb21-54"><a href="#cb21-54"></a>                correct <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb21-55"><a href="#cb21-55"></a>            <span class="cf">else</span>:</span>
-<span id="cb21-56"><a href="#cb21-56"></a>                <span class="bu">print</span>(<span class="st">"incorrect"</span>)</span>
-<span id="cb21-57"><a href="#cb21-57"></a>                <span class="bu">print</span>(<span class="ss">f"prod_set: </span><span class="sc">{</span>prod_set<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb21-58"><a href="#cb21-58"></a>                <span class="bu">print</span>(<span class="ss">f"prod_set_ideal: </span><span class="sc">{</span>prod_set_ideal<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb21-59"><a href="#cb21-59"></a>                <span class="cf">if</span> prod_set <span class="op">&lt;=</span> prod_set_ideal:</span>
-<span id="cb21-60"><a href="#cb21-60"></a>                    <span class="bu">print</span>(<span class="st">"response is a subset of the ideal answer"</span>)</span>
-<span id="cb21-61"><a href="#cb21-61"></a>                <span class="cf">elif</span> prod_set <span class="op">&gt;=</span> prod_set_ideal:</span>
-<span id="cb21-62"><a href="#cb21-62"></a>                    <span class="bu">print</span>(<span class="st">"response is a superset of the ideal answer"</span>)</span>
-<span id="cb21-63"><a href="#cb21-63"></a></span>
-<span id="cb21-64"><a href="#cb21-64"></a>    <span class="co"># count correct over total number of items in list</span></span>
-<span id="cb21-65"><a href="#cb21-65"></a>    pc_correct <span class="op">=</span> correct <span class="op">/</span> <span class="bu">len</span>(l_of_d)</span>
-<span id="cb21-66"><a href="#cb21-66"></a></span>
-<span id="cb21-67"><a href="#cb21-67"></a>    <span class="cf">return</span> pc_correct</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">def</span> eval_response_with_ideal(response,</span>
+<span id="cb14-2"><a href="#cb14-2"></a>                             ideal,</span>
+<span id="cb14-3"><a href="#cb14-3"></a>                             debug<span class="op">=</span><span class="va">False</span>):</span>
+<span id="cb14-4"><a href="#cb14-4"></a></span>
+<span id="cb14-5"><a href="#cb14-5"></a>    <span class="cf">if</span> debug:</span>
+<span id="cb14-6"><a href="#cb14-6"></a>        <span class="bu">print</span>(<span class="st">"response"</span>)</span>
+<span id="cb14-7"><a href="#cb14-7"></a>        <span class="bu">print</span>(response)</span>
+<span id="cb14-8"><a href="#cb14-8"></a></span>
+<span id="cb14-9"><a href="#cb14-9"></a>    <span class="co"># json.loads() expects double quotes, not single quotes</span></span>
+<span id="cb14-10"><a href="#cb14-10"></a>    json_like_str <span class="op">=</span> response.replace(<span class="st">"'"</span>, <span class="st">'"'</span>)</span>
+<span id="cb14-11"><a href="#cb14-11"></a></span>
+<span id="cb14-12"><a href="#cb14-12"></a>    <span class="co"># parse into a list of dictionaries</span></span>
+<span id="cb14-13"><a href="#cb14-13"></a>    l_of_d <span class="op">=</span> json.loads(json_like_str)</span>
+<span id="cb14-14"><a href="#cb14-14"></a></span>
+<span id="cb14-15"><a href="#cb14-15"></a>    <span class="co"># special case when response is empty list</span></span>
+<span id="cb14-16"><a href="#cb14-16"></a>    <span class="cf">if</span> l_of_d <span class="op">==</span> [] <span class="kw">and</span> ideal <span class="op">==</span> []:</span>
+<span id="cb14-17"><a href="#cb14-17"></a>        <span class="cf">return</span> <span class="dv">1</span></span>
+<span id="cb14-18"><a href="#cb14-18"></a></span>
+<span id="cb14-19"><a href="#cb14-19"></a>    <span class="co"># otherwise, response is empty</span></span>
+<span id="cb14-20"><a href="#cb14-20"></a>    <span class="co"># or ideal should be empty, there's a mismatch</span></span>
+<span id="cb14-21"><a href="#cb14-21"></a>    <span class="cf">elif</span> l_of_d <span class="op">==</span> [] <span class="kw">or</span> ideal <span class="op">==</span> []:</span>
+<span id="cb14-22"><a href="#cb14-22"></a>        <span class="cf">return</span> <span class="dv">0</span></span>
+<span id="cb14-23"><a href="#cb14-23"></a></span>
+<span id="cb14-24"><a href="#cb14-24"></a>    correct <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb14-25"><a href="#cb14-25"></a></span>
+<span id="cb14-26"><a href="#cb14-26"></a>    <span class="cf">if</span> debug:</span>
+<span id="cb14-27"><a href="#cb14-27"></a>        <span class="bu">print</span>(<span class="st">"l_of_d is"</span>)</span>
+<span id="cb14-28"><a href="#cb14-28"></a>        <span class="bu">print</span>(l_of_d)</span>
+<span id="cb14-29"><a href="#cb14-29"></a>    <span class="cf">for</span> d <span class="kw">in</span> l_of_d:</span>
+<span id="cb14-30"><a href="#cb14-30"></a></span>
+<span id="cb14-31"><a href="#cb14-31"></a>        cat <span class="op">=</span> d.get(<span class="st">'category'</span>)</span>
+<span id="cb14-32"><a href="#cb14-32"></a>        prod_l <span class="op">=</span> d.get(<span class="st">'products'</span>)</span>
+<span id="cb14-33"><a href="#cb14-33"></a>        <span class="cf">if</span> cat <span class="kw">and</span> prod_l:</span>
+<span id="cb14-34"><a href="#cb14-34"></a>            <span class="co"># convert list to set for comparison</span></span>
+<span id="cb14-35"><a href="#cb14-35"></a>            prod_set <span class="op">=</span> <span class="bu">set</span>(prod_l)</span>
+<span id="cb14-36"><a href="#cb14-36"></a>            <span class="co"># get ideal set of products</span></span>
+<span id="cb14-37"><a href="#cb14-37"></a>            ideal_cat <span class="op">=</span> ideal.get(cat)</span>
+<span id="cb14-38"><a href="#cb14-38"></a>            <span class="cf">if</span> ideal_cat:</span>
+<span id="cb14-39"><a href="#cb14-39"></a>                prod_set_ideal <span class="op">=</span> <span class="bu">set</span>(ideal.get(cat))</span>
+<span id="cb14-40"><a href="#cb14-40"></a>            <span class="cf">else</span>:</span>
+<span id="cb14-41"><a href="#cb14-41"></a>                <span class="cf">if</span> debug:</span>
+<span id="cb14-42"><a href="#cb14-42"></a>                    <span class="bu">print</span>(<span class="ss">f"did not find category </span><span class="sc">{</span>cat<span class="sc">}</span><span class="ss"> in ideal"</span>)</span>
+<span id="cb14-43"><a href="#cb14-43"></a>                    <span class="bu">print</span>(<span class="ss">f"ideal: </span><span class="sc">{</span>ideal<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-44"><a href="#cb14-44"></a>                <span class="cf">continue</span></span>
+<span id="cb14-45"><a href="#cb14-45"></a></span>
+<span id="cb14-46"><a href="#cb14-46"></a>            <span class="cf">if</span> debug:</span>
+<span id="cb14-47"><a href="#cb14-47"></a>                <span class="bu">print</span>(<span class="st">"prod_set</span><span class="ch">\n</span><span class="st">"</span>, prod_set)</span>
+<span id="cb14-48"><a href="#cb14-48"></a>                <span class="bu">print</span>()</span>
+<span id="cb14-49"><a href="#cb14-49"></a>                <span class="bu">print</span>(<span class="st">"prod_set_ideal</span><span class="ch">\n</span><span class="st">"</span>, prod_set_ideal)</span>
+<span id="cb14-50"><a href="#cb14-50"></a></span>
+<span id="cb14-51"><a href="#cb14-51"></a>            <span class="cf">if</span> prod_set <span class="op">==</span> prod_set_ideal:</span>
+<span id="cb14-52"><a href="#cb14-52"></a>                <span class="cf">if</span> debug:</span>
+<span id="cb14-53"><a href="#cb14-53"></a>                    <span class="bu">print</span>(<span class="st">"correct"</span>)</span>
+<span id="cb14-54"><a href="#cb14-54"></a>                correct <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb14-55"><a href="#cb14-55"></a>            <span class="cf">else</span>:</span>
+<span id="cb14-56"><a href="#cb14-56"></a>                <span class="bu">print</span>(<span class="st">"incorrect"</span>)</span>
+<span id="cb14-57"><a href="#cb14-57"></a>                <span class="bu">print</span>(<span class="ss">f"prod_set: </span><span class="sc">{</span>prod_set<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-58"><a href="#cb14-58"></a>                <span class="bu">print</span>(<span class="ss">f"prod_set_ideal: </span><span class="sc">{</span>prod_set_ideal<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-59"><a href="#cb14-59"></a>                <span class="cf">if</span> prod_set <span class="op">&lt;=</span> prod_set_ideal:</span>
+<span id="cb14-60"><a href="#cb14-60"></a>                    <span class="bu">print</span>(<span class="st">"response is a subset of the ideal answer"</span>)</span>
+<span id="cb14-61"><a href="#cb14-61"></a>                <span class="cf">elif</span> prod_set <span class="op">&gt;=</span> prod_set_ideal:</span>
+<span id="cb14-62"><a href="#cb14-62"></a>                    <span class="bu">print</span>(<span class="st">"response is a superset of the ideal answer"</span>)</span>
+<span id="cb14-63"><a href="#cb14-63"></a></span>
+<span id="cb14-64"><a href="#cb14-64"></a>    <span class="co"># count correct over total number of items in list</span></span>
+<span id="cb14-65"><a href="#cb14-65"></a>    pc_correct <span class="op">=</span> correct <span class="op">/</span> <span class="bu">len</span>(l_of_d)</span>
+<span id="cb14-66"><a href="#cb14-66"></a></span>
+<span id="cb14-67"><a href="#cb14-67"></a>    <span class="cf">return</span> pc_correct</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="message-and-ideal-answer" class="slide level2">
 <h2>Message and ideal answer</h2>
-<div id="faed95a4" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a><span class="bu">print</span>(<span class="ss">f'Customer message: </span><span class="sc">{</span>msg_ideal_pairs_set[<span class="dv">7</span>][<span class="st">"customer_msg"</span>]<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb22-2"><a href="#cb22-2"></a><span class="bu">print</span>(<span class="ss">f'Ideal answer: </span><span class="sc">{</span>msg_ideal_pairs_set[<span class="dv">7</span>][<span class="st">"ideal_answer"</span>]<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="bu">print</span>(<span class="ss">f'Customer message: </span><span class="sc">{</span>msg_ideal_pairs_set[<span class="dv">7</span>][<span class="st">"customer_msg"</span>]<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="bu">print</span>(<span class="ss">f'Ideal answer: </span><span class="sc">{</span>msg_ideal_pairs_set[<span class="dv">7</span>][<span class="st">"ideal_answer"</span>]<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell fragment" data-execution_count="15">
-<div class="cell-output cell-output-stdout">
-<pre><code>Customer message: What Gaming consoles would be good for my friend who is into racing games?
-Ideal answer: {'Gaming Consoles and Accessories': {'GameSphere X', 'ProGamer Racing Wheel', 'GameSphere VR Headset', 'GameSphere Y', 'ProGamer Controller'}}</code></pre>
-</div>
-</div>
+<ul>
+<li>Customer message: What Gaming consoles would be good for my friend who is into racing games? Ideal answer: {‘Gaming Consoles and Accessories’: {‘ProGamer Controller’, ‘GameSphere X’, ‘GameSphere VR Headset’, ‘GameSphere Y’, ‘ProGamer Racing Wheel’}}</li>
+</ul>
 </section>
 <section id="output" class="slide level2">
 <h2>Output</h2>
-<div id="1f0791fb" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1"></a>response <span class="op">=</span> find_category_and_product_v2(msg_ideal_pairs_set[<span class="dv">7</span>][<span class="st">"customer_msg"</span>],</span>
-<span id="cb24-2"><a href="#cb24-2"></a>                                        products_and_category)</span>
-<span id="cb24-3"><a href="#cb24-3"></a><span class="bu">print</span>(<span class="ss">f'Resonse: </span><span class="sc">{</span>response<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb24-4"><a href="#cb24-4"></a></span>
-<span id="cb24-5"><a href="#cb24-5"></a>eval_response_with_ideal(response,</span>
-<span id="cb24-6"><a href="#cb24-6"></a>                         msg_ideal_pairs_set[<span class="dv">7</span>][<span class="st">"ideal_answer"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>response <span class="op">=</span> find_category_and_product_v2(msg_ideal_pairs_set[<span class="dv">7</span>][<span class="st">"customer_msg"</span>],</span>
+<span id="cb16-2"><a href="#cb16-2"></a>                                        products_and_category)</span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="bu">print</span>(<span class="ss">f'Resonse: </span><span class="sc">{</span>response<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb16-4"><a href="#cb16-4"></a></span>
+<span id="cb16-5"><a href="#cb16-5"></a>eval_response_with_ideal(response,</span>
+<span id="cb16-6"><a href="#cb16-6"></a>                         msg_ideal_pairs_set[<span class="dv">7</span>][<span class="st">"ideal_answer"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell fragment" data-execution_count="16">
-<div class="cell-output cell-output-stdout">
-<pre><code>Resonse:  
-    [{'category': 'Gaming Consoles and Accessories', 'products': ['GameSphere X', 'ProGamer Controller', 'GameSphere Y', 'ProGamer Racing Wheel', 'GameSphere VR Headset']}]
-    </code></pre>
-</div>
-<div class="cell-output cell-output-display" data-execution_count="16">
-<pre><code>1.0</code></pre>
-</div>
-</div>
+<ul>
+<li><p>Resonse:<br>
+[{‘category’: ‘Gaming Consoles and Accessories’, ‘products’: [‘GameSphere X’, ‘ProGamer Controller’, ‘GameSphere Y’, ‘ProGamer Racing Wheel’, ‘GameSphere VR Headset’]}]</p></li>
+<li><p>1.0</p></li>
+</ul>
 </section>
 <section id="evaluate-all-test-cases" class="slide level2 smaller">
 <h2>Evaluate all test cases</h2>
 <p>Run evaluation on all test cases and calculate the fraction of cases that are correct</p>
-<div id="dab8b8c8" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># Note, this will not work if any of the api calls time out</span></span>
-<span id="cb27-2"><a href="#cb27-2"></a>score_accum <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb27-3"><a href="#cb27-3"></a><span class="cf">for</span> i, pair <span class="kw">in</span> <span class="bu">enumerate</span>(msg_ideal_pairs_set):</span>
-<span id="cb27-4"><a href="#cb27-4"></a>    <span class="bu">print</span>(<span class="ss">f"example </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb27-5"><a href="#cb27-5"></a></span>
-<span id="cb27-6"><a href="#cb27-6"></a>    customer_msg <span class="op">=</span> pair[<span class="st">'customer_msg'</span>]</span>
-<span id="cb27-7"><a href="#cb27-7"></a>    ideal <span class="op">=</span> pair[<span class="st">'ideal_answer'</span>]</span>
-<span id="cb27-8"><a href="#cb27-8"></a></span>
-<span id="cb27-9"><a href="#cb27-9"></a>    <span class="co"># print("Customer message",customer_msg)</span></span>
-<span id="cb27-10"><a href="#cb27-10"></a>    <span class="co"># print("ideal:",ideal)</span></span>
-<span id="cb27-11"><a href="#cb27-11"></a>    response <span class="op">=</span> find_category_and_product_v2(customer_msg,</span>
-<span id="cb27-12"><a href="#cb27-12"></a>                                            products_and_category)</span>
-<span id="cb27-13"><a href="#cb27-13"></a></span>
-<span id="cb27-14"><a href="#cb27-14"></a>    <span class="co"># print("products_by_category",products_by_category)</span></span>
-<span id="cb27-15"><a href="#cb27-15"></a>    score <span class="op">=</span> eval_response_with_ideal(response, ideal, debug<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb27-16"><a href="#cb27-16"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>score<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb27-17"><a href="#cb27-17"></a>    score_accum <span class="op">+=</span> score</span>
-<span id="cb27-18"><a href="#cb27-18"></a></span>
-<span id="cb27-19"><a href="#cb27-19"></a></span>
-<span id="cb27-20"><a href="#cb27-20"></a>n_examples <span class="op">=</span> <span class="bu">len</span>(msg_ideal_pairs_set)</span>
-<span id="cb27-21"><a href="#cb27-21"></a>fraction_correct <span class="op">=</span> score_accum <span class="op">/</span> n_examples</span>
-<span id="cb27-22"><a href="#cb27-22"></a><span class="bu">print</span>(<span class="ss">f"Fraction correct out of </span><span class="sc">{</span>n_examples<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>fraction_correct<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Note, this will not work if any of the api calls time out</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>score_accum <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="cf">for</span> i, pair <span class="kw">in</span> <span class="bu">enumerate</span>(msg_ideal_pairs_set):</span>
+<span id="cb17-4"><a href="#cb17-4"></a>    <span class="bu">print</span>(<span class="ss">f"example </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb17-5"><a href="#cb17-5"></a></span>
+<span id="cb17-6"><a href="#cb17-6"></a>    customer_msg <span class="op">=</span> pair[<span class="st">'customer_msg'</span>]</span>
+<span id="cb17-7"><a href="#cb17-7"></a>    ideal <span class="op">=</span> pair[<span class="st">'ideal_answer'</span>]</span>
+<span id="cb17-8"><a href="#cb17-8"></a></span>
+<span id="cb17-9"><a href="#cb17-9"></a>    <span class="co"># print("Customer message",customer_msg)</span></span>
+<span id="cb17-10"><a href="#cb17-10"></a>    <span class="co"># print("ideal:",ideal)</span></span>
+<span id="cb17-11"><a href="#cb17-11"></a>    response <span class="op">=</span> find_category_and_product_v2(customer_msg,</span>
+<span id="cb17-12"><a href="#cb17-12"></a>                                            products_and_category)</span>
+<span id="cb17-13"><a href="#cb17-13"></a></span>
+<span id="cb17-14"><a href="#cb17-14"></a>    <span class="co"># print("products_by_category",products_by_category)</span></span>
+<span id="cb17-15"><a href="#cb17-15"></a>    score <span class="op">=</span> eval_response_with_ideal(response, ideal, debug<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb17-16"><a href="#cb17-16"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>score<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb17-17"><a href="#cb17-17"></a>    score_accum <span class="op">+=</span> score</span>
+<span id="cb17-18"><a href="#cb17-18"></a></span>
+<span id="cb17-19"><a href="#cb17-19"></a></span>
+<span id="cb17-20"><a href="#cb17-20"></a>n_examples <span class="op">=</span> <span class="bu">len</span>(msg_ideal_pairs_set)</span>
+<span id="cb17-21"><a href="#cb17-21"></a>fraction_correct <span class="op">=</span> score_accum <span class="op">/</span> n_examples</span>
+<span id="cb17-22"><a href="#cb17-22"></a><span class="bu">print</span>(<span class="ss">f"Fraction correct out of </span><span class="sc">{</span>n_examples<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>fraction_correct<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section></section>
+<section id="output-1" class="title-slide slide level1 center">
+<h1>Output</h1>
+<p>example 0 0: 1.0 example 1 incorrect prod_set: {‘MobiTech Wireless Charger’, ‘MobiTech PowerCase’, ‘SmartX MiniPhone’, ‘SmartX EarBuds’, ‘SmartX ProPhone’} prod_set_ideal: {‘MobiTech Wireless Charger’, ‘MobiTech PowerCase’, ‘SmartX EarBuds’} response is a superset of the ideal answer 1: 0.0 example 2 2: 1.0 example 3 incorrect prod_set: {‘CineView 4K TV’, ‘CineView 8K TV’, ‘CineView OLED TV’} prod_set_ideal: {‘CineView 8K TV’, ‘CineView OLED TV’, ‘SoundMax Home Theater’, ‘CineView 4K TV’, ‘SoundMax Soundbar’} response is a subset of the ideal answer 3: 0.6666666666666666 example 4 incorrect prod_set: {‘CineView 8K TV’, ‘CineView OLED TV’, ‘SoundMax Home Theater’, ‘CineView 4K TV’, ‘SoundMax Soundbar’} prod_set_ideal: {‘CineView 8K TV’} response is a superset of the ideal answer incorrect prod_set: {‘ProGamer Controller’, ‘GameSphere X’, ‘GameSphere VR Headset’, ‘GameSphere Y’, ‘ProGamer Racing Wheel’} prod_set_ideal: {‘GameSphere X’} response is a superset of the ideal answer 4: 0.3333333333333333 example 5 5: 1.0 example 6 6: 1.0 example 7 7: 1.0 example 8 8: 1.0 example 9 9: 1 Fraction correct out of 10: 0.8</p>
+</section>
 
+<section id="acknowledgments" class="title-slide slide level1 center">
+<h1>Acknowledgments</h1>
+<p>This tutorial is mainly based on the excellent course “Building Systems with the ChatGPT API” provided by Isa Fulford from OpenAI and Andrew Ng from DeepLearning.AI</p>
+</section>
+
+<section id="whats-next" class="title-slide slide level1 center" data-background-image="../images/logo.png" data-background-opacity="0.5">
+<h1>What’s next?</h1>
+<p><strong>Congratulations! You have completed this tutorial</strong> 👍</p>
+<p><strong>Next, you may want to go back to the <a href="https://kirenz.github.io/lab-chat-system/">lab’s website</a></strong></p>
 
 <div class="footer footer-default">
 <p>Jan Kirenz</p>
 </div>
-</section><section id="evaluate-all-test-cases-output" class="slide level2 smaller output-location-slide"><h2>Evaluate all test cases</h2><div class="cell output-location-slide" data-execution_count="17">
-<div class="cell-output cell-output-stdout">
-<pre><code>example 0
-0: 1.0
-example 1
-incorrect
-prod_set: {'SmartX ProPhone', 'SmartX MiniPhone', 'SmartX EarBuds', 'MobiTech PowerCase', 'MobiTech Wireless Charger'}
-prod_set_ideal: {'MobiTech Wireless Charger', 'SmartX EarBuds', 'MobiTech PowerCase'}
-response is a superset of the ideal answer
-1: 0.0
-example 2
-2: 1.0
-example 3
-3: 1.0
-example 4
-incorrect
-prod_set: {'CineView 4K TV', 'SoundMax Home Theater', 'CineView OLED TV', 'SoundMax Soundbar', 'CineView 8K TV'}
-prod_set_ideal: {'CineView 8K TV'}
-response is a superset of the ideal answer
-incorrect
-prod_set: {'GameSphere X', 'ProGamer Racing Wheel', 'GameSphere VR Headset', 'GameSphere Y', 'ProGamer Controller'}
-prod_set_ideal: {'GameSphere X'}
-response is a superset of the ideal answer
-4: 0.3333333333333333
-example 5
-5: 1.0
-example 6
-6: 1.0
-example 7
-7: 1.0
-example 8
-8: 1.0
-example 9
-9: 1
-Fraction correct out of 10: 0.8333333333333334</code></pre>
-</div>
-</div></section></section>
+</section>
     </div>
   </div>
 
@@ -1067,6 +1021,7 @@ Fraction correct out of 10: 0.8333333333333334</code></pre>
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': true,
+'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
@@ -1328,9 +1283,10 @@ Fraction correct out of 10: 0.8333333333333334</code></pre>
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      function tippyHover(el, contentFn) {
         const config = {
           allowHTML: true,
+          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1340,17 +1296,8 @@ Fraction correct out of 10: 0.8333333333333334</code></pre>
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start',
+          placement: 'bottom-start'
         };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 
