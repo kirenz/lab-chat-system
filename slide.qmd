@@ -113,3 +113,7 @@ Evaluate LLM responses where there isn't a single "right answer."
 - [🖥️ Presentation](/slides/evaluation_2.qmd)
 - [💻 Jupyter Notebook](https://colab.research.google.com/github/kirenz/lab-chat-system/blob/main/code/evaluation_2.ipynb)
 :::
+
+Resources: 
+
+- OpenAI's [Evals](https://github.com/openai/evals/tree/main) is a framework for evaluating LLMs and LLM systems, and an open-source registry of benchmarks (An "eval" is a task used to evaluate the quality of a system's behavior).
