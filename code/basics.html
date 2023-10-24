@@ -162,26 +162,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#intuition" id="toc-intuition" class="nav-link" data-scroll-target="#intuition">Intuition</a></li>
   <li><a href="#what-is-a-token" id="toc-what-is-a-token" class="nav-link" data-scroll-target="#what-is-a-token">What is a token?</a></li>
   <li><a href="#how-long-is-a-token" id="toc-how-long-is-a-token" class="nav-link" data-scroll-target="#how-long-is-a-token">How long is a token?</a></li>
-  <li><a href="#tokens-vs-words" id="toc-tokens-vs-words" class="nav-link" data-scroll-target="#tokens-vs-words">Tokens vs words</a></li>
-  <li><a href="#create-single-tokens" id="toc-create-single-tokens" class="nav-link" data-scroll-target="#create-single-tokens">Create single tokens</a></li>
   </ul></li>
   <li><a href="#chat-format" id="toc-chat-format" class="nav-link" data-scroll-target="#chat-format">Chat Format</a>
   <ul class="collapse">
   <li><a href="#helper-function-chat-format" id="toc-helper-function-chat-format" class="nav-link" data-scroll-target="#helper-function-chat-format">Helper function (chat format)</a></li>
-  <li><a href="#sokrates-happy-hdm-students" id="toc-sokrates-happy-hdm-students" class="nav-link" data-scroll-target="#sokrates-happy-hdm-students">Sokrates &amp; happy HdM students 😊</a></li>
-  <li><a href="#response" id="toc-response" class="nav-link" data-scroll-target="#response">Response</a></li>
+  <li><a href="#yoda-happy-hdm-students" id="toc-yoda-happy-hdm-students" class="nav-link" data-scroll-target="#yoda-happy-hdm-students">Yoda &amp; happy HdM students 😊</a></li>
+  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
   <li><a href="#one-sentence-output" id="toc-one-sentence-output" class="nav-link" data-scroll-target="#one-sentence-output">One sentence output</a></li>
-  <li><a href="#response-1" id="toc-response-1" class="nav-link" data-scroll-target="#response-1">Response</a></li>
-  <li><a href="#sokrates-in-one-sentence" id="toc-sokrates-in-one-sentence" class="nav-link" data-scroll-target="#sokrates-in-one-sentence">Sokrates in one sentence</a></li>
-  <li><a href="#response-2" id="toc-response-2" class="nav-link" data-scroll-target="#response-2">Response</a></li>
   </ul></li>
   <li><a href="#token-count" id="toc-token-count" class="nav-link" data-scroll-target="#token-count">Token Count</a>
   <ul class="collapse">
   <li><a href="#tiktoken" id="toc-tiktoken" class="nav-link" data-scroll-target="#tiktoken">tiktoken</a></li>
   <li><a href="#helper-function-1" id="toc-helper-function-1" class="nav-link" data-scroll-target="#helper-function-1">Helper function</a></li>
   <li><a href="#example-prompt-1" id="toc-example-prompt-1" class="nav-link" data-scroll-target="#example-prompt-1">Example prompt</a></li>
-  <li><a href="#response-3" id="toc-response-3" class="nav-link" data-scroll-target="#response-3">Response</a></li>
-  <li><a href="#token-count-1" id="toc-token-count-1" class="nav-link" data-scroll-target="#token-count-1">Token count</a></li>
+  <li><a href="#output-1" id="toc-output-1" class="nav-link" data-scroll-target="#output-1">Output</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -206,6 +200,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<p>In this tutorial, you’ll learn some basic properties of Large Language Models (tokens and the chat format)</p>
 <section id="setup" class="level1">
 <h1>Setup</h1>
 <section id="python" class="level2">
@@ -215,7 +210,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> openai</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tiktoken  <span class="co"># tokenizer</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv, find_dotenv</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> load_dotenv(find_dotenv())  <span class="co"># read local .env file</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> load_dotenv(find_dotenv())  </span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>openai.api_key <span class="op">=</span> os.environ[<span class="st">'OPENAI_API_KEY'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -244,9 +239,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(<span class="st">"What is the capital of Germany?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-output-location="fragment">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<ul>
+<li>Output: The capital of Germany is Berlin</li>
+</ul>
 </section>
 </section>
 <section id="tokens" class="level1">
@@ -266,30 +264,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="how-long-is-a-token" class="level2">
 <h2 class="anchored" data-anchor-id="how-long-is-a-token">How long is a token?</h2>
 <ul>
-<li>One token generally corresponds to ~4 characters of text</li>
-<li>This translates to roughly ¾ of a word (so 100 tokens ~= 75 words).</li>
+<li><p>One token generally corresponds to ~4 characters of text</p></li>
+<li><p>This translates to roughly ¾ of a word (so 100 tokens ~= 75 words).</p></li>
 </ul>
-</section>
-<section id="tokens-vs-words" class="level2">
-<h2 class="anchored" data-anchor-id="tokens-vs-words">Tokens vs words</h2>
-<ul>
-<li>“lollipop” in reverse should be “popillol”</li>
-</ul>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(<span class="st">"Take the letters in lollipop </span><span class="ch">\</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="st">and reverse them"</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="create-single-tokens" class="level2">
-<h2 class="anchored" data-anchor-id="create-single-tokens">Create single tokens</h2>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(<span class="st">"""Take the letters in </span><span class="ch">\</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="st">l-o-l-l-i-p-o-p and reverse them"""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
 </section>
 <section id="chat-format" class="level1">
@@ -300,80 +277,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Helper function for chat format</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion_from_messages(messages,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                                 model<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                                 temperature<span class="op">=</span><span class="dv">0</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                                 max_tokens<span class="op">=</span><span class="dv">500</span>):</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> openai.ChatCompletion.create(</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        model<span class="op">=</span>model,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        messages<span class="op">=</span>messages,</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        temperature<span class="op">=</span>temperature,  <span class="co"># this is the degree of randomness of the model's output</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        max_tokens<span class="op">=</span>max_tokens,  <span class="co"># the maximum number of tokens the model can ouptut</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> response.choices[<span class="dv">0</span>].message[<span class="st">"content"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion_from_messages(messages,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                                 model<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                                 temperature<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                                 max_tokens<span class="op">=</span><span class="dv">500</span>):</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> openai.ChatCompletion.create(</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        model<span class="op">=</span>model,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        messages<span class="op">=</span>messages,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        temperature<span class="op">=</span>temperature, </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        max_tokens<span class="op">=</span>max_tokens, </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> response.choices[<span class="dv">0</span>].message[<span class="st">"content"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="sokrates-happy-hdm-students" class="level2">
-<h2 class="anchored" data-anchor-id="sokrates-happy-hdm-students">Sokrates &amp; happy HdM students 😊</h2>
+<section id="yoda-happy-hdm-students" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="yoda-happy-hdm-students">Yoda &amp; happy HdM students 😊</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'system'</span>,  <span class="co"># overall tone/behavior of assistant</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>     <span class="st">'content'</span>: <span class="st">"""You are an assistant who</span><span class="ch">\</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="st"> responds in the style of Sokrates."""</span>},</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'user'</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'content'</span>: <span class="st">"""write me a very short poem</span><span class="ch">\</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="st"> about a happy student at Hochschule der Medien Stuttgart """</span>},</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'system'</span>,  <span class="co"># overall tone/behavior of assistant</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>     <span class="st">'content'</span>: <span class="st">"""You are an assistant who</span><span class="ch">\</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st"> responds in the style of Yoda, the fictional character in the Star Wars universe."""</span>},</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'user'</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'content'</span>: <span class="st">"""write me a very short poem</span><span class="ch">\</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="st"> about a happy student at Hochschule der Medien Stuttgart """</span>},</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="response" class="level2">
-<h2 class="anchored" data-anchor-id="response">Response</h2>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion_from_messages(messages, temperature<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="one-sentence-output" class="level2">
-<h2 class="anchored" data-anchor-id="one-sentence-output">One sentence output</h2>
+<section id="output" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="output">Output</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'system'</span>,</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>     <span class="st">'content'</span>: <span class="st">'All your responses must be </span><span class="ch">\</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="st">one sentence long.'</span>},</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'user'</span>,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>     <span class="st">'content'</span>: <span class="st">'write me a very short poem</span><span class="ch">\</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="st"> about a happy student at Hochschule der Medien Stuttgart'</span>},</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion_from_messages(messages, temperature<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>A happy student at Hochschule der Medien Stuttgart, Knowledge flowing like a vibrant current, it is. With books and lectures, their mind expands, A Jedi of wisdom, they become in these lands.</p>
+<p>In lectures, their thoughts dance like stars so bright, Creating visions, illuminating the night. Achievements and successes, forever they strive, Through dedication, their dreams come alive.</p>
+<p>A community of learning, their peers by their side, Support and friendship, like the Force, shall abide. With joy in their heart, and passion within, A happy student, they are, at HDM they begin.</p>
 </section>
-<section id="response-1" class="level2">
-<h2 class="anchored" data-anchor-id="response-1">Response</h2>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion_from_messages(messages, temperature<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="one-sentence-output" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="one-sentence-output">One sentence output</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'system'</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>     <span class="st">'content'</span>: <span class="st">"""You are an assistant who</span><span class="ch">\</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="st"> responds in the style of Socrates and all your responses must be </span><span class="ch">\</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="st">one sentence long."""</span>},</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'user'</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">'content'</span>: <span class="st">"""write me a very short poem</span><span class="ch">\</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="st"> about a happy student at Hochschule der Medien Stuttgart"""</span>},</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="sokrates-in-one-sentence" class="level2">
-<h2 class="anchored" data-anchor-id="sokrates-in-one-sentence">Sokrates in one sentence</h2>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># combined</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'system'</span>,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>     <span class="st">'content'</span>: <span class="st">"""You are an assistant who </span><span class="ch">\</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="st">responds in the style of Sokrates. </span><span class="ch">\</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="st">All your responses must be one sentence long."""</span>},</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'user'</span>,</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>     <span class="st">'content'</span>: <span class="st">"""write me a very short poem</span><span class="ch">\</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="st"> about a happy student at Hochschule der Medien Stuttgart"""</span>},</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion_from_messages(messages, temperature<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="response-2" class="level2">
-<h2 class="anchored" data-anchor-id="response-2">Response</h2>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion_from_messages(messages, temperature<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<ul>
+<li>In knowledge’s realm, a joyful scholar thrives.</li>
+</ul>
 </section>
 </section>
 <section id="token-count" class="level1">
@@ -381,10 +340,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="tiktoken" class="level2">
 <h2 class="anchored" data-anchor-id="tiktoken">tiktoken</h2>
 <ul>
-<li><a href="https://github.com/openai/tiktoken">tiktoken</a> is a fast open-source tokenizer by OpenAI.</li>
-<li>Given a text string (e.g., “tiktoken is great!”) and an <em>encoding</em> (e.g., “cl100k_base”), a tokenizer can split the text string into a list of tokens (e.g., [“t”, “ik”, “token”, ” is”, ” great”, “!”]).</li>
-<li>Encodings specify how text is converted into tokens.</li>
-<li>Different models use different encodings.</li>
+<li><p><a href="https://github.com/openai/tiktoken">tiktoken</a> is a fast open-source tokenizer by OpenAI.</p></li>
+<li><p>Given a text string (e.g., “tiktoken is great!”) and an <em>encoding</em> (e.g., “cl100k_base”), a tokenizer can split the text string into a list of tokens (e.g., [“t”, “ik”, “token”, ” is”, ” great”, “!”]).</p></li>
+<li><p>Encodings specify how text is converted into tokens.</p></li>
+<li><p>Different models use different encodings.</p></li>
 </ul>
 </section>
 <section id="helper-function-1" class="level2 smaller">
@@ -393,54 +352,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Show how many tokens you are using</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion_and_token_count(messages,</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                                   model<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>,</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                                   temperature<span class="op">=</span><span class="dv">0</span>,</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                                   max_tokens<span class="op">=</span><span class="dv">500</span>):</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> openai.ChatCompletion.create(</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        model<span class="op">=</span>model,</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        messages<span class="op">=</span>messages,</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        temperature<span class="op">=</span>temperature,</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>        max_tokens<span class="op">=</span>max_tokens,</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> response.choices[<span class="dv">0</span>].message[<span class="st">"content"</span>]</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    token_dict <span class="op">=</span> {</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">'prompt_tokens'</span>: response[<span class="st">'usage'</span>][<span class="st">'prompt_tokens'</span>],</span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">'completion_tokens'</span>: response[<span class="st">'usage'</span>][<span class="st">'completion_tokens'</span>],</span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">'total_tokens'</span>: response[<span class="st">'usage'</span>][<span class="st">'total_tokens'</span>],</span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> content, token_dict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion_and_token_count(messages,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                                   model<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                                   temperature<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                                   max_tokens<span class="op">=</span><span class="dv">500</span>):</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> openai.ChatCompletion.create(</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        model<span class="op">=</span>model,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        messages<span class="op">=</span>messages,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        temperature<span class="op">=</span>temperature,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        max_tokens<span class="op">=</span>max_tokens,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> response.choices[<span class="dv">0</span>].message[<span class="st">"content"</span>]</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    token_dict <span class="op">=</span> {</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">'prompt_tokens'</span>: response[<span class="st">'usage'</span>][<span class="st">'prompt_tokens'</span>],</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">'completion_tokens'</span>: response[<span class="st">'usage'</span>][<span class="st">'completion_tokens'</span>],</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">'total_tokens'</span>: response[<span class="st">'usage'</span>][<span class="st">'total_tokens'</span>],</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> content, token_dict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="example-prompt-1" class="level2">
 <h2 class="anchored" data-anchor-id="example-prompt-1">Example prompt</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'system'</span>,  <span class="co"># overall tone/behavior of assistant</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>     <span class="st">'content'</span>: <span class="st">"""You are an assistant who</span><span class="ch">\</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="st"> responds in the style of Sokrates."""</span>},</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'user'</span>,</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'content'</span>: <span class="st">"""write me a very short poem</span><span class="ch">\</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="st"> about a happy student at Hochschule der Medien Stuttgart """</span>},</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>response, token_dict <span class="op">=</span> get_completion_and_token_count(messages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'system'</span>,  </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>     <span class="st">'content'</span>: <span class="st">"""You are an unfriendly and sarcastic assistant who</span><span class="ch">\</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="st"> responds in the style of Ricky Gervais. Your response must be 3 sentences long."""</span>},</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'user'</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'content'</span>: <span class="st">"""write me a short text </span><span class="ch">\</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="st"> about a student at Hochschule der Medien Stuttgart """</span>},</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>response, token_dict <span class="op">=</span> get_completion_and_token_count(messages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="response-3" class="level2">
-<h2 class="anchored" data-anchor-id="response-3">Response</h2>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="output-1" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="output-1">Output</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="token-count-1" class="level2">
-<h2 class="anchored" data-anchor-id="token-count-1">Token count</h2>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(token_dict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><p>Output: Oh, great, another student at Hochschule der Medien Stuttgart. I’m sure your life is just riveting. Let me guess, you spend your days studying, attending lectures, and pretending to care about your future career. How exciting. I can’t wait to hear all about it.</p></li>
+<li><p>Token count</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(token_dict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 

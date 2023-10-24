@@ -153,14 +153,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python">Python</a></li>
   <li><a href="#helper-function" id="toc-helper-function" class="nav-link" data-scroll-target="#helper-function">Helper function</a></li>
   </ul></li>
-  <li><a href="#classification-of-customer-queries" id="toc-classification-of-customer-queries" class="nav-link" data-scroll-target="#classification-of-customer-queries">Classification of Customer queries</a>
-  <ul class="collapse">
   <li><a href="#system-message" id="toc-system-message" class="nav-link" data-scroll-target="#system-message">System message</a></li>
-  <li><a href="#user-message" id="toc-user-message" class="nav-link" data-scroll-target="#user-message">User message</a></li>
+  <li><a href="#user-message-1" id="toc-user-message-1" class="nav-link" data-scroll-target="#user-message-1">User message 1</a>
+  <ul class="collapse">
   <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
-  <li><a href="#user-message-2" id="toc-user-message-2" class="nav-link" data-scroll-target="#user-message-2">User message 2</a></li>
   </ul></li>
+  <li><a href="#user-message-2" id="toc-user-message-2" class="nav-link" data-scroll-target="#user-message-2">User message 2</a>
+  <ul class="collapse">
   <li><a href="#output-1" id="toc-output-1" class="nav-link" data-scroll-target="#output-1">Output</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -184,6 +185,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<p>Learn how to classify different customer queries</p>
 <section id="setup" class="level1">
 <h1>Setup</h1>
 <section id="python" class="level2">
@@ -192,7 +194,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> openai</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv, find_dotenv</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> load_dotenv(find_dotenv())  <span class="co"># read local .env file</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> load_dotenv(find_dotenv())  </span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>openai.api_key <span class="op">=</span> os.environ[<span class="st">'OPENAI_API_KEY'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -214,11 +216,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="classification-of-customer-queries" class="level1">
-<h1>Classification of Customer queries</h1>
-<p>Classify customer queries to handle different cases</p>
-<section id="system-message" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="system-message">System message</h2>
+<section id="system-message" class="level1 smaller">
+<h1 class="smaller">System message</h1>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>delimiter <span class="op">=</span> <span class="st">"####"</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -260,8 +259,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="user-message" class="level2">
-<h2 class="anchored" data-anchor-id="user-message">User message</h2>
+<section id="user-message-1" class="level1">
+<h1>User message 1</h1>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>user_message <span class="op">=</span> <span class="ss">f"""</span><span class="ch">\</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ss">I want you to delete my profile and all of my user data"""</span></span>
@@ -272,16 +271,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">'content'</span>: <span class="ss">f"</span><span class="sc">{</span>delimiter<span class="sc">}{</span>user_message<span class="sc">}{</span>delimiter<span class="sc">}</span><span class="ss">"</span>},</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
 <section id="output" class="level2">
 <h2 class="anchored" data-anchor-id="output">Output</h2>
-<div class="cell" data-output-location="fragment">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion_from_messages(messages)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<ul>
+<li>Output: {“primary”: “Account Management”, “secondary”: “Close account”}</li>
+</ul>
 </section>
-<section id="user-message-2" class="level2">
-<h2 class="anchored" data-anchor-id="user-message-2">User message 2</h2>
+</section>
+<section id="user-message-2" class="level1">
+<h1>User message 2</h1>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>user_message <span class="op">=</span> <span class="ss">f"""</span><span class="ch">\</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ss">Tell me more about your flat screen tvs"""</span></span>
@@ -292,16 +294,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">'content'</span>: <span class="ss">f"</span><span class="sc">{</span>delimiter<span class="sc">}{</span>user_message<span class="sc">}{</span>delimiter<span class="sc">}</span><span class="ss">"</span>},</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-</section>
-<section id="output-1" class="level1">
-<h1>Output</h1>
-<div class="cell" data-output-location="fragment">
+<section id="output-1" class="level2">
+<h2 class="anchored" data-anchor-id="output-1">Output</h2>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion_from_messages(messages)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

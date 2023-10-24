@@ -157,6 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#final-response" id="toc-final-response" class="nav-link" data-scroll-target="#final-response">Final response</a></li>
   <li><a href="#moderation-api" id="toc-moderation-api" class="nav-link" data-scroll-target="#moderation-api">Moderation API</a></li>
+  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
   </ul></li>
   <li><a href="#output-check-1" id="toc-output-check-1" class="nav-link" data-scroll-target="#output-check-1">Output Check 1</a>
   <ul class="collapse">
@@ -164,15 +165,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#customer-message" id="toc-customer-message" class="nav-link" data-scroll-target="#customer-message">Customer message</a></li>
   <li><a href="#product-information" id="toc-product-information" class="nav-link" data-scroll-target="#product-information">Product information</a></li>
   <li><a href="#question-and-answer-pair" id="toc-question-and-answer-pair" class="nav-link" data-scroll-target="#question-and-answer-pair">Question and answer pair</a></li>
-  <li><a href="#messages" id="toc-messages" class="nav-link" data-scroll-target="#messages">Messages</a></li>
-  <li><a href="#response" id="toc-response" class="nav-link" data-scroll-target="#response">Response</a></li>
+  <li><a href="#messages-and-response" id="toc-messages-and-response" class="nav-link" data-scroll-target="#messages-and-response">Messages and response</a></li>
   </ul></li>
   <li><a href="#output-check-2" id="toc-output-check-2" class="nav-link" data-scroll-target="#output-check-2">Output Check 2</a>
   <ul class="collapse">
   <li><a href="#another-response" id="toc-another-response" class="nav-link" data-scroll-target="#another-response">Another response</a></li>
   <li><a href="#question-answer-pair" id="toc-question-answer-pair" class="nav-link" data-scroll-target="#question-answer-pair">Question answer pair</a></li>
-  <li><a href="#messages-1" id="toc-messages-1" class="nav-link" data-scroll-target="#messages-1">Messages</a></li>
-  <li><a href="#response-1" id="toc-response-1" class="nav-link" data-scroll-target="#response-1">Response</a></li>
+  <li><a href="#messages-and-response-1" id="toc-messages-and-response-1" class="nav-link" data-scroll-target="#messages-and-response-1">Messages and response</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -197,6 +196,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<p>Ask the model to verify its own outputs.</p>
 <section id="setup" class="level1">
 <h1>Setup</h1>
 <section id="python" class="level2">
@@ -205,7 +205,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> openai</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv, find_dotenv</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> load_dotenv(find_dotenv())  <span class="co"># read local .env file</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> load_dotenv(find_dotenv()) </span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>openai.api_key <span class="op">=</span> os.environ[<span class="st">'OPENAI_API_KEY'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -252,10 +252,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span><span class="op">=</span>final_response_to_customer</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-output-location="fragment">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>moderation_output <span class="op">=</span> response[<span class="st">"results"</span>][<span class="dv">0</span>]</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(moderation_output)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="output" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="output">Output</h2>
+<p>{ “flagged”: false, “categories”: { “sexual”: false, “hate”: false, “harassment”: false, “self-harm”: false, “sexual/minors”: false, “hate/threatening”: false, “violence/graphic”: false, “self-harm/intent”: false, “self-harm/instructions”: false, “harassment/threatening”: false, “violence”: false }, “category_scores”: { “sexual”: 2.2853287191537675e-06, “hate”: 8.689411856721563e-08, “harassment”: 4.445904266958678e-07, “self-harm”: 8.501614523481749e-09, “sexual/minors”: 1.2479181066282763e-07, “hate/threatening”: 2.1572541530900935e-09, “violence/graphic”: 1.2744135347020347e-07, “self-harm/intent”: 1.3307280610774797e-08, “self-harm/instructions”: 4.01164648167196e-08, “harassment/threatening”: 1.4587811847377452e-08, “violence”: 3.7806817090313416e-06 } }</p>
 </section>
 </section>
 <section id="output-check-1" class="level1">
@@ -312,21 +316,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="messages" class="level2">
-<h2 class="anchored" data-anchor-id="messages">Messages</h2>
+<section id="messages-and-response" class="level2">
+<h2 class="anchored" data-anchor-id="messages-and-response">Messages and response</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'system'</span>, <span class="st">'content'</span>: system_message},</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'user'</span>, <span class="st">'content'</span>: q_a_pair}</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="response" class="level2">
-<h2 class="anchored" data-anchor-id="response">Response</h2>
-<div class="cell" data-output-location="fragment">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion_from_messages(messages, max_tokens<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<ul>
+<li>Y</li>
+</ul>
 </section>
 </section>
 <section id="output-check-2" class="level1">
@@ -352,18 +356,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="messages-1" class="level2">
-<h2 class="anchored" data-anchor-id="messages-1">Messages</h2>
+<section id="messages-and-response-1" class="level2">
+<h2 class="anchored" data-anchor-id="messages-and-response-1">Messages and response</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'system'</span>, <span class="st">'content'</span>: system_message},</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'role'</span>: <span class="st">'user'</span>, <span class="st">'content'</span>: q_a_pair}</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="response-1" class="level2">
-<h2 class="anchored" data-anchor-id="response-1">Response</h2>
-<div class="cell" data-output-location="fragment">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion_from_messages(messages)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
