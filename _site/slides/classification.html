@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.268">
+  <meta name="generator" content="quarto-1.3.450">
 
   <meta name="author" content="Jan Kirenz">
   <title>Chat System - Classification of Customer queries</title>
@@ -224,8 +224,7 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    padding-bottom: 0.5rem;
-    margin-bottom: 0;
+    margin-bottom: 0.5rem;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -410,23 +409,31 @@ Jan Kirenz
 <nav role="doc-toc"> 
 <h2 id="toc-title">Table of contents</h2>
 <ul>
+<li class="fragment"><a href="#/classification-of-customer-queries" id="/toc-classification-of-customer-queries">Classification of Customer queries</a></li>
 <li class="fragment"><a href="#/setup" id="/toc-setup">Setup</a>
 <ul>
 <li class="fragment"><a href="#/python" id="/toc-python">Python</a></li>
 <li class="fragment"><a href="#/helper-function" id="/toc-helper-function">Helper function</a></li>
 </ul></li>
-<li class="fragment"><a href="#/classification-of-customer-queries" id="/toc-classification-of-customer-queries">Classification of Customer queries</a>
-<ul>
 <li class="fragment"><a href="#/system-message" id="/toc-system-message">System message</a></li>
-<li class="fragment"><a href="#/user-message" id="/toc-user-message">User message</a></li>
+<li class="fragment"><a href="#/user-message-1" id="/toc-user-message-1">User message 1</a>
+<ul>
 <li class="fragment"><a href="#/output" id="/toc-output">Output</a></li>
-<li class="fragment"><a href="#/user-message-2" id="/toc-user-message-2">User message 2</a></li>
 </ul></li>
+<li class="fragment"><a href="#/user-message-2" id="/toc-user-message-2">User message 2</a>
+<ul>
 <li class="fragment"><a href="#/output-1" id="/toc-output-1">Output</a></li>
+</ul></li>
+<li class="fragment"><a href="#/acknowledgments" id="/toc-acknowledgments">Acknowledgments</a></li>
 <li class="fragment"><a href="#/whats-next" id="/toc-whats-next">What’s next?</a></li>
 </ul>
 </nav>
 </section>
+<section id="classification-of-customer-queries" class="title-slide slide level1 center">
+<h1>Classification of Customer queries</h1>
+<p>Learn how to classify different customer queries</p>
+</section>
+
 <section>
 <section id="setup" class="title-slide slide level1 center">
 <h1>Setup</h1>
@@ -434,18 +441,18 @@ Jan Kirenz
 </section>
 <section id="python" class="slide level2">
 <h2>Python</h2>
-<div id="2dc6eb8e" class="cell" data-execution_count="1">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> openai</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv, find_dotenv</span>
-<span id="cb1-4"><a href="#cb1-4"></a>_ <span class="op">=</span> load_dotenv(find_dotenv())  <span class="co"># read local .env file</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>_ <span class="op">=</span> load_dotenv(find_dotenv())  </span>
 <span id="cb1-5"><a href="#cb1-5"></a></span>
 <span id="cb1-6"><a href="#cb1-6"></a>openai.api_key <span class="op">=</span> os.environ[<span class="st">'OPENAI_API_KEY'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="helper-function" class="slide level2">
 <h2>Helper function</h2>
-<div id="012ee24e" class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> get_completion_from_messages(messages,</span>
 <span id="cb2-2"><a href="#cb2-2"></a>                                 model<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>,</span>
 <span id="cb2-3"><a href="#cb2-3"></a>                                 temperature<span class="op">=</span><span class="dv">0</span>,</span>
@@ -459,14 +466,9 @@ Jan Kirenz
 <span id="cb2-11"><a href="#cb2-11"></a>    <span class="cf">return</span> response.choices[<span class="dv">0</span>].message[<span class="st">"content"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section>
-<section>
-<section id="classification-of-customer-queries" class="title-slide slide level1 center">
-<h1>Classification of Customer queries</h1>
-<p>Classify customer queries to handle different cases</p>
-</section>
-<section id="system-message" class="slide level2 smaller">
-<h2>System message</h2>
-<div id="a36aadae" class="cell" data-execution_count="3">
+<section id="system-message" class="title-slide slide level1 smaller center">
+<h1>System message</h1>
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>delimiter <span class="op">=</span> <span class="st">"####"</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a></span>
 <span id="cb3-3"><a href="#cb3-3"></a>system_message <span class="op">=</span> <span class="ss">f"""</span></span>
@@ -507,9 +509,11 @@ Jan Kirenz
 <span id="cb3-38"><a href="#cb3-38"></a><span class="ss">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="user-message" class="slide level2">
-<h2>User message</h2>
-<div id="b3537af5" class="cell" data-execution_count="4">
+
+<section>
+<section id="user-message-1" class="title-slide slide level1 center">
+<h1>User message 1</h1>
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>user_message <span class="op">=</span> <span class="ss">f"""</span><span class="ch">\</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="ss">I want you to delete my profile and all of my user data"""</span></span>
 <span id="cb4-3"><a href="#cb4-3"></a>messages <span class="op">=</span> [</span>
@@ -522,54 +526,45 @@ Jan Kirenz
 </section>
 <section id="output" class="slide level2">
 <h2>Output</h2>
-<div id="5539cf5b" class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>response <span class="op">=</span> get_completion_from_messages(messages)</span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell fragment" data-execution_count="5">
-<div class="cell-output cell-output-stdout">
-<pre><code>{
-  "primary": "Account Management",
-  "secondary": "Close account"
-}</code></pre>
-</div>
+<ul>
+<li class="fragment">Output: {“primary”: “Account Management”, “secondary”: “Close account”}</li>
+</ul>
+</section></section>
+<section>
+<section id="user-message-2" class="title-slide slide level1 center">
+<h1>User message 2</h1>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>user_message <span class="op">=</span> <span class="ss">f"""</span><span class="ch">\</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="ss">Tell me more about your flat screen tvs"""</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>messages <span class="op">=</span> [</span>
+<span id="cb6-4"><a href="#cb6-4"></a>    {<span class="st">'role'</span>: <span class="st">'system'</span>,</span>
+<span id="cb6-5"><a href="#cb6-5"></a>     <span class="st">'content'</span>: system_message},</span>
+<span id="cb6-6"><a href="#cb6-6"></a>    {<span class="st">'role'</span>: <span class="st">'user'</span>,</span>
+<span id="cb6-7"><a href="#cb6-7"></a>     <span class="st">'content'</span>: <span class="ss">f"</span><span class="sc">{</span>delimiter<span class="sc">}{</span>user_message<span class="sc">}{</span>delimiter<span class="sc">}</span><span class="ss">"</span>},</span>
+<span id="cb6-8"><a href="#cb6-8"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="user-message-2" class="slide level2">
-<h2>User message 2</h2>
-<div id="55117af2" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>user_message <span class="op">=</span> <span class="ss">f"""</span><span class="ch">\</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="ss">Tell me more about your flat screen tvs"""</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a>messages <span class="op">=</span> [</span>
-<span id="cb7-4"><a href="#cb7-4"></a>    {<span class="st">'role'</span>: <span class="st">'system'</span>,</span>
-<span id="cb7-5"><a href="#cb7-5"></a>     <span class="st">'content'</span>: system_message},</span>
-<span id="cb7-6"><a href="#cb7-6"></a>    {<span class="st">'role'</span>: <span class="st">'user'</span>,</span>
-<span id="cb7-7"><a href="#cb7-7"></a>     <span class="st">'content'</span>: <span class="ss">f"</span><span class="sc">{</span>delimiter<span class="sc">}{</span>user_message<span class="sc">}{</span>delimiter<span class="sc">}</span><span class="ss">"</span>},</span>
-<span id="cb7-8"><a href="#cb7-8"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="output-1" class="slide level2">
+<h2>Output</h2>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>response <span class="op">=</span> get_completion_from_messages(messages)</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>{ “primary”: “General Inquiry”, “secondary”: “Product information” }</p>
 </section></section>
-<section id="output-1" class="title-slide slide level1 center">
-<h1>Output</h1>
-<div id="3642c533" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>response <span class="op">=</span> get_completion_from_messages(messages)</span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell fragment" data-execution_count="7">
-<div class="cell-output cell-output-stdout">
-<pre><code>{
-  "primary": "General Inquiry",
-  "secondary": "Product information"
-}</code></pre>
-</div>
-</div>
+<section id="acknowledgments" class="title-slide slide level1 center">
+<h1>Acknowledgments</h1>
+<p>This tutorial is mainly based on the excellent course “Building Systems with the ChatGPT API” provided by Isa Fulford from OpenAI and Andrew Ng from DeepLearning.AI</p>
 </section>
 
 <section id="whats-next" class="title-slide slide level1 center" data-background-image="../images/logo.png" data-background-opacity="0.5">
 <h1>What’s next?</h1>
-<ul>
-<li class="fragment"><p><strong>Congratulations! You have completed this tutorial</strong> 👍</p></li>
-<li class="fragment"><p><strong>Next, you may want to go back to the <a href="https://kirenz.github.io/lab-chat-system/">lab’s website</a></strong></p></li>
-</ul>
+<p><strong>Congratulations! You have completed this tutorial</strong> 👍</p>
+<p><strong>Next, you may want to go back to the <a href="https://kirenz.github.io/lab-chat-system/">lab’s website</a></strong></p>
 
 <div class="footer footer-default">
 <p>Jan Kirenz</p>
@@ -602,6 +597,7 @@ Jan Kirenz
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': true,
+'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
@@ -863,9 +859,10 @@ Jan Kirenz
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      function tippyHover(el, contentFn) {
         const config = {
           allowHTML: true,
+          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -875,17 +872,8 @@ Jan Kirenz
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start',
+          placement: 'bottom-start'
         };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 
