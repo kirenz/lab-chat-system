@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.268">
+  <meta name="generator" content="quarto-1.3.450">
 
   <meta name="author" content="Jan Kirenz">
   <title>Chat System - Chain of Thought Reasoning</title>
@@ -224,8 +224,7 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    padding-bottom: 0.5rem;
-    margin-bottom: 0;
+    margin-bottom: 0.5rem;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -410,13 +409,21 @@ Jan Kirenz
 <nav role="doc-toc"> 
 <h2 id="toc-title">Table of contents</h2>
 <ul>
+<li class="fragment"><a href="#/chain-of-thought-reasoning" id="/toc-chain-of-thought-reasoning">Chain of Thought Reasoning</a></li>
 <li class="fragment"><a href="#/setup" id="/toc-setup">Setup</a></li>
 <li class="fragment"><a href="#/chain-of-thought-prompting-1" id="/toc-chain-of-thought-prompting-1">Chain-of-Thought Prompting 1</a></li>
 <li class="fragment"><a href="#/chain-of-thought-prompting-2" id="/toc-chain-of-thought-prompting-2">Chain-of-Thought Prompting 2</a></li>
+<li class="fragment"><a href="#/acknowledgments" id="/toc-acknowledgments">Acknowledgments</a></li>
 <li class="fragment"><a href="#/whats-next" id="/toc-whats-next">What’s next?</a></li>
 </ul>
 </nav>
 </section>
+<section id="chain-of-thought-reasoning" class="title-slide slide level1 center">
+<h1>Chain of Thought Reasoning</h1>
+<p>Chain-of-thought (CoT) prompting enables complex reasoning capabilities through intermediate reasoning steps.</p>
+<p>You can combine it with few-shot prompting to get better results on more complex tasks that require reasoning before responding.</p>
+</section>
+
 <section>
 <section id="setup" class="title-slide slide level1 center">
 <h1>Setup</h1>
@@ -424,7 +431,7 @@ Jan Kirenz
 </section>
 <section id="python" class="slide level2">
 <h2>Python</h2>
-<div id="8f34870c" class="cell" data-execution_count="1">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> openai</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> sys</span>
@@ -436,7 +443,7 @@ Jan Kirenz
 </section>
 <section id="helper-function" class="slide level2">
 <h2>Helper function</h2>
-<div id="f09c49d8" class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> get_completion_from_messages(messages,</span>
 <span id="cb2-2"><a href="#cb2-2"></a>                                 model<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>,</span>
 <span id="cb2-3"><a href="#cb2-3"></a>                                 temperature<span class="op">=</span><span class="dv">0</span>, max_tokens<span class="op">=</span><span class="dv">500</span>):</span>
@@ -456,19 +463,19 @@ Jan Kirenz
 </section>
 <section id="system-message" class="slide level2 smaller">
 <h2>System message</h2>
-<div id="361fca63" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>delimiter <span class="op">=</span> <span class="st">"####"</span></span>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>delimiter <span class="op">=</span> <span class="st">"##"</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a></span>
 <span id="cb3-3"><a href="#cb3-3"></a>system_message <span class="op">=</span> <span class="ss">f"""</span></span>
 <span id="cb3-4"><a href="#cb3-4"></a><span class="ss">Follow these steps to answer the customer queries.</span></span>
 <span id="cb3-5"><a href="#cb3-5"></a><span class="ss">The customer query will be delimited with four hashtags,</span><span class="ch">\</span></span>
 <span id="cb3-6"><a href="#cb3-6"></a><span class="ss">i.e. </span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss">. </span></span>
 <span id="cb3-7"><a href="#cb3-7"></a></span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="ss">Step 1:</span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> First decide whether the user is </span><span class="ch">\</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="ss">Step 1: </span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> First decide whether the user is </span><span class="ch">\</span></span>
 <span id="cb3-9"><a href="#cb3-9"></a><span class="ss">asking a question about a specific product or products. </span><span class="ch">\</span></span>
 <span id="cb3-10"><a href="#cb3-10"></a><span class="ss">Product cateogry doesn't count. </span></span>
 <span id="cb3-11"><a href="#cb3-11"></a></span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="ss">Step 2:</span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> If the user is asking about </span><span class="ch">\</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="ss">Step 2: </span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> If the user is asking about </span><span class="ch">\</span></span>
 <span id="cb3-13"><a href="#cb3-13"></a><span class="ss">specific products, identify whether </span><span class="ch">\</span></span>
 <span id="cb3-14"><a href="#cb3-14"></a><span class="ss">the products are in the following list.</span></span>
 <span id="cb3-15"><a href="#cb3-15"></a><span class="ss">All available products: </span></span>
@@ -522,17 +529,17 @@ Jan Kirenz
 <span id="cb3-63"><a href="#cb3-63"></a><span class="ss">   Description: A compact and affordable Chromebook for everyday tasks.</span></span>
 <span id="cb3-64"><a href="#cb3-64"></a><span class="ss">   Price: $249.99</span></span>
 <span id="cb3-65"><a href="#cb3-65"></a></span>
-<span id="cb3-66"><a href="#cb3-66"></a><span class="ss">Step 3:</span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> If the message contains products </span><span class="ch">\</span></span>
+<span id="cb3-66"><a href="#cb3-66"></a><span class="ss">Step 3: </span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> If the message contains products </span><span class="ch">\</span></span>
 <span id="cb3-67"><a href="#cb3-67"></a><span class="ss">in the list above, list any assumptions that the </span><span class="ch">\</span></span>
 <span id="cb3-68"><a href="#cb3-68"></a><span class="ss">user is making in their </span><span class="ch">\</span></span>
 <span id="cb3-69"><a href="#cb3-69"></a><span class="ss">message e.g. that Laptop X is bigger than </span><span class="ch">\</span></span>
 <span id="cb3-70"><a href="#cb3-70"></a><span class="ss">Laptop Y, or that Laptop Z has a 2 year warranty.</span></span>
 <span id="cb3-71"><a href="#cb3-71"></a></span>
-<span id="cb3-72"><a href="#cb3-72"></a><span class="ss">Step 4:</span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss">: If the user made any assumptions, </span><span class="ch">\</span></span>
+<span id="cb3-72"><a href="#cb3-72"></a><span class="ss">Step 4: </span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss">: If the user made any assumptions, </span><span class="ch">\</span></span>
 <span id="cb3-73"><a href="#cb3-73"></a><span class="ss">figure out whether the assumption is true based on your </span><span class="ch">\</span></span>
 <span id="cb3-74"><a href="#cb3-74"></a><span class="ss">product information. </span></span>
 <span id="cb3-75"><a href="#cb3-75"></a></span>
-<span id="cb3-76"><a href="#cb3-76"></a><span class="ss">Step 5:</span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss">: First, politely correct the </span><span class="ch">\</span></span>
+<span id="cb3-76"><a href="#cb3-76"></a><span class="ss">Step 5: </span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss">: First, politely correct the </span><span class="ch">\</span></span>
 <span id="cb3-77"><a href="#cb3-77"></a><span class="ss">customer's incorrect assumptions if applicable. </span><span class="ch">\</span></span>
 <span id="cb3-78"><a href="#cb3-78"></a><span class="ss">Only mention or reference products in the list of </span><span class="ch">\</span></span>
 <span id="cb3-79"><a href="#cb3-79"></a><span class="ss">5 available products, as these are the only 5 </span><span class="ch">\</span></span>
@@ -540,25 +547,26 @@ Jan Kirenz
 <span id="cb3-81"><a href="#cb3-81"></a><span class="ss">Answer the customer in a friendly tone.</span></span>
 <span id="cb3-82"><a href="#cb3-82"></a></span>
 <span id="cb3-83"><a href="#cb3-83"></a><span class="ss">Use the following format:</span></span>
-<span id="cb3-84"><a href="#cb3-84"></a><span class="ss">Step 1:</span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> &lt;step 1 reasoning&gt;</span></span>
-<span id="cb3-85"><a href="#cb3-85"></a><span class="ss">Step 2:</span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> &lt;step 2 reasoning&gt;</span></span>
-<span id="cb3-86"><a href="#cb3-86"></a><span class="ss">Step 3:</span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> &lt;step 3 reasoning&gt;</span></span>
-<span id="cb3-87"><a href="#cb3-87"></a><span class="ss">Step 4:</span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> &lt;step 4 reasoning&gt;</span></span>
-<span id="cb3-88"><a href="#cb3-88"></a><span class="ss">Response to user:</span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> &lt;response to customer&gt;</span></span>
+<span id="cb3-84"><a href="#cb3-84"></a><span class="ss">Step 1: </span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> &lt;step 1 reasoning&gt;</span></span>
+<span id="cb3-85"><a href="#cb3-85"></a><span class="ss">Step 2: </span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> &lt;step 2 reasoning&gt;</span></span>
+<span id="cb3-86"><a href="#cb3-86"></a><span class="ss">Step 3: </span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> &lt;step 3 reasoning&gt;</span></span>
+<span id="cb3-87"><a href="#cb3-87"></a><span class="ss">Step 4: </span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> &lt;step 4 reasoning&gt;</span></span>
+<span id="cb3-88"><a href="#cb3-88"></a><span class="ss">Response to user: </span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> &lt;response to customer&gt;</span></span>
 <span id="cb3-89"><a href="#cb3-89"></a></span>
-<span id="cb3-90"><a href="#cb3-90"></a><span class="ss">Make sure to include </span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> to separate every step.</span></span>
-<span id="cb3-91"><a href="#cb3-91"></a><span class="ss">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-90"><a href="#cb3-90"></a><span class="ss">Make sure to include </span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> to separate every step. </span></span>
+<span id="cb3-91"><a href="#cb3-91"></a></span>
+<span id="cb3-92"><a href="#cb3-92"></a><span class="ss">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="user-message" class="slide level2">
 <h2>User message</h2>
-<div id="90810aab" class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>user_message <span class="op">=</span> <span class="ss">f"""</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="ss">by how much is the BlueWave Chromebook more expensive </span><span class="ch">\</span></span>
 <span id="cb4-3"><a href="#cb4-3"></a><span class="ss">than the TechPro Desktop"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
-<div id="6a347e0d" class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>messages <span class="op">=</span> [</span>
 <span id="cb5-2"><a href="#cb5-2"></a>    {<span class="st">'role'</span>: <span class="st">'system'</span>,</span>
 <span id="cb5-3"><a href="#cb5-3"></a>     <span class="st">'content'</span>: system_message},</span>
@@ -568,25 +576,17 @@ Jan Kirenz
 </div>
 </div>
 </section>
-<section id="response" class="slide level2">
+<section id="response" class="slide level2 smaller">
 <h2>Response</h2>
-<div id="a27080e3" class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>response <span class="op">=</span> get_completion_from_messages(messages)</span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell fragment" data-execution_count="6">
-<div class="cell-output cell-output-stdout">
-<pre><code>Step 1:#### The user is asking about the price difference between the BlueWave Chromebook and the TechPro Desktop.
-
-Step 2:#### Both the BlueWave Chromebook and the TechPro Desktop are available products.
-
-Step 3:#### The user assumes that the BlueWave Chromebook is more expensive than the TechPro Desktop.
-
-Step 4:#### Based on the product information, the price of the BlueWave Chromebook is $249.99, and the price of the TechPro Desktop is $999.99. Therefore, the TechPro Desktop is actually more expensive than the BlueWave Chromebook.
-
-Response to user:#### The BlueWave Chromebook is actually less expensive than the TechPro Desktop. The BlueWave Chromebook is priced at $249.99, while the TechPro Desktop is priced at $999.99.</code></pre>
-</div>
-</div>
+<p>Step 1: ## The user is asking about the price difference between the BlueWave Chromebook and the TechPro Desktop.</p>
+<p>Step 2: ## Both the BlueWave Chromebook and the TechPro Desktop are available products.</p>
+<p>Step 3: ## The user assumes that the BlueWave Chromebook is more expensive than the TechPro Desktop.</p>
+<p>Step 4: ## The assumption is incorrect. The TechPro Desktop is priced at $999.99, while the BlueWave Chromebook is priced at $249.99. Therefore, the BlueWave Chromebook is actually less expensive than the TechPro Desktop.</p>
+<p>Response to user: ## The BlueWave Chromebook is actually less expensive than the TechPro Desktop. The BlueWave Chromebook is priced at $249.99, while the TechPro Desktop is priced at $999.99. Let me know if there’s anything else I can assist you with</p>
 </section></section>
 <section>
 <section id="chain-of-thought-prompting-2" class="title-slide slide level1 center">
@@ -595,62 +595,56 @@ Response to user:#### The BlueWave Chromebook is actually less expensive than th
 </section>
 <section id="user-message-1" class="slide level2">
 <h2>User message</h2>
-<div id="baf0bede" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>user_message <span class="op">=</span> <span class="ss">f"""</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="ss">do you sell tvs"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>user_message <span class="op">=</span> <span class="ss">f"""do you sell tvs"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
-<div id="f64c148a" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>messages <span class="op">=</span> [</span>
-<span id="cb9-2"><a href="#cb9-2"></a>    {<span class="st">'role'</span>: <span class="st">'system'</span>,</span>
-<span id="cb9-3"><a href="#cb9-3"></a>     <span class="st">'content'</span>: system_message},</span>
-<span id="cb9-4"><a href="#cb9-4"></a>    {<span class="st">'role'</span>: <span class="st">'user'</span>,</span>
-<span id="cb9-5"><a href="#cb9-5"></a>     <span class="st">'content'</span>: <span class="ss">f"</span><span class="sc">{</span>delimiter<span class="sc">}{</span>user_message<span class="sc">}{</span>delimiter<span class="sc">}</span><span class="ss">"</span>},</span>
-<span id="cb9-6"><a href="#cb9-6"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>messages <span class="op">=</span> [</span>
+<span id="cb8-2"><a href="#cb8-2"></a>    {<span class="st">'role'</span>: <span class="st">'system'</span>,</span>
+<span id="cb8-3"><a href="#cb8-3"></a>     <span class="st">'content'</span>: system_message},</span>
+<span id="cb8-4"><a href="#cb8-4"></a>    {<span class="st">'role'</span>: <span class="st">'user'</span>,</span>
+<span id="cb8-5"><a href="#cb8-5"></a>     <span class="st">'content'</span>: <span class="ss">f"</span><span class="sc">{</span>delimiter<span class="sc">}{</span>user_message<span class="sc">}{</span>delimiter<span class="sc">}</span><span class="ss">"</span>},</span>
+<span id="cb8-6"><a href="#cb8-6"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
 <section id="response-1" class="slide level2">
 <h2>Response</h2>
-<div id="739e435c" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>response <span class="op">=</span> get_completion_from_messages(messages)</span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>response <span class="op">=</span> get_completion_from_messages(messages)</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell fragment" data-execution_count="9">
-<div class="cell-output cell-output-stdout">
-<pre><code>Step 1:#### The user is asking if the store sells TVs, which is a question about a specific product category.
-
-Step 2:#### TVs are not included in the list of available products. The store only sells computers and laptops.
-
-Response to user:#### I'm sorry, but we currently do not sell TVs. Our store specializes in computers and laptops. If you have any questions or need assistance with our available products, feel free to ask.</code></pre>
-</div>
-</div>
+<ul>
+<li class="fragment">Step 1:## The user is asking if the store sells TVs. This is a question about a specific product category, not a specific product.</li>
+</ul>
 </section>
 <section id="inner-monologue" class="slide level2">
 <h2>Inner Monologue</h2>
 <ul>
 <li class="fragment">Since we asked the LLM to separate its reasoning steps by a delimiter, we can hide the chain-of-thought reasoning from the final output that the user sees.</li>
 </ul>
-<div id="c6d60f9e" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="cf">try</span>:</span>
-<span id="cb12-2"><a href="#cb12-2"></a>    final_response <span class="op">=</span> response.split(delimiter)[<span class="op">-</span><span class="dv">1</span>].strip()</span>
-<span id="cb12-3"><a href="#cb12-3"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
-<span id="cb12-4"><a href="#cb12-4"></a>    final_response <span class="op">=</span> <span class="st">"Sorry, I'm having trouble right now, please try asking another question."</span></span>
-<span id="cb12-5"><a href="#cb12-5"></a></span>
-<span id="cb12-6"><a href="#cb12-6"></a><span class="bu">print</span>(final_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="cf">try</span>:</span>
+<span id="cb10-2"><a href="#cb10-2"></a>    final_response <span class="op">=</span> response.split(delimiter)[<span class="op">-</span><span class="dv">1</span>].strip()</span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb10-4"><a href="#cb10-4"></a>    final_response <span class="op">=</span> <span class="st">"Sorry, I'm having trouble right now, please try asking another question."</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="bu">print</span>(final_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell fragment" data-execution_count="10">
-<div class="cell-output cell-output-stdout">
-<pre><code>I'm sorry, but we currently do not sell TVs. Our store specializes in computers and laptops. If you have any questions or need assistance with our available products, feel free to ask.</code></pre>
-</div>
-</div>
+<ul>
+<li class="fragment">The BlueWave Chromebook is actually less expensive than the TechPro Desktop. The BlueWave Chromebook is priced at $249.99, while the TechPro Desktop is priced at $999.99. Let me know if there’s anything else I can assist you with!</li>
+</ul>
 </section></section>
+<section id="acknowledgments" class="title-slide slide level1 center">
+<h1>Acknowledgments</h1>
+<p>This tutorial is mainly based on the excellent course “Building Systems with the ChatGPT API” provided by Isa Fulford from OpenAI and Andrew Ng from DeepLearning.AI</p>
+</section>
+
 <section id="whats-next" class="title-slide slide level1 center" data-background-image="../images/logo.png" data-background-opacity="0.5">
 <h1>What’s next?</h1>
-<ul>
-<li class="fragment"><p><strong>Congratulations! You have completed this tutorial</strong> 👍</p></li>
-<li class="fragment"><p><strong>Next, you may want to go back to the <a href="https://kirenz.github.io/lab-chat-system/">lab’s website</a></strong></p></li>
-</ul>
+<p><strong>Congratulations! You have completed this tutorial</strong> 👍</p>
+<p><strong>Next, you may want to go back to the <a href="https://kirenz.github.io/lab-chat-system/">lab’s website</a></strong></p>
 
 <div class="footer footer-default">
 <p>Jan Kirenz</p>
@@ -683,6 +677,7 @@ Response to user:#### I'm sorry, but we currently do not sell TVs. Our store spe
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': true,
+'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
@@ -944,9 +939,10 @@ Response to user:#### I'm sorry, but we currently do not sell TVs. Our store spe
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      function tippyHover(el, contentFn) {
         const config = {
           allowHTML: true,
+          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -956,17 +952,8 @@ Response to user:#### I'm sorry, but we currently do not sell TVs. Our store spe
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start',
+          placement: 'bottom-start'
         };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 
